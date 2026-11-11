@@ -6,25 +6,308 @@
 	objectVersion = 56;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EF1DB4163097DCA400C6443C /* Relations_Logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF1DB4153097DCA400C6443C /* Relations_Logic.cpp */; };
+		EF1DB4183097F15200C6443C /* Initialization_Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF1DB4173097F15200C6443C /* Initialization_Data.cpp */; };
+		EF1DB419309821B900C6443C /* Relations_Header.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF26206E3097D982006C94A4 /* Relations_Header.hpp */; };
+		EF1DB41B309823EB00C6443C /* Initialization_Data_header.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF1DB41A309823EB00C6443C /* Initialization_Data_header.hpp */; };
+		EF1DB42330982B6A00C6443C /* RelationshipClassTesting.mm in Sources */ = {isa = PBXBuildFile; fileRef = EF1DB42230982B6A00C6443C /* RelationshipClassTesting.mm */; };
+		EF1DB42430982B6A00C6443C /* libAmethyne.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EFF46A323093D6F500B2A8B0 /* libAmethyne.a */; };
+		EF1DB4383099295B00C6443C /* Derived_Differences_Calculation.metal in Sources */ = {isa = PBXBuildFile; fileRef = EF1DB4373099295B00C6443C /* Derived_Differences_Calculation.metal */; };
+		EF1DB43B309935BD00C6443C /* Absolute_Minimum.metal in Sources */ = {isa = PBXBuildFile; fileRef = EF1DB43A309935BD00C6443C /* Absolute_Minimum.metal */; };
+		EF1DB43D3099376A00C6443C /* Tester_Setup.mm in Sources */ = {isa = PBXBuildFile; fileRef = EF1DB43C3099376A00C6443C /* Tester_Setup.mm */; };
+		EF1DB43F30993C3B00C6443C /* AbsMin_Tester_Header.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1DB43E30993C3B00C6443C /* AbsMin_Tester_Header.h */; };
+		EF1DB445309940AD00C6443C /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1DB44330993EFE00C6443C /* MetalKit.framework */; };
+		EF1DB446309940B100C6443C /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1DB44130993EEA00C6443C /* Metal.framework */; };
+		EF1DB44B30999F0800C6443C /* Variable_Gen_Header.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF1DB44A30999F0800C6443C /* Variable_Gen_Header.hpp */; };
+		EF1DB44F309A7EF000C6443C /* Authentic_Vars_Creation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF1DB44D309A7EF000C6443C /* Authentic_Vars_Creation.cpp */; };
+		EF1DB450309A7EF000C6443C /* Authentic_Vars_Creation.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF1DB44E309A7EF000C6443C /* Authentic_Vars_Creation.hpp */; };
+		EF1DB456309A7FF800C6443C /* Base_types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF1DB454309A7FF800C6443C /* Base_types.cpp */; };
+		EF1DB457309A7FF800C6443C /* Base_types.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF1DB455309A7FF800C6443C /* Base_types.hpp */; };
+		EF1DB45B309A8F7600C6443C /* Var_Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF1DB459309A8F7600C6443C /* Var_Storage.cpp */; };
+		EF1DB45C309A8F7600C6443C /* Var_Storage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF1DB45A309A8F7600C6443C /* Var_Storage.hpp */; };
+		EF1DB462309AD58D00C6443C /* Metadata.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1DB461309AD58D00C6443C /* Metadata.h */; };
+		EF1DB464309AE57000C6443C /* Variable_Gen_Logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF1DB463309AE57000C6443C /* Variable_Gen_Logic.cpp */; };
+		EF1DB467309B0F6300C6443C /* Synthetics_preprocessing.metal in Sources */ = {isa = PBXBuildFile; fileRef = EF1DB466309B0F6300C6443C /* Synthetics_preprocessing.metal */; };
+		EF1DB46A309C7A8100C6443C /* Ephemerality.metal in Sources */ = {isa = PBXBuildFile; fileRef = EF1DB469309C7A8100C6443C /* Ephemerality.metal */; };
+		EF1DB46E309D34E100C6443C /* Symbolic_representation_logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF1DB46C309D34E100C6443C /* Symbolic_representation_logic.cpp */; };
+		EF1DB46F309D34E100C6443C /* Symbolic_representation_logic.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF1DB46D309D34E100C6443C /* Symbolic_representation_logic.hpp */; };
+		EF1DB471309DA81F00C6443C /* libsymengine.0.13.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1DB470309DA81F00C6443C /* libsymengine.0.13.0.dylib */; };
+		EF1DB472309DA82000C6443C /* libsymengine.0.13.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1DB470309DA81F00C6443C /* libsymengine.0.13.0.dylib */; };
+		EF1DB474309DA8AC00C6443C /* libsymengine.0.13.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF1DB470309DA81F00C6443C /* libsymengine.0.13.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		EF49D1FC30A2FB6F00E63E9D /* Transfer_Manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF49D1FA30A2FB6F00E63E9D /* Transfer_Manager.cpp */; };
+		EF49D1FD30A2FB6F00E63E9D /* Transfer_Manager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF49D1FB30A2FB6F00E63E9D /* Transfer_Manager.hpp */; };
+		EF51199C309FAA960072B851 /* Heirarchial_Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF51199A309FAA960072B851 /* Heirarchial_Storage.cpp */; };
+		EF51199D309FAA960072B851 /* Heirarchial_Storage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF51199B309FAA960072B851 /* Heirarchial_Storage.hpp */; };
+		EF5119A1309FD3600072B851 /* Equation_Form_Converter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF51199F309FD3600072B851 /* Equation_Form_Converter.cpp */; };
+		EF5119A2309FD3600072B851 /* Equation_Form_Converter.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF5119A0309FD3600072B851 /* Equation_Form_Converter.hpp */; };
+		EF5119A430A12CC60072B851 /* Bernstein_Coefficients.metal in Sources */ = {isa = PBXBuildFile; fileRef = EF5119A330A12CC60072B851 /* Bernstein_Coefficients.metal */; };
+		EFE5A3A830A3FC8E004B0708 /* Accelerate_initialization_data.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE5A3A730A3FC8E004B0708 /* Accelerate_initialization_data.h */; };
+		EFE5A3AB30A403B9004B0708 /* AccelTesting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EFE5A3A930A403B9004B0708 /* AccelTesting.cpp */; };
+		EFE5A3AC30A403B9004B0708 /* AccelTesting.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EFE5A3AA30A403B9004B0708 /* AccelTesting.hpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EF1DB42530982B6A00C6443C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EFF46A2A3093D6F500B2A8B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EFF46A313093D6F500B2A8B0;
+			remoteInfo = Amethyne;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EF1DB473309DA88A00C6443C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EF1DB474309DA8AC00C6443C /* libsymengine.0.13.0.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		EF1DB4153097DCA400C6443C /* Relations_Logic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Relations_Logic.cpp; sourceTree = "<group>"; };
+		EF1DB4173097F15200C6443C /* Initialization_Data.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Initialization_Data.cpp; sourceTree = "<group>"; };
+		EF1DB41A309823EB00C6443C /* Initialization_Data_header.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Initialization_Data_header.hpp; sourceTree = "<group>"; };
+		EF1DB42030982B6A00C6443C /* RelationshipClassTesting.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RelationshipClassTesting.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF1DB42230982B6A00C6443C /* RelationshipClassTesting.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RelationshipClassTesting.mm; sourceTree = "<group>"; };
+		EF1DB4373099295B00C6443C /* Derived_Differences_Calculation.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Derived_Differences_Calculation.metal; sourceTree = "<group>"; };
+		EF1DB43A309935BD00C6443C /* Absolute_Minimum.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Absolute_Minimum.metal; sourceTree = "<group>"; };
+		EF1DB43C3099376A00C6443C /* Tester_Setup.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Tester_Setup.mm; sourceTree = "<group>"; };
+		EF1DB43E30993C3B00C6443C /* AbsMin_Tester_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AbsMin_Tester_Header.h; sourceTree = "<group>"; };
+		EF1DB44130993EEA00C6443C /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		EF1DB44330993EFE00C6443C /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		EF1DB44A30999F0800C6443C /* Variable_Gen_Header.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Variable_Gen_Header.hpp; sourceTree = "<group>"; };
+		EF1DB44D309A7EF000C6443C /* Authentic_Vars_Creation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Authentic_Vars_Creation.cpp; sourceTree = "<group>"; };
+		EF1DB44E309A7EF000C6443C /* Authentic_Vars_Creation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Authentic_Vars_Creation.hpp; sourceTree = "<group>"; };
+		EF1DB454309A7FF800C6443C /* Base_types.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Base_types.cpp; sourceTree = "<group>"; };
+		EF1DB455309A7FF800C6443C /* Base_types.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Base_types.hpp; sourceTree = "<group>"; };
+		EF1DB459309A8F7600C6443C /* Var_Storage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Var_Storage.cpp; sourceTree = "<group>"; };
+		EF1DB45A309A8F7600C6443C /* Var_Storage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Var_Storage.hpp; sourceTree = "<group>"; };
+		EF1DB461309AD58D00C6443C /* Metadata.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Metadata.h; sourceTree = "<group>"; };
+		EF1DB463309AE57000C6443C /* Variable_Gen_Logic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Variable_Gen_Logic.cpp; sourceTree = "<group>"; };
+		EF1DB466309B0F6300C6443C /* Synthetics_preprocessing.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Synthetics_preprocessing.metal; sourceTree = "<group>"; };
+		EF1DB469309C7A8100C6443C /* Ephemerality.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Ephemerality.metal; sourceTree = "<group>"; };
+		EF1DB46C309D34E100C6443C /* Symbolic_representation_logic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Symbolic_representation_logic.cpp; sourceTree = "<group>"; };
+		EF1DB46D309D34E100C6443C /* Symbolic_representation_logic.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = Symbolic_representation_logic.hpp; sourceTree = "<group>"; };
+		EF1DB470309DA81F00C6443C /* libsymengine.0.13.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libsymengine.0.13.0.dylib; sourceTree = "<group>"; };
+		EF26206E3097D982006C94A4 /* Relations_Header.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Relations_Header.hpp; sourceTree = "<group>"; };
+		EF49D1FA30A2FB6F00E63E9D /* Transfer_Manager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Transfer_Manager.cpp; sourceTree = "<group>"; };
+		EF49D1FB30A2FB6F00E63E9D /* Transfer_Manager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Transfer_Manager.hpp; sourceTree = "<group>"; };
+		EF51199A309FAA960072B851 /* Heirarchial_Storage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Heirarchial_Storage.cpp; sourceTree = "<group>"; };
+		EF51199B309FAA960072B851 /* Heirarchial_Storage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Heirarchial_Storage.hpp; sourceTree = "<group>"; };
+		EF51199F309FD3600072B851 /* Equation_Form_Converter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Equation_Form_Converter.cpp; sourceTree = "<group>"; };
+		EF5119A0309FD3600072B851 /* Equation_Form_Converter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Equation_Form_Converter.hpp; sourceTree = "<group>"; };
+		EF5119A330A12CC60072B851 /* Bernstein_Coefficients.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Bernstein_Coefficients.metal; sourceTree = "<group>"; };
+		EFE5A3A730A3FC8E004B0708 /* Accelerate_initialization_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Accelerate_initialization_data.h; sourceTree = "<group>"; };
+		EFE5A3A930A403B9004B0708 /* AccelTesting.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AccelTesting.cpp; sourceTree = "<group>"; };
+		EFE5A3AA30A403B9004B0708 /* AccelTesting.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AccelTesting.hpp; sourceTree = "<group>"; };
 		EFF46A323093D6F500B2A8B0 /* libAmethyne.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAmethyne.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		EF1DB41D30982B6A00C6443C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF1DB446309940B100C6443C /* Metal.framework in Frameworks */,
+				EF1DB445309940AD00C6443C /* MetalKit.framework in Frameworks */,
+				EF1DB42430982B6A00C6443C /* libAmethyne.a in Frameworks */,
+				EF1DB472309DA82000C6443C /* libsymengine.0.13.0.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EFF46A303093D6F500B2A8B0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF1DB471309DA81F00C6443C /* libsymengine.0.13.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EF1DB42130982B6A00C6443C /* RelationshipClassTesting */ = {
+			isa = PBXGroup;
+			children = (
+				EF1DB42230982B6A00C6443C /* RelationshipClassTesting.mm */,
+			);
+			path = RelationshipClassTesting;
+			sourceTree = "<group>";
+		};
+		EF1DB4353099145500C6443C /* Metal_Kernels */ = {
+			isa = PBXGroup;
+			children = (
+				EF1DB465309B0EAB00C6443C /* Processing */,
+				EF1DB436309928FB00C6443C /* Relations */,
+				EF1DB439309935A300C6443C /* Tester */,
+			);
+			path = Metal_Kernels;
+			sourceTree = "<group>";
+		};
+		EF1DB436309928FB00C6443C /* Relations */ = {
+			isa = PBXGroup;
+			children = (
+				EF1DB466309B0F6300C6443C /* Synthetics_preprocessing.metal */,
+				EF1DB4373099295B00C6443C /* Derived_Differences_Calculation.metal */,
+			);
+			path = Relations;
+			sourceTree = "<group>";
+		};
+		EF1DB439309935A300C6443C /* Tester */ = {
+			isa = PBXGroup;
+			children = (
+				EF1DB43E30993C3B00C6443C /* AbsMin_Tester_Header.h */,
+				EF1DB43C3099376A00C6443C /* Tester_Setup.mm */,
+				EF1DB43A309935BD00C6443C /* Absolute_Minimum.metal */,
+			);
+			path = Tester;
+			sourceTree = "<group>";
+		};
+		EF1DB44030993EEA00C6443C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EF1DB470309DA81F00C6443C /* libsymengine.0.13.0.dylib */,
+				EF1DB44330993EFE00C6443C /* MetalKit.framework */,
+				EF1DB44130993EEA00C6443C /* Metal.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EF1DB44930999EB600C6443C /* Synthetic_Variables */ = {
+			isa = PBXGroup;
+			children = (
+				EF1DB44A30999F0800C6443C /* Variable_Gen_Header.hpp */,
+				EF1DB463309AE57000C6443C /* Variable_Gen_Logic.cpp */,
+			);
+			path = Synthetic_Variables;
+			sourceTree = "<group>";
+		};
+		EF1DB44C309A7E3300C6443C /* Authentic_Variables */ = {
+			isa = PBXGroup;
+			children = (
+				EF1DB44D309A7EF000C6443C /* Authentic_Vars_Creation.cpp */,
+				EF1DB44E309A7EF000C6443C /* Authentic_Vars_Creation.hpp */,
+			);
+			path = Authentic_Variables;
+			sourceTree = "<group>";
+		};
+		EF1DB451309A7F9000C6443C /* Variables */ = {
+			isa = PBXGroup;
+			children = (
+				EF49D1F930A2FAA900E63E9D /* Transfer */,
+				EF26206D3097D7DF006C94A4 /* Relationships */,
+				EF1DB46B309D34B800C6443C /* Symbolic_Representation */,
+				EF1DB458309A8F5000C6443C /* Storage */,
+				EF1DB452309A7F9D00C6443C /* Creation */,
+			);
+			path = Variables;
+			sourceTree = "<group>";
+		};
+		EF1DB452309A7F9D00C6443C /* Creation */ = {
+			isa = PBXGroup;
+			children = (
+				EF1DB455309A7FF800C6443C /* Base_types.hpp */,
+				EF1DB454309A7FF800C6443C /* Base_types.cpp */,
+				EF1DB44930999EB600C6443C /* Synthetic_Variables */,
+				EF1DB44C309A7E3300C6443C /* Authentic_Variables */,
+			);
+			path = Creation;
+			sourceTree = "<group>";
+		};
+		EF1DB453309A7FBF00C6443C /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				EF1DB41A309823EB00C6443C /* Initialization_Data_header.hpp */,
+				EF1DB4173097F15200C6443C /* Initialization_Data.cpp */,
+				EF1DB461309AD58D00C6443C /* Metadata.h */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		EF1DB458309A8F5000C6443C /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				EF1DB459309A8F7600C6443C /* Var_Storage.cpp */,
+				EF1DB45A309A8F7600C6443C /* Var_Storage.hpp */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		EF1DB465309B0EAB00C6443C /* Processing */ = {
+			isa = PBXGroup;
+			children = (
+				EF5119A330A12CC60072B851 /* Bernstein_Coefficients.metal */,
+				EF1DB469309C7A8100C6443C /* Ephemerality.metal */,
+			);
+			path = Processing;
+			sourceTree = "<group>";
+		};
+		EF1DB46B309D34B800C6443C /* Symbolic_Representation */ = {
+			isa = PBXGroup;
+			children = (
+				EF1DB46C309D34E100C6443C /* Symbolic_representation_logic.cpp */,
+				EF1DB46D309D34E100C6443C /* Symbolic_representation_logic.hpp */,
+			);
+			path = Symbolic_Representation;
+			sourceTree = "<group>";
+		};
+		EF26206D3097D7DF006C94A4 /* Relationships */ = {
+			isa = PBXGroup;
+			children = (
+				EFE5A3A730A3FC8E004B0708 /* Accelerate_initialization_data.h */,
+				EF26206E3097D982006C94A4 /* Relations_Header.hpp */,
+				EF1DB4153097DCA400C6443C /* Relations_Logic.cpp */,
+			);
+			path = Relationships;
+			sourceTree = "<group>";
+		};
+		EF49D1F930A2FAA900E63E9D /* Transfer */ = {
+			isa = PBXGroup;
+			children = (
+				EF49D1FA30A2FB6F00E63E9D /* Transfer_Manager.cpp */,
+				EF49D1FB30A2FB6F00E63E9D /* Transfer_Manager.hpp */,
+			);
+			path = Transfer;
+			sourceTree = "<group>";
+		};
+		EF511999309FAA1A0072B851 /* Heirarchy */ = {
+			isa = PBXGroup;
+			children = (
+				EF51199A309FAA960072B851 /* Heirarchial_Storage.cpp */,
+				EF51199B309FAA960072B851 /* Heirarchial_Storage.hpp */,
+			);
+			path = Heirarchy;
+			sourceTree = "<group>";
+		};
+		EF51199E309FD32C0072B851 /* Solver */ = {
+			isa = PBXGroup;
+			children = (
+				EF51199F309FD3600072B851 /* Equation_Form_Converter.cpp */,
+				EF5119A0309FD3600072B851 /* Equation_Form_Converter.hpp */,
+			);
+			path = Solver;
+			sourceTree = "<group>";
+		};
 		EFF46A293093D6F500B2A8B0 = {
 			isa = PBXGroup;
 			children = (
+				EFE5A3A930A403B9004B0708 /* AccelTesting.cpp */,
+				EFE5A3AA30A403B9004B0708 /* AccelTesting.hpp */,
+				EF1DB453309A7FBF00C6443C /* Global */,
+				EF1DB451309A7F9000C6443C /* Variables */,
+				EF511999309FAA1A0072B851 /* Heirarchy */,
+				EF51199E309FD32C0072B851 /* Solver */,
+				EF1DB4353099145500C6443C /* Metal_Kernels */,
+				EF1DB42130982B6A00C6443C /* RelationshipClassTesting */,
 				EFF46A333093D6F500B2A8B0 /* Products */,
+				EF1DB44030993EEA00C6443C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -32,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				EFF46A323093D6F500B2A8B0 /* libAmethyne.a */,
+				EF1DB42030982B6A00C6443C /* RelationshipClassTesting.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -43,12 +327,44 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF1DB419309821B900C6443C /* Relations_Header.hpp in Headers */,
+				EF49D1FD30A2FB6F00E63E9D /* Transfer_Manager.hpp in Headers */,
+				EF1DB462309AD58D00C6443C /* Metadata.h in Headers */,
+				EF1DB41B309823EB00C6443C /* Initialization_Data_header.hpp in Headers */,
+				EF1DB450309A7EF000C6443C /* Authentic_Vars_Creation.hpp in Headers */,
+				EF1DB46F309D34E100C6443C /* Symbolic_representation_logic.hpp in Headers */,
+				EF1DB45C309A8F7600C6443C /* Var_Storage.hpp in Headers */,
+				EF1DB457309A7FF800C6443C /* Base_types.hpp in Headers */,
+				EFE5A3AC30A403B9004B0708 /* AccelTesting.hpp in Headers */,
+				EF5119A2309FD3600072B851 /* Equation_Form_Converter.hpp in Headers */,
+				EF51199D309FAA960072B851 /* Heirarchial_Storage.hpp in Headers */,
+				EF1DB44B30999F0800C6443C /* Variable_Gen_Header.hpp in Headers */,
+				EFE5A3A830A3FC8E004B0708 /* Accelerate_initialization_data.h in Headers */,
+				EF1DB43F30993C3B00C6443C /* AbsMin_Tester_Header.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		EF1DB41F30982B6A00C6443C /* RelationshipClassTesting */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF1DB42730982B6A00C6443C /* Build configuration list for PBXNativeTarget "RelationshipClassTesting" */;
+			buildPhases = (
+				EF1DB41C30982B6A00C6443C /* Sources */,
+				EF1DB41D30982B6A00C6443C /* Frameworks */,
+				EF1DB41E30982B6A00C6443C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EF1DB42630982B6A00C6443C /* PBXTargetDependency */,
+			);
+			name = RelationshipClassTesting;
+			productName = RelationshipClassTesting;
+			productReference = EF1DB42030982B6A00C6443C /* RelationshipClassTesting.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		EFF46A313093D6F500B2A8B0 /* Amethyne */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EFF46A363093D6F500B2A8B0 /* Build configuration list for PBXNativeTarget "Amethyne" */;
@@ -56,6 +372,7 @@
 				EFF46A2E3093D6F500B2A8B0 /* Headers */,
 				EFF46A2F3093D6F500B2A8B0 /* Sources */,
 				EFF46A303093D6F500B2A8B0 /* Frameworks */,
+				EF1DB473309DA88A00C6443C /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -75,6 +392,9 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					EF1DB41F30982B6A00C6443C = {
+						CreatedOnToolsVersion = 14.2;
+					};
 					EFF46A313093D6F500B2A8B0 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -94,21 +414,99 @@
 			projectRoot = "";
 			targets = (
 				EFF46A313093D6F500B2A8B0 /* Amethyne */,
+				EF1DB41F30982B6A00C6443C /* RelationshipClassTesting */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXSourcesBuildPhase section */
-		EFF46A2F3093D6F500B2A8B0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
+/* Begin PBXResourcesBuildPhase section */
+		EF1DB41E30982B6A00C6443C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EF1DB41C30982B6A00C6443C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF1DB42330982B6A00C6443C /* RelationshipClassTesting.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EFF46A2F3093D6F500B2A8B0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF1DB44F309A7EF000C6443C /* Authentic_Vars_Creation.cpp in Sources */,
+				EF1DB46E309D34E100C6443C /* Symbolic_representation_logic.cpp in Sources */,
+				EFE5A3AB30A403B9004B0708 /* AccelTesting.cpp in Sources */,
+				EF1DB4163097DCA400C6443C /* Relations_Logic.cpp in Sources */,
+				EF1DB43B309935BD00C6443C /* Absolute_Minimum.metal in Sources */,
+				EF49D1FC30A2FB6F00E63E9D /* Transfer_Manager.cpp in Sources */,
+				EF5119A1309FD3600072B851 /* Equation_Form_Converter.cpp in Sources */,
+				EF1DB4383099295B00C6443C /* Derived_Differences_Calculation.metal in Sources */,
+				EF51199C309FAA960072B851 /* Heirarchial_Storage.cpp in Sources */,
+				EF1DB467309B0F6300C6443C /* Synthetics_preprocessing.metal in Sources */,
+				EF5119A430A12CC60072B851 /* Bernstein_Coefficients.metal in Sources */,
+				EF1DB456309A7FF800C6443C /* Base_types.cpp in Sources */,
+				EF1DB45B309A8F7600C6443C /* Var_Storage.cpp in Sources */,
+				EF1DB46A309C7A8100C6443C /* Ephemerality.metal in Sources */,
+				EF1DB464309AE57000C6443C /* Variable_Gen_Logic.cpp in Sources */,
+				EF1DB43D3099376A00C6443C /* Tester_Setup.mm in Sources */,
+				EF1DB4183097F15200C6443C /* Initialization_Data.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		EF1DB42630982B6A00C6443C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EFF46A313093D6F500B2A8B0 /* Amethyne */;
+			targetProxy = EF1DB42530982B6A00C6443C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		EF1DB42830982B6A00C6443C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = RexTheDinoINC.RelationshipClassTesting;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+			};
+			name = Debug;
+		};
+		EF1DB42930982B6A00C6443C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = RexTheDinoINC.RelationshipClassTesting;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+			};
+			name = Release;
+		};
 		EFF46A343093D6F500B2A8B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -159,6 +557,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = /opt/local/include;
+				"LIBRARY_SEARCH_PATHS[arch=*]" = /opt/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 12.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -211,6 +611,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = /opt/local/include;
+				"LIBRARY_SEARCH_PATHS[arch=*]" = /opt/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 12.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -223,6 +625,11 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
+				"HEADER_SEARCH_PATHS[arch=*]" = /opt/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -233,6 +640,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -241,6 +652,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		EF1DB42730982B6A00C6443C /* Build configuration list for PBXNativeTarget "RelationshipClassTesting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF1DB42830982B6A00C6443C /* Debug */,
+				EF1DB42930982B6A00C6443C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		EFF46A2D3093D6F500B2A8B0 /* Build configuration list for PBXProject "Amethyne" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

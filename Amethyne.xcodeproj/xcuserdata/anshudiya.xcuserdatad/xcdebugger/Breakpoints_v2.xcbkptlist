@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "8FCF8940-66F6-440F-874C-0BD071DAFB5B"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3E3FB42A-BBC4-42E4-A9DA-54A038C0034F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RelationshipClassTesting/RelationshipClassTesting.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "RelationshipClassTesting"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "3E3FB42A-BBC4-42E4-A9DA-54A038C0034F - 794a7180e8edc624"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[RelationshipClassTesting testExample]"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/RelationshipClassTesting/RelationshipClassTesting.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "439">
+               </Location>
+               <Location
+                  uuid = "3E3FB42A-BBC4-42E4-A9DA-54A038C0034F - 794a7180e8edc624"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[RelationshipClassTesting testExample]"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/RelationshipClassTesting/RelationshipClassTesting.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "488">
+               </Location>
+               <Location
+                  uuid = "3E3FB42A-BBC4-42E4-A9DA-54A038C0034F - 794a7180e8edc624"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[RelationshipClassTesting testExample]"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/RelationshipClassTesting/RelationshipClassTesting.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "485">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "64B799F2-37DD-4C86-9C35-3E3161360F8C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3C798932-4853-4F57-B355-EF0A0BC83A6C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7CF1CD2D-45FE-4AE8-B84B-A07D4A2A9ECF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2EB4DE58-BF74-45A7-82B2-415BA4509ECD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "2EB4DE58-BF74-45A7-82B2-415BA4509ECD - d8fcccec8916dae"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RelationDetector::relationReturn(VariableData, VariableData)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Relationships/Relations_Logic.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "2278">
+               </Location>
+               <Location
+                  uuid = "2EB4DE58-BF74-45A7-82B2-415BA4509ECD - d8fcccec8916dae"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RelationDetector::relationReturn(VariableData, VariableData)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Relationships/Relations_Logic.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
+                  offsetFromSymbolStart = "2110">
+               </Location>
+               <Location
+                  uuid = "2EB4DE58-BF74-45A7-82B2-415BA4509ECD - d8fcccec8916d4f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RelationDetector::relationReturn(VariableData, VariableData)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Relationships/Relations_Logic.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
+                  offsetFromSymbolStart = "2100">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BFD8AEB3-1002-487D-8B01-9B5B764F4EE4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "56574B4D-E6D5-4E97-85B3-87BFFBB83353"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D1C4F367-1C10-45B2-8F2F-B04F4BA28D96"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "D1C4F367-1C10-45B2-8F2F-B04F4BA28D96 - d8fcccec891690c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RelationDetector::relationReturn(VariableData, VariableData)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Relationships/Relations_Logic.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "552">
+               </Location>
+               <Location
+                  uuid = "D1C4F367-1C10-45B2-8F2F-B04F4BA28D96 - fce57d10da372fea"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RelationDetector::relationReturn(VariableData, VariableData)::$_0::operator()(Coordinate const&amp;, Coordinate const&amp;) const"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Relationships/Relations_Logic.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9DCA9364-180E-4C97-B305-BBB8FAA39C80"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7115B1E1-9EEC-46F0-838E-5C5FC61EBA3C"
+            shouldBeEnabled = "Yes"
+            nameForDebugger = "ExecuteFuncIncomplete"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal_Kernels/Tester/Tester_Setup.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "MetalSetup()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
