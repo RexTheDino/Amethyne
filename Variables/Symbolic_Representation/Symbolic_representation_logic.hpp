@@ -10,8 +10,7 @@
 
 #pragma once
 
-#include <stdio.h>
-#include <Var_Storage.hpp>
+#include "Variable_Gen_Header.hpp"
 
 
 //need to move this folder to a different folder as well. does not belong inside variables.

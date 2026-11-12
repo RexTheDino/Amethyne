@@ -95,7 +95,7 @@ void BernsteinDataConverter::convertDegreesAndCoefficientOfExprGivenTerm(SymEngi
 
 
 
-uint8_t BernsteinDataConverter::helperFuncs::returnSymbolIndice(decltype(SymEngine::free_symbols(std::declval<SymEngine::Basic>())) &freed_symbols, SymEngine::RCP<const SymEngine::Basic> &derSymbol, std::vector<symbolAndIndex>* ptrToVector){
+uint8_t BernsteinDataConverter::helperFuncs::returnSymbolIndice(decltype(SymEngine::free_symbols(std::declval<const SymEngine::Basic>())) &freed_symbols, SymEngine::RCP<const SymEngine::Basic> &derSymbol, std::vector<symbolAndIndex>* ptrToVector){
     auto correspondingIterator = freed_symbols.find(derSymbol);
     int correspondingIndex = (int)std::distance(freed_symbols.begin(), correspondingIterator);
     if(correspondingIndex > 7){

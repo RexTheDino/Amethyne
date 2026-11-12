@@ -50,7 +50,7 @@ kernel void Ephemerality_Calculation(device const float* data [[buffer(0)]],
         total += calculation;
     }
     momentum_classification momentum(der_var.tag, round(log(total)));
-    results[clamp(der_var.tag-1U, 0U, UINT_MAX)] = momentum;
+    if(simd_id == 0){results[clamp(der_var.tag-1U, 0U, UINT_MAX)] = momentum;}
 }
 
 

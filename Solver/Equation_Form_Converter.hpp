@@ -22,8 +22,8 @@ struct MetalMatriceDimensionsFormat{
     unsigned char dimensionsOneThruFour = 0; unsigned char dimensionsFourThruEight = 0;
 };
 struct varDegreesAndCoefficient{//degrees and coefficient given a certain term of an expression
-    unsigned char degreesOneThruFour = 0; unsigned char degreesFourThruEight = 0;
     float coefficient = 0.0f;
+    unsigned char degreesOneThruFour = 0; unsigned char degreesFourThruEight = 0;
 };
 
 struct InfoBytes{//mirrors struct found in metal
@@ -64,7 +64,7 @@ class BernsteinDataConverter{
             };
         
         //returns the degree a certain symbol belongs in
-        static inline uint8_t returnSymbolIndice(decltype(SymEngine::free_symbols(std::declval<SymEngine::Basic>())) &freed_symbols, SymEngine::RCP<const SymEngine::Basic> &derSymbol, std::vector<symbolAndIndex>* ptrToVector);
+        static inline uint8_t returnSymbolIndice(decltype(SymEngine::free_symbols(std::declval<const SymEngine::Basic>())) &freed_symbols, SymEngine::RCP<const SymEngine::Basic> &derSymbol, std::vector<symbolAndIndex>* ptrToVector);
         
         
         static inline void writeSymbolIndexesIntoVector(SymEngine::RCP<const SymEngine::Basic> expr, std::vector<symbolAndIndex>* ptrToVector);

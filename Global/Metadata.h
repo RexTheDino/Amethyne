@@ -36,5 +36,6 @@ struct varCreationMetadata{
 struct RelationConstructionMetadata{
     //TEMPORARY scratchpad to hold data while architecture is being built!!!!
     static const uint16_t points_per_var = 1024;
+    static const uint32_t points_per_var_eqn_construct_calculation_SGELSY = 128;
     //TEMPORARY scratchpad to hold data while architecture is being built!!!!
 };

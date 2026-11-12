@@ -14,7 +14,7 @@ struct nChooseR_values{//combinations of values for n choose r where (0 < n < 4)
     //int ONE_choose_ZERO, ONE_choose_ONE;
     //int TWO_choose_ZERO, TWO_choose_ONE, TWO_choose_TWO;
     //int THREE_choose_ZERO, THREE_choose_ONE, THREE_choose_TWO, THREE_choose_THREE;
-    int values[12];//arranged in order respective to the format above except it has padding so each row has 4 elements.
+    int values[12];//arranged in order respective to the format above except it has padding so each row has 4 elements. needs to be filled still!
 };
 
 //first we need to know the dimensions of the matrice. since the max and min lenghts along any specific dimension range from (2,4) a.k.a. 3 possible values for each dimension that actually exists create a for loop that reads bytes from pvt buffer and stops when it reaches 00

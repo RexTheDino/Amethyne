@@ -5,6 +5,8 @@
 //  Created by AnshuDiya on 11/3/26.
 //
 
+#pragma once
+
 #ifndef Authentic_Vars_Creation_hpp
 #define Authentic_Vars_Creation_hpp
 

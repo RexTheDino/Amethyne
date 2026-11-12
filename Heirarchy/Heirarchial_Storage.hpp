@@ -5,12 +5,14 @@
 //  Created by AnshuDiya on 11/7/26.
 //
 
+#pragma once
+
 #ifndef Heirarchial_Storage_hpp
 #define Heirarchial_Storage_hpp
 
-#include <stdio.h>
-#include <symengine/expression.h>
-#include <vector>
+#include "Symbolic_representation_logic.hpp"
+#include "Relations_Header.hpp"
+
 
 struct symbolicVariable{
 private:
@@ -35,6 +37,9 @@ class ExpressionStorage{
 public:
     inline ExpressionStorage();//reserves space for the expressions
     static inline SymEngine::RCP<const SymEngine::Basic> returnMasterExpression();//returns master expression NOT in terms of the underling goals but all the relationships that have been found with respect to the underling goals!!
+    
+    //for non-synthetic vars simply dont add the synthVarAddon parameter
+    static inline void appendSymbolicVar(uint16_t tagOfVar, std::span<Dataset> dSetsRelatedToVar, std::span<synthVarAddon> correspondingAddons = {});//with the var as the y-tag!
 };
 
 #endif /* Heirarchial_Storage_hpp */

@@ -5,6 +5,8 @@
 //  Created by AnshuDiya on 11/3/26.
 //
 
+#pragma once
+
 #include "Authentic_Vars_Creation.hpp"
 #include <symengine/expression.h>
 

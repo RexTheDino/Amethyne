@@ -25,18 +25,19 @@ struct relationshipResult{
 //half configuration to save on byte loads
 kernel void derivedDiffs(device relationshipResult* resultOutBuffer [[buffer(2)]], //to output in [tag1, tag2, relationship]
                          device const float* variableData [[buffer(0)]],
-                         device const packed_half3* numberOfPointsAndVarTags [[buffer(1)]],//contains [pointsPerVar, tag1, tag2]
+                         device const packed_half2* numberOfPointsAndVarTags [[buffer(1)]],//contains [tag1, tag2]. 0th index is pointsPerVar
                          uint16_t group_id [[threadgroup_position_in_grid]],
                          unsigned short simd_thread_id [[thread_index_in_simdgroup]]){
     
     //const uint16_t threadsPerGrp = 64;
     const float epsilon = 0.0005;
     const float cutoffThreshold = 1.1f;
-    half3 varData;
-    if(simd_thread_id == 5){varData = numberOfPointsAndVarTags[group_id];}
+    half2 varData;
+    float pointsPerVar = numberOfPointsAndVarTags[0].x;//MUST BE FLOAT TO MATCH WITH OTHER DATA TYPES
+    if(simd_thread_id == 5){varData = numberOfPointsAndVarTags[group_id+1];}//doing plus 1 cuz first element/first 2 indexes contains points per var
     varData = simd_broadcast(varData, 5);
-    const uint32_t var1Start = varData.y * varData.x;//tag1*pointsPerVar. this is *varY*
-    const uint32_t var2Start = varData.z * varData.x;//tag2*pointsPerVar. this is *varX*
+    const uint32_t var1Start = varData.x * pointsPerVar;//tag1*pointsPerVar. this is *varY*
+    const uint32_t var2Start = varData.y * pointsPerVar;//tag2*pointsPerVar. this is *varX*
     
     //y is var1, x is var 2
     float y1 = variableData[var1Start+simd_thread_id]; float x1 = variableData[var2Start+simd_thread_id];
@@ -55,7 +56,7 @@ kernel void derivedDiffs(device relationshipResult* resultOutBuffer [[buffer(2)]
             float stdDev = sqrt(simd_sum(pow(fDiff-mean, 2.0f))/(varData.x-1));//-1 to account for n-1 differences
             ratio = stdDev/abs(mean);}
         if((ratio < cutoffThreshold)&&(simd_thread_id == 5)){
-            resultOutBuffer[group_id] = relationshipResult((uint16_t)varData.y, (uint16_t)varData.z, static_cast<relationships>(5));
+            resultOutBuffer[group_id] = relationshipResult((uint16_t)varData.y, (uint16_t)pointsPerVar, static_cast<relationships>(5));
             return;
         }else{
             fDiffFinal1 = fDiff;
@@ -73,7 +74,7 @@ kernel void derivedDiffs(device relationshipResult* resultOutBuffer [[buffer(2)]
         float stdDev = sqrt(simd_sum(pow(sDiff-mean, 2.0f))/(varData.x-2));
         ratio = stdDev/abs(mean);
         if((ratio < cutoffThreshold)&&(simd_thread_id == 5)){
-            resultOutBuffer[group_id] = relationshipResult((uint16_t)varData.y, (uint16_t)varData.z, static_cast<relationships>(6));
+            resultOutBuffer[group_id] = relationshipResult((uint16_t)varData.y, (uint16_t)pointsPerVar, static_cast<relationships>(6));
             return;
         }else{
             sDiffFinal1 = sDiff;
@@ -87,7 +88,7 @@ kernel void derivedDiffs(device relationshipResult* resultOutBuffer [[buffer(2)]
         float stdDev = sqrt(simd_sum(pow((tDiff-mean),2.0f))/(varData.x-3));
         ratio = stdDev/abs(mean);
         if((ratio < cutoffThreshold)&&(simd_thread_id == 5)){
-            resultOutBuffer[group_id] = relationshipResult((uint16_t)varData.y, (uint16_t)varData.z, static_cast<relationships>(7));
+            resultOutBuffer[group_id] = relationshipResult((uint16_t)varData.y, (uint16_t)pointsPerVar, static_cast<relationships>(7));
         }
     }
 }

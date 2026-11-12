@@ -5,28 +5,30 @@
 //  Created by AnshuDiya on 11/2/26.
 //
 
-#ifndef Variable_Gen_Header_h
-#define Variable_Gen_Header_h
-
 #pragma once
+
 
 //#include "Initialization_Data_header.hpp"
 //#include "Relations_Header.hpp"
 //#include "Metadata.h"
 #include "Base_types.hpp"
+
 #include <span>
+
+class addonGenPasskey;
 
 enum class morphOps{
     add = 1,//add the next term to this
     subtract = 2,//subtract the next term from this
     multiply = 3,//multiply the next term times this
-    
+    count = 4//size of morphOps. udpate if adding more variables!
 };
 
 //modifiers to this variable
 enum class modOps{
     recp = 1,//set this number to its reciprocal
     square = 2,//set this number to its square
+    count = 3
 };
 
 //can/should be chained
@@ -83,16 +85,14 @@ public:
 };
 
 
-class synthVarGen{
-    //writes synth vars to the adress provided through std::span
-    static void createAndWriteSynthVars(uint16_t numVarsToCreate, std::span<synthVarAddon> resultVec);
-    struct twoTermExhaustion{
-        static bool exhaustedTwoTermSynthetics;
-        static uint16_t opCounter;
-        static uint16_t modOpsCounter;
-        static uint16_t tag1Counter;
-        static uint16_t tag2Counter;
-    };
+struct numAddonsPerTestSynth{
+    uint16_t numAddons;
 };
 
-#endif /* Variable_Gen_Header_h */
+class synthVarGen{
+    //writes synth vars to the adress provided through std::span
+    //returns the number it decided for the addons/terms per synthVar
+public:
+    static int currentAddonsPerTestSynth;
+    static numAddonsPerTestSynth createAndWriteSynthVars(uint16_t numVarsToCreate, std::span<synthVarAddon> resultVec, addonGenPasskey passkey);
+};

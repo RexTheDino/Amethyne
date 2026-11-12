@@ -5,12 +5,16 @@
 //  Created by AnshuDiya on 11/1/26.
 //
 
+#pragma once
+
 #include "Relations_Header.hpp"
 
 #include <numeric>
 #include <algorithm>
+#include "Symbolic_representation_logic.hpp"
 #include "Var_Storage.hpp"
 #include "Metadata.h"
+#include "Data_logs.hpp"
 
 using namespace std;
 /*
@@ -39,11 +43,11 @@ void Relation_Equation_Constructor::organization::sort_by_tag(bool ascending, bo
 
 Dataset::Dataset(uint16_t tagX, uint16_t tagY, RelationshipType derRelation): xTag{tagX}, yTag{tagY}, relationBetweenVars{derRelation}{}
 
-const inline uint16_t Dataset::returnYtag(){return yTag;}
+const uint16_t Dataset::returnYtag(){return yTag;}
 
-const inline uint16_t Dataset::returnXtag(){return xTag;}
+const uint16_t Dataset::returnXtag(){return xTag;}
 
-const inline RelationshipType Dataset::returnRelation(){return relationBetweenVars;}
+const RelationshipType Dataset::returnRelation(){return relationBetweenVars;}
 
 vector<float>* Relation_Equation_Constructor::sgels_data::call_sgels(){
     float queryResult = 0.0f;
@@ -56,42 +60,163 @@ vector<float>* Relation_Equation_Constructor::sgels_data::call_sgels(){
     return &work;
 }
 
-vector<Relation_Equation_Constructor::tags_and_relationships_return>* Relation_Equation_Constructor::calculateCoefficients(unsigned int yTag){
+//still needs to set the x/y vals ptr as well as fill data!
+SymEngine::RCP<const SymEngine::Basic> Relation_Equation_Constructor::calculateCoefficients(unsigned int yTag){
+    if(coldStorage::returnVarType_givenTag(yTag) == variableCategory::action){throw std::invalid_argument("Action variable cannot be related to anything!");}
     
-    organization::sort_by_tag();
+    calculate_SGELSY sgelsy_calc;
+        auto& initDat = sgelsy_calc.initDat;
+    std::span<Dataset> relatedDatasets = testingGround::return_req_relationTag_related_datasets(yTag);
+    auto systemOfEqns = returnSysOfEqns(relatedDatasets);//ALSO FILLS MATRIX WITH REQ POINTS!
     
-    int startIndice = testingGround::return_req_relationTag_indice(yTag);
+        int calculatedRank;
+        float rcond = 0.001f;
+    initDat.numPts = RelationConstructionMetadata::points_per_var_eqn_construct_calculation_SGELSY;
+    initDat.numTerms = (int)systemOfEquations.size();//the number of terms in the matrix
+    initDat.writeBackRankTo = &calculatedRank;
+    initDat.epsilonThreshold = &rcond;
+    initDat.numEqnsToSolve = 1;//hardcoded, change later if needed
     
-    sgels_data sgelMtdt;
-    sgelMtdt.acclDat.num_pts = RelationConstructionMetadata::points_per_var;
-    sgelMtdt.acclDat.lead_dimension_x_vals = sgelMtdt.acclDat.num_pts;
+    std::string nameOfVarBeingSolvedFor = synthetic_parser::varNameReturn(yTag);
+    auto iteratorToDataOfVarBeingSolvedFor = logsManager::returnDataOfRequestedTracker(nameOfVarBeingSolvedFor);
+    std::vector<float> resultsVec(iteratorToDataOfVarBeingSolvedFor.size());
+    //copy data points of var being solved for to the results vec so sgelsy can access it and overwrite with coefficients
+    std::transform(iteratorToDataOfVarBeingSolvedFor.begin(), iteratorToDataOfVarBeingSolvedFor.end(), resultsVec.begin(), [](dataLog& dLog){
+        return dLog.data;
+    });
+    initDat.ptrToOutputVec = resultsVec.data();
+    initDat.ptrToInputVec = matriceData.data();
     
-    int num_x_variables = 0;
-    int thisYtag = testingGround::return_yTag_of_dSet(startIndice);
-    //while we remain on this tag keep countin up
-    while(thisYtag == testingGround::return_yTag_of_dSet(startIndice)){
-        num_x_variables++;
-        thisYtag = testingGround::return_yTag_of_dSet(startIndice+num_x_variables);//next indice
+    sgelsy_calc.primeTheCalculator();
+    sgelsy_calc.call_sgelsy();
+    
+    using namespace SymEngine;
+    RCP<const Basic> resultExpr = integer(0);
+    for(int q = 0; q < initDat.numTerms * initDat.numEqnsToSolve; q++){
+        RCP<const Basic> modifiedTerm = mul(systemOfEqns[q], real_double(resultsVec[q]));
+        resultExpr = add(resultExpr, modifiedTerm);
     }
     
-    sgelMtdt.acclDat.lead_dimension_y_vals = max(sgelMtdt.acclDat.lead_dimension_x_vals, num_x_variables);
-    sgelMtdt.acclDat.num_unknown_coeffs = num_x_variables;
-    sgelMtdt.acclDat.nrhs = 1;//could change later
-    
-    vector<float>* resultCoefficients = sgelMtdt.call_sgels();
-    results.resize((*resultCoefficients).size());//prepares to be filled
-        for(int k = 0; k < results.size(); k++){
-            tags_and_relationships_return tagNrelation;
-            tagNrelation.xTag = testingGround::return_xTag_of_dSet(startIndice+num_x_variables);
-            tagNrelation.relationTo_Y_tag = static_cast<RelationshipType>(testingGround::return_relation_of_dSet(startIndice+k));
-            results[k] = tagNrelation;
-        }
-    
-    return &results;
+    matriceData.clear();
+    return resultExpr;
 }
 
+using namespace std;
 
+ // *IMPORTANT BUG--CURRENTLy ONLY PULLS DATASETS FROM TESTING GROUND OF NEWLY CREATED SYNTH VARS. BUT ALSO NEEDS TO PULL OLD DATASETS. FIX!!!*
+//a system of equations ofr all the variables related to a single variable since all y-tags in dsets are supposed to be the same. only x-tags differ
+span<SymEngine::RCP<const SymEngine::Basic>> Relation_Equation_Constructor::returnSysOfEqns(const std::span<Dataset> relatedDSETS){
+    systemOfEquations.clear();
+    if(relatedDSETS.size() > 8){throw std::runtime_error("COMBINATORIAL EXPLOSION OF NUMBER OF VARIABLES!");}
+    using namespace SymEngine;
+    for(int b = 0; b < relatedDSETS.size(); b++){
+        int numTimesToRunBasedOnPow;
+        switch (relatedDSETS[b].returnRelation()) {
+            case RelationshipType::linear:
+                numTimesToRunBasedOnPow = 1;
+                break;
+            case RelationshipType::quadratic:
+                numTimesToRunBasedOnPow = 2;
+                break;
+            case RelationshipType::cubic:
+                numTimesToRunBasedOnPow = 3;
+                break;
+                
+            default:
+                throw std::runtime_error("Relation_constructor asked to consturct an equation between variables that do NOT share a relaionship!");
+                break;
+        }
+        RCP<const Basic> dominantVariable = symbol(synthetic_parser::varNameReturn(relatedDSETS[b].returnXtag()));
+        for(int h = b+1; h < relatedDSETS.size(); h++){
+            RCP<const Basic> twoTermPair = integer(0);//all the combinations of powers between two terms
+            RCP<const Basic> nonDominantVariable = symbol(synthetic_parser::varNameReturn(relatedDSETS[h].returnXtag()));//all y-tags in the datasets should be the same
+            int maxDegreeOfNonDominant;
+            switch (relatedDSETS[h].returnRelation()) {
+                case RelationshipType::linear:
+                    maxDegreeOfNonDominant = 1;
+                    break;
+                case RelationshipType::quadratic:
+                    maxDegreeOfNonDominant = 2;
+                    break;
+                case RelationshipType::cubic:
+                    maxDegreeOfNonDominant = 3;
+                    break;
+                    
+                default:
+                    throw std::runtime_error("Relation_constructor asked to consturct an equation between variables that do NOT share a relaionship!");
+                    break;
+            }
+            for(int k = 1; k <= numTimesToRunBasedOnPow; k++){
+                for(int r = 1; r <= maxDegreeOfNonDominant; r++){
+                    twoTermPair = mul(pow(dominantVariable, integer(k)), pow(nonDominantVariable, integer(r)));
+                    systemOfEquations.push_back(twoTermPair);
+                    //k and r only go from 1 to 3
+                    addVariableDataTo_SGELSY_matrice(relatedDSETS[b].returnXtag(), (uint16_t)k, relatedDSETS[h].returnXtag(), (uint16_t)r);
+                }
+            }
+        }
+        
+        for(int p = 1; p <= numTimesToRunBasedOnPow; p++){
+            RCP<const Basic> singleVariable = pow(dominantVariable, integer(p));
+            systemOfEquations.push_back(singleVariable);
+            addVariableDataTo_SGELSY_matrice(relatedDSETS[b].returnXtag(), (uint16_t)p, 0, 0);//dont fill var 2 obviously cuz single-var term
+        }
+    }
+    std::span<RCP<const Basic>> sysEqns(systemOfEquations.begin(), systemOfEquations.end());
+    return sysEqns;
+}
 
+//if no var 2, just have the power be 0 and/or the tag be 0
+//called whenever the new terms are created
+void Relation_Equation_Constructor::addVariableDataTo_SGELSY_matrice(uint16_t tagOfVar1, uint16_t powerOfVar1, uint16_t tagOfVar2, uint16_t powerOfVar2){
+    std::string progNameVar1 = synthetic_parser::varNameReturn(tagOfVar1);
+    std::string progNameVar2 = synthetic_parser::varNameReturn(tagOfVar2);
+        auto var1DataSpan = logsManager::returnDataOfRequestedTracker(progNameVar1);
+        auto var2DataSpan = logsManager::returnDataOfRequestedTracker(progNameVar2);
+    
+    int sizeOfDat = RelationConstructionMetadata::points_per_var_eqn_construct_calculation_SGELSY;
+            functionWork.clear();
+            functionWork.reserve(sizeOfDat);
+                //transfers var 2's data over to function work
+                std::transform(var2DataSpan.begin(), var2DataSpan.end(), std::back_inserter(functionWork), [&](dataLog& dLog){
+                    return dLog.data;
+                });
+    int strideSize = int(var1DataSpan.size()/sizeOfDat);
+    //if matrix does not have enough capacity to hold new data, reserve enough
+    if((matriceData.capacity()-matriceData.size()) <= sizeOfDat){matriceData.reserve(matriceData.capacity()+sizeOfDat+1);}
+        int oldDataEndIndex = (int)matriceData.size();
+    if(powerOfVar1 != 0){
+        for(int k = 0; k < var1DataSpan.size(); k+=strideSize){
+            float averageVal = var1DataSpan[k].data;
+            for(int f = 1; f < strideSize; f++){
+                averageVal += var1DataSpan[k+f].data;
+            }
+            averageVal /= strideSize;
+            matriceData.push_back(averageVal);
+        }
+    } else{
+        matriceData.resize(matriceData.size()+sizeOfDat,1.0f);//if exponent is 0 then fill with 1 starting from the new data slots.
+    }
+    std::vector<float> varPow((float)powerOfVar1, sizeOfDat);
+    //now raise that array to the required power
+    switch (powerOfVar1) {
+        case 2:
+            vDSP_vsq(&matriceData[oldDataEndIndex], 1, &matriceData[oldDataEndIndex], 1, sizeOfDat);//squares existing data
+            break;
+        case 3:
+            vvpowsf(&matriceData[oldDataEndIndex], varPow.data(), &matriceData[oldDataEndIndex], &sizeOfDat);//cubes existing data
+            break;
+        default://dont do anything with a power of 1
+            break;
+    }
+    
+    std::fill(varPow.begin(), varPow.end(), (float)powerOfVar2);
+    if(powerOfVar2 != 0){//no need to fill with 1's since if exponent was 0 for both this and var1 it was already filled
+        for(int e = 0; e < powerOfVar2; e++){
+            vDSP_vmul(functionWork.data(), 1, &matriceData[oldDataEndIndex], 1, &matriceData[oldDataEndIndex], 1, sizeOfDat);
+        }
+    }
+}
 
 
 

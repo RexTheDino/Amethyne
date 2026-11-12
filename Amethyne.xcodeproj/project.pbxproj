@@ -35,6 +35,8 @@
 		EF1DB471309DA81F00C6443C /* libsymengine.0.13.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1DB470309DA81F00C6443C /* libsymengine.0.13.0.dylib */; };
 		EF1DB472309DA82000C6443C /* libsymengine.0.13.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1DB470309DA81F00C6443C /* libsymengine.0.13.0.dylib */; };
 		EF1DB474309DA8AC00C6443C /* libsymengine.0.13.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF1DB470309DA81F00C6443C /* libsymengine.0.13.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		EF2545D830A5922300426F13 /* SynthAddon_gen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF2545D630A5922300426F13 /* SynthAddon_gen.cpp */; };
+		EF2545D930A5922300426F13 /* SynthAddon_gen.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF2545D730A5922300426F13 /* SynthAddon_gen.hpp */; };
 		EF49D1FC30A2FB6F00E63E9D /* Transfer_Manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF49D1FA30A2FB6F00E63E9D /* Transfer_Manager.cpp */; };
 		EF49D1FD30A2FB6F00E63E9D /* Transfer_Manager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF49D1FB30A2FB6F00E63E9D /* Transfer_Manager.hpp */; };
 		EF51199C309FAA960072B851 /* Heirarchial_Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF51199A309FAA960072B851 /* Heirarchial_Storage.cpp */; };
@@ -42,9 +44,10 @@
 		EF5119A1309FD3600072B851 /* Equation_Form_Converter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF51199F309FD3600072B851 /* Equation_Form_Converter.cpp */; };
 		EF5119A2309FD3600072B851 /* Equation_Form_Converter.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF5119A0309FD3600072B851 /* Equation_Form_Converter.hpp */; };
 		EF5119A430A12CC60072B851 /* Bernstein_Coefficients.metal in Sources */ = {isa = PBXBuildFile; fileRef = EF5119A330A12CC60072B851 /* Bernstein_Coefficients.metal */; };
+		EF78404130A53B8A006CB5E0 /* Accelerate_Init_Logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF78404030A53B8A006CB5E0 /* Accelerate_Init_Logic.cpp */; };
 		EFE5A3A830A3FC8E004B0708 /* Accelerate_initialization_data.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE5A3A730A3FC8E004B0708 /* Accelerate_initialization_data.h */; };
-		EFE5A3AB30A403B9004B0708 /* AccelTesting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EFE5A3A930A403B9004B0708 /* AccelTesting.cpp */; };
-		EFE5A3AC30A403B9004B0708 /* AccelTesting.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EFE5A3AA30A403B9004B0708 /* AccelTesting.hpp */; };
+		EFE5A3B030A45445004B0708 /* Data_logs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EFE5A3AE30A45445004B0708 /* Data_logs.cpp */; };
+		EFE5A3B130A45445004B0708 /* Data_logs.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EFE5A3AF30A45445004B0708 /* Data_logs.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +99,8 @@
 		EF1DB46C309D34E100C6443C /* Symbolic_representation_logic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Symbolic_representation_logic.cpp; sourceTree = "<group>"; };
 		EF1DB46D309D34E100C6443C /* Symbolic_representation_logic.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = Symbolic_representation_logic.hpp; sourceTree = "<group>"; };
 		EF1DB470309DA81F00C6443C /* libsymengine.0.13.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libsymengine.0.13.0.dylib; sourceTree = "<group>"; };
+		EF2545D630A5922300426F13 /* SynthAddon_gen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SynthAddon_gen.cpp; sourceTree = "<group>"; };
+		EF2545D730A5922300426F13 /* SynthAddon_gen.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthAddon_gen.hpp; sourceTree = "<group>"; };
 		EF26206E3097D982006C94A4 /* Relations_Header.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Relations_Header.hpp; sourceTree = "<group>"; };
 		EF49D1FA30A2FB6F00E63E9D /* Transfer_Manager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Transfer_Manager.cpp; sourceTree = "<group>"; };
 		EF49D1FB30A2FB6F00E63E9D /* Transfer_Manager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Transfer_Manager.hpp; sourceTree = "<group>"; };
@@ -104,9 +109,10 @@
 		EF51199F309FD3600072B851 /* Equation_Form_Converter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Equation_Form_Converter.cpp; sourceTree = "<group>"; };
 		EF5119A0309FD3600072B851 /* Equation_Form_Converter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Equation_Form_Converter.hpp; sourceTree = "<group>"; };
 		EF5119A330A12CC60072B851 /* Bernstein_Coefficients.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Bernstein_Coefficients.metal; sourceTree = "<group>"; };
+		EF78404030A53B8A006CB5E0 /* Accelerate_Init_Logic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Accelerate_Init_Logic.cpp; sourceTree = "<group>"; };
 		EFE5A3A730A3FC8E004B0708 /* Accelerate_initialization_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Accelerate_initialization_data.h; sourceTree = "<group>"; };
-		EFE5A3A930A403B9004B0708 /* AccelTesting.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AccelTesting.cpp; sourceTree = "<group>"; };
-		EFE5A3AA30A403B9004B0708 /* AccelTesting.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AccelTesting.hpp; sourceTree = "<group>"; };
+		EFE5A3AE30A45445004B0708 /* Data_logs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Data_logs.cpp; sourceTree = "<group>"; };
+		EFE5A3AF30A45445004B0708 /* Data_logs.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Data_logs.hpp; sourceTree = "<group>"; };
 		EFF46A323093D6F500B2A8B0 /* libAmethyne.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAmethyne.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -185,6 +191,8 @@
 			children = (
 				EF1DB44A30999F0800C6443C /* Variable_Gen_Header.hpp */,
 				EF1DB463309AE57000C6443C /* Variable_Gen_Logic.cpp */,
+				EF2545D630A5922300426F13 /* SynthAddon_gen.cpp */,
+				EF2545D730A5922300426F13 /* SynthAddon_gen.hpp */,
 			);
 			path = Synthetic_Variables;
 			sourceTree = "<group>";
@@ -262,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				EFE5A3A730A3FC8E004B0708 /* Accelerate_initialization_data.h */,
+				EF78404030A53B8A006CB5E0 /* Accelerate_Init_Logic.cpp */,
 				EF26206E3097D982006C94A4 /* Relations_Header.hpp */,
 				EF1DB4153097DCA400C6443C /* Relations_Logic.cpp */,
 			);
@@ -295,11 +304,19 @@
 			path = Solver;
 			sourceTree = "<group>";
 		};
+		EFE5A3AD30A45334004B0708 /* Logs */ = {
+			isa = PBXGroup;
+			children = (
+				EFE5A3AE30A45445004B0708 /* Data_logs.cpp */,
+				EFE5A3AF30A45445004B0708 /* Data_logs.hpp */,
+			);
+			path = Logs;
+			sourceTree = "<group>";
+		};
 		EFF46A293093D6F500B2A8B0 = {
 			isa = PBXGroup;
 			children = (
-				EFE5A3A930A403B9004B0708 /* AccelTesting.cpp */,
-				EFE5A3AA30A403B9004B0708 /* AccelTesting.hpp */,
+				EFE5A3AD30A45334004B0708 /* Logs */,
 				EF1DB453309A7FBF00C6443C /* Global */,
 				EF1DB451309A7F9000C6443C /* Variables */,
 				EF511999309FAA1A0072B851 /* Heirarchy */,
@@ -335,12 +352,13 @@
 				EF1DB46F309D34E100C6443C /* Symbolic_representation_logic.hpp in Headers */,
 				EF1DB45C309A8F7600C6443C /* Var_Storage.hpp in Headers */,
 				EF1DB457309A7FF800C6443C /* Base_types.hpp in Headers */,
-				EFE5A3AC30A403B9004B0708 /* AccelTesting.hpp in Headers */,
 				EF5119A2309FD3600072B851 /* Equation_Form_Converter.hpp in Headers */,
 				EF51199D309FAA960072B851 /* Heirarchial_Storage.hpp in Headers */,
 				EF1DB44B30999F0800C6443C /* Variable_Gen_Header.hpp in Headers */,
 				EFE5A3A830A3FC8E004B0708 /* Accelerate_initialization_data.h in Headers */,
 				EF1DB43F30993C3B00C6443C /* AbsMin_Tester_Header.h in Headers */,
+				EF2545D930A5922300426F13 /* SynthAddon_gen.hpp in Headers */,
+				EFE5A3B130A45445004B0708 /* Data_logs.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,7 +462,6 @@
 			files = (
 				EF1DB44F309A7EF000C6443C /* Authentic_Vars_Creation.cpp in Sources */,
 				EF1DB46E309D34E100C6443C /* Symbolic_representation_logic.cpp in Sources */,
-				EFE5A3AB30A403B9004B0708 /* AccelTesting.cpp in Sources */,
 				EF1DB4163097DCA400C6443C /* Relations_Logic.cpp in Sources */,
 				EF1DB43B309935BD00C6443C /* Absolute_Minimum.metal in Sources */,
 				EF49D1FC30A2FB6F00E63E9D /* Transfer_Manager.cpp in Sources */,
@@ -454,9 +471,12 @@
 				EF1DB467309B0F6300C6443C /* Synthetics_preprocessing.metal in Sources */,
 				EF5119A430A12CC60072B851 /* Bernstein_Coefficients.metal in Sources */,
 				EF1DB456309A7FF800C6443C /* Base_types.cpp in Sources */,
+				EF78404130A53B8A006CB5E0 /* Accelerate_Init_Logic.cpp in Sources */,
 				EF1DB45B309A8F7600C6443C /* Var_Storage.cpp in Sources */,
+				EFE5A3B030A45445004B0708 /* Data_logs.cpp in Sources */,
 				EF1DB46A309C7A8100C6443C /* Ephemerality.metal in Sources */,
 				EF1DB464309AE57000C6443C /* Variable_Gen_Logic.cpp in Sources */,
+				EF2545D830A5922300426F13 /* SynthAddon_gen.cpp in Sources */,
 				EF1DB43D3099376A00C6443C /* Tester_Setup.mm in Sources */,
 				EF1DB4183097F15200C6443C /* Initialization_Data.cpp in Sources */,
 			);

@@ -5,6 +5,8 @@
 //  Created by AnshuDiya on 11/3/26.
 //
 
+#pragma once
+
 #include <stdio.h>
 #include "Variable_Gen_Header.hpp"
 #include "Var_Storage.hpp"
@@ -12,37 +14,31 @@
 
 using namespace std;
 
-bool synthVarGen::twoTermExhaustion::exhaustedTwoTermSynthetics = false;
-uint16_t synthVarGen::twoTermExhaustion::opCounter = 1;
-uint16_t synthVarGen::twoTermExhaustion::tag1Counter = 1;
-uint16_t synthVarGen::twoTermExhaustion::tag2Counter = 1;
-uint16_t synthVarGen::twoTermExhaustion::modOpsCounter = 1;
+ synthVarAddon::synthVarAddon(morphOps morphInstruction, modOps modInstruction, uint16_t assignedTag): morph{morphInstruction}, mod{modInstruction}, tag{assignedTag}{}
 
-inline synthVarAddon::synthVarAddon(morphOps morphInstruction, modOps modInstruction, uint16_t assignedTag): morph{morphInstruction}, mod{modInstruction}, tag{assignedTag}{}
+ uint16_t synthVarAddon::returnTag(){return tag;}
 
-inline uint16_t synthVarAddon::returnTag(){return tag;}
+ morphOps synthVarAddon::returnMorphOp(){return morph;}
 
-inline morphOps synthVarAddon::returnMorphOp(){return morph;}
-
-inline modOps synthVarAddon::returnModOp(){return mod;}
+ modOps synthVarAddon::returnModOp(){return mod;}
 
 
 
 permanentSynthAddon::permanentSynthAddon(status derStatus, linkage derLinkage, synthVarAddon derAddon): STATUS{derStatus}, LINKAGE{derLinkage}, addon{derAddon}{}
 
-inline permanentSynthAddon::status permanentSynthAddon::returnSTATUS(){return STATUS;}
+ permanentSynthAddon::status permanentSynthAddon::returnSTATUS(){return STATUS;}
 
-inline permanentSynthAddon::linkage permanentSynthAddon::returnLINKAGE(){return LINKAGE;}
+ permanentSynthAddon::linkage permanentSynthAddon::returnLINKAGE(){return LINKAGE;}
 
-inline uint16_t permanentSynthAddon::returnAddonTag(){return addon.returnTag();}
+ uint16_t permanentSynthAddon::returnAddonTag(){return addon.returnTag();}
 
-inline morphOps permanentSynthAddon::returnAddonMorphOp(){return addon.returnMorphOp();}
+ morphOps permanentSynthAddon::returnAddonMorphOp(){return addon.returnMorphOp();}
 
-inline modOps permanentSynthAddon::returnAddonModOp(){return addon.returnModOp();}
+ modOps permanentSynthAddon::returnAddonModOp(){return addon.returnModOp();}
 
 
 
-inline synthVar::synthVar(uint16_t derTag, uint16_t derAddonStartIndex, domain domainOfVar): tag{derTag}, synthAddonStartIndice{derAddonStartIndex}, derDomain{domainOfVar}{}
+ synthVar::synthVar(uint16_t derTag, uint16_t derAddonStartIndex, domain domainOfVar): tag{derTag}, synthAddonStartIndice{derAddonStartIndex}, derDomain{domainOfVar}{}
 
 const uint16_t synthVar::returnTag(){return tag;}
 
@@ -51,10 +47,6 @@ uint16_t synthVar::returnStartIndice(){return synthAddonStartIndice;}
 domain synthVar::returnDomain(){return derDomain;}
 
 std::string synthVar::returnName(){return program_name;}
-
-
-
-//void synthVarGen::createSynthVars(uint16_t numVarsToCreate, std::span<synthVarAddon> resultVec){
     
 
 

@@ -5,8 +5,11 @@
 //  Created by AnshuDiya on 11/5/26.
 //
 
+#pragma once
+
 #include "Symbolic_representation_logic.hpp"
 #include "Initialization_Data_header.hpp"
+#include "Var_Storage.hpp"
 
 using namespace SymEngine;
 
@@ -17,6 +20,9 @@ std::string synthetic_parser::varNameReturn(uint16_t tag){
         randString[h] = char(((float(std::rand())*25.0f)/float(RAND_MAX))+65.0f);
     }
     std::string returnString(randString);
+    if ((coldStorage::returnVarType_givenTag(tag) == variableCategory::action)||(coldStorage::returnVarType_givenTag(tag) == variableCategory::metric)) {
+        returnString.insert(0, "~");//PROGRAM NAME OF ACTION AND METRIC VARS HAS A ~ APPENDENDED TO THE FRONT!!!
+    }
     return returnString;
 }
 
