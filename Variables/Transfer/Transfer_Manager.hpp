@@ -6,18 +6,35 @@
 //
 #pragma once
 
-#ifndef Transfer_Manager_hpp
-#define Transfer_Manager_hpp
 
-#include "Relations_Header.hpp"
 #include <unordered_map>
+#include "Var_Storage.hpp"
+
+class testingGround;
+
 
 class testingTagManager{
+    enum class managerStatus{
+        cleared,
+        createdTestTags,
+        returnedTestTagPairs
+        //add more if needed and also implement checks int he functions below later
+    };static managerStatus statusOfTestTagManager;
     std::unordered_map<uint16_t, uint16_t> realTagsToTestTags;//key--real variable tag, value-- its test tag counterpart
+    struct synthAndRealRelationTestPair{
+    private:
+        uint16_t realTag;//tagX
+        uint16_t testTag;//tagY
+    public:
+        synthAndRealRelationTestPair(uint16_t assignedRealTag, uint16_t assignedSynthTestTag);//checks if the tag is even and odd for safety
+        uint16_t returnX_Tag();
+        uint16_t returnY_Tag();
+    };
 public:
     inline void createTestTags();//for every single currently existing variable, creates a test tag for them and stores it. clears previously stored tags.
-    inline int realTagToTestTag(uint16_t realTag);//give a real tag and returns currently stored test tag.
-    inline int testSynthTagCounterpartOfRealTag(uint16_t realTag);//literally just hte realTag+1 since the real tag-test tag are only even indexes
+    inline uint16_t realTagToTestTag(uint16_t realTag);//give a real tag and returns currently stored test tag for that real tag.
+    inline uint16_t testSynthTagCounterpartOfRealTag(uint16_t realTag);//literally just hte realTag+1 since the real tag-test tag are only even indexes
+    inline std::vector<synthAndRealRelationTestPair> returnRandomSynthTestPairTags();
 };
 
 class tagAssigner{
@@ -36,8 +53,9 @@ public:
 //and finally tag%3==2 tags are reserved for synthetic variables
 //this way there are ZERO shared tags across variables! even synthetic addons meant for testing only contain tags as a reference to what existing variables they modify!
 class TransferManager{
-    //std::span view of all the data referenced by the tagged synthAddons in order
-    //static inline void addSyntheticVariable(std::vector<std::span<const float>> taggedVars_data, Dataset corresponding_result);
+    class testingGroundsPasskey{
+        friend class testingGround;
+        testingGroundsPasskey() = default;
+    };
 };
 
-#endif /* Transfer_Manager_hpp */

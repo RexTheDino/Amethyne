@@ -9,23 +9,31 @@
 #ifndef Var_Storage_hpp
 #define Var_Storage_hpp
 
-#include <stdio.h>
 
-
-#include <Variable_Gen_Header.hpp>
-//#include "Relations_Header.hpp"
+#include "Symbolic_representation_logic.hpp"
+#include "Relations_Header.hpp"
 
 //#include <symengine/basic.h>
-#include <unordered_map>
 //#include "Symbolic_representation_logic.hpp"
 //#include "Base_types.hpp"
 
-#include "Transfer_Manager.hpp"
+//#include "Transfer_Manager.hpp"
+
+enum class RelationshipType: uint16_t;
+class groundsWatchdog;
+class statusUpdaters;
+enum class testingGroundExploringStatus;
+enum class testingGroundMode;
+enum class testingGroundAnalyzingStatus;
 
 struct MtdtStruct{
     uint16_t pointsPerVar_as_multiple_of_64;//*as a multiple of 64! change derived_differences to also look for num_points and as a multiple of 64*
     uint16_t num_terms_per_synthetic;//the term count of this batch!
-    uint16_t write_back_indice;//what starting indice to write back points to
+};
+struct relationshipResult{
+    uint16_t xTag;
+    uint16_t yTag;
+    RelationshipType typeOfRelationship;
 };
 
 
@@ -43,24 +51,17 @@ enum class variableCategory{
 };
 
 
-enum class testingGroundExploringStatus{
-    empty,
-    PREPROCESSING_generatedSynthAddons,
-    PREPROCESSING_realVarsInTestSlots,
-    PREPROCESSING_initializedMetadata,
-    PREPROCESSING_running,
-    FINISHED_PREPROCESSING,
-    solidified,
-    counter
-};
+
 //testing ground to store variables in only to be moved if a relationship is found
 class testingGround{
-    enum class testingGroundMode{
-        testing,//for when it is testing relationships between ALREADY EXISTING VARIABLES
-        exploring//for when it is testing relationships between existing variables as well as TEST SYNTHETICS
-    };static testingGroundMode modeOfTestingGround;//can be manually set by a function
+    friend class groundsWatchdog;
+    friend class statusUpdaters;
+    
+    static testingGroundMode modeOfTestingGround;//can be manually set by a function
     
     static testingGroundExploringStatus statusOfExploringTestingGround;//must be toggled in between states, no direct set
+    static testingGroundAnalyzingStatus statusOfAnalyzingTestingGround;
+    
     
     //when metal writes back the tags of the testing synths it just calculated back to the results vector, remember those tags DO NOT correspond with the tagging system for confirmed variables. they NEED TO BE CONVERTED before being accessed by other stuff.
     enum class datasetSynthTagConvertStatus{
@@ -79,28 +80,6 @@ public:
     static inline int return_yTag_of_dSet(uint16_t indexOfDset);
     static inline int return_xTag_of_dSet(uint16_t indexOfDset);
     static inline RelationshipType return_relation_of_dSet(uint16_t indexOfDset);
-
-    
-    class groundsWatchdog{
-    private:
-        
-    public:
-        static inline void setTestingGroundMode(testingGroundMode modeToSet);
-        static inline void toggleStatus();
-            static inline testingGroundExploringStatus queryExploringStatus();
-    };
-    class statusUpdaters{//updates the testing ground to be of a certain status
-        static inline void generateSyntheticAddons();
-        //returns the index to write back sythetic preprocessing results to
-        static inline int copyRealDataIntoTestTagSlots();//copies the data of existing variables into their assigned test tag slots into testVarsStorage.
-        static inline void initializeMetadata(MtdtStruct* ptrToMetalMetadataBuffer, int write_back_index);
-        static inline void dispatchSynthPreprocessing();//to be implemented when the asynchronous metal dispatcher class has been implemented
-        
-        
-        
-        static inline void queryStatus();
-        
-    };
 };
 
 //for permanently storing variables even though they may be reevaluated later. shoudld be sorted by tag.

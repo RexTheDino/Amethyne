@@ -32,7 +32,6 @@ kernel void Ephemerality_Calculation(device const float* data [[buffer(0)]],
     Metadata mtdt = MetadataBffr[0];
     mtdt.timeStep = select(mtdt.epsilon, mtdt.timeStep, mtdt.timeStep > mtdt.epsilon);
     float total = 0.0f;
-    float previousVal = 0.0f;
     float averageSlopeVal;
     var_tag der_var = instructions[group_id];
     if(simd_id == 1){

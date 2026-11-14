@@ -37,6 +37,13 @@
 		EF1DB474309DA8AC00C6443C /* libsymengine.0.13.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF1DB470309DA81F00C6443C /* libsymengine.0.13.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		EF2545D830A5922300426F13 /* SynthAddon_gen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF2545D630A5922300426F13 /* SynthAddon_gen.cpp */; };
 		EF2545D930A5922300426F13 /* SynthAddon_gen.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF2545D730A5922300426F13 /* SynthAddon_gen.hpp */; };
+		EF2545DB30A68F8800426F13 /* Passkeys.h in Headers */ = {isa = PBXBuildFile; fileRef = EF2545DA30A68F8800426F13 /* Passkeys.h */; };
+		EF2545DE30A6F66A00426F13 /* TestStorage_Status_logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF2545DC30A6F66A00426F13 /* TestStorage_Status_logic.cpp */; };
+		EF2545DF30A6F66A00426F13 /* TestStorage_Status_logic.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF2545DD30A6F66A00426F13 /* TestStorage_Status_logic.hpp */; };
+		EF2545E330A78B4800426F13 /* Dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF2545E130A78B4800426F13 /* Dispatcher.cpp */; };
+		EF2545E430A78B4800426F13 /* Dispatcher.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF2545E230A78B4800426F13 /* Dispatcher.hpp */; };
+		EF2545E630A7ABD300426F13 /* Commander.mm in Sources */ = {isa = PBXBuildFile; fileRef = EF2545E530A7ABD300426F13 /* Commander.mm */; };
+		EF2545E830A7AC7E00426F13 /* Commander_Header.h in Headers */ = {isa = PBXBuildFile; fileRef = EF2545E730A7AC7E00426F13 /* Commander_Header.h */; };
 		EF49D1FC30A2FB6F00E63E9D /* Transfer_Manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF49D1FA30A2FB6F00E63E9D /* Transfer_Manager.cpp */; };
 		EF49D1FD30A2FB6F00E63E9D /* Transfer_Manager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF49D1FB30A2FB6F00E63E9D /* Transfer_Manager.hpp */; };
 		EF51199C309FAA960072B851 /* Heirarchial_Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF51199A309FAA960072B851 /* Heirarchial_Storage.cpp */; };
@@ -101,6 +108,13 @@
 		EF1DB470309DA81F00C6443C /* libsymengine.0.13.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libsymengine.0.13.0.dylib; sourceTree = "<group>"; };
 		EF2545D630A5922300426F13 /* SynthAddon_gen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SynthAddon_gen.cpp; sourceTree = "<group>"; };
 		EF2545D730A5922300426F13 /* SynthAddon_gen.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthAddon_gen.hpp; sourceTree = "<group>"; };
+		EF2545DA30A68F8800426F13 /* Passkeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Passkeys.h; sourceTree = "<group>"; };
+		EF2545DC30A6F66A00426F13 /* TestStorage_Status_logic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestStorage_Status_logic.cpp; sourceTree = "<group>"; };
+		EF2545DD30A6F66A00426F13 /* TestStorage_Status_logic.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TestStorage_Status_logic.hpp; sourceTree = "<group>"; };
+		EF2545E130A78B4800426F13 /* Dispatcher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dispatcher.cpp; sourceTree = "<group>"; };
+		EF2545E230A78B4800426F13 /* Dispatcher.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Dispatcher.hpp; sourceTree = "<group>"; };
+		EF2545E530A7ABD300426F13 /* Commander.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Commander.mm; sourceTree = "<group>"; };
+		EF2545E730A7AC7E00426F13 /* Commander_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Commander_Header.h; sourceTree = "<group>"; };
 		EF26206E3097D982006C94A4 /* Relations_Header.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Relations_Header.hpp; sourceTree = "<group>"; };
 		EF49D1FA30A2FB6F00E63E9D /* Transfer_Manager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Transfer_Manager.cpp; sourceTree = "<group>"; };
 		EF49D1FB30A2FB6F00E63E9D /* Transfer_Manager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Transfer_Manager.hpp; sourceTree = "<group>"; };
@@ -244,6 +258,8 @@
 			children = (
 				EF1DB459309A8F7600C6443C /* Var_Storage.cpp */,
 				EF1DB45A309A8F7600C6443C /* Var_Storage.hpp */,
+				EF2545DC30A6F66A00426F13 /* TestStorage_Status_logic.cpp */,
+				EF2545DD30A6F66A00426F13 /* TestStorage_Status_logic.hpp */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -266,6 +282,17 @@
 			path = Symbolic_Representation;
 			sourceTree = "<group>";
 		};
+		EF2545E030A78B2B00426F13 /* Metal Dispatch */ = {
+			isa = PBXGroup;
+			children = (
+				EF2545E130A78B4800426F13 /* Dispatcher.cpp */,
+				EF2545E230A78B4800426F13 /* Dispatcher.hpp */,
+				EF2545E530A7ABD300426F13 /* Commander.mm */,
+				EF2545E730A7AC7E00426F13 /* Commander_Header.h */,
+			);
+			path = "Metal Dispatch";
+			sourceTree = "<group>";
+		};
 		EF26206D3097D7DF006C94A4 /* Relationships */ = {
 			isa = PBXGroup;
 			children = (
@@ -282,6 +309,7 @@
 			children = (
 				EF49D1FA30A2FB6F00E63E9D /* Transfer_Manager.cpp */,
 				EF49D1FB30A2FB6F00E63E9D /* Transfer_Manager.hpp */,
+				EF2545DA30A68F8800426F13 /* Passkeys.h */,
 			);
 			path = Transfer;
 			sourceTree = "<group>";
@@ -316,8 +344,9 @@
 		EFF46A293093D6F500B2A8B0 = {
 			isa = PBXGroup;
 			children = (
-				EFE5A3AD30A45334004B0708 /* Logs */,
 				EF1DB453309A7FBF00C6443C /* Global */,
+				EF2545E030A78B2B00426F13 /* Metal Dispatch */,
+				EFE5A3AD30A45334004B0708 /* Logs */,
 				EF1DB451309A7F9000C6443C /* Variables */,
 				EF511999309FAA1A0072B851 /* Heirarchy */,
 				EF51199E309FD32C0072B851 /* Solver */,
@@ -345,10 +374,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF1DB419309821B900C6443C /* Relations_Header.hpp in Headers */,
+				EF2545E430A78B4800426F13 /* Dispatcher.hpp in Headers */,
 				EF49D1FD30A2FB6F00E63E9D /* Transfer_Manager.hpp in Headers */,
 				EF1DB462309AD58D00C6443C /* Metadata.h in Headers */,
+				EF2545DB30A68F8800426F13 /* Passkeys.h in Headers */,
 				EF1DB41B309823EB00C6443C /* Initialization_Data_header.hpp in Headers */,
+				EF2545E830A7AC7E00426F13 /* Commander_Header.h in Headers */,
 				EF1DB450309A7EF000C6443C /* Authentic_Vars_Creation.hpp in Headers */,
+				EF2545DF30A6F66A00426F13 /* TestStorage_Status_logic.hpp in Headers */,
 				EF1DB46F309D34E100C6443C /* Symbolic_representation_logic.hpp in Headers */,
 				EF1DB45C309A8F7600C6443C /* Var_Storage.hpp in Headers */,
 				EF1DB457309A7FF800C6443C /* Base_types.hpp in Headers */,
@@ -462,6 +495,7 @@
 			files = (
 				EF1DB44F309A7EF000C6443C /* Authentic_Vars_Creation.cpp in Sources */,
 				EF1DB46E309D34E100C6443C /* Symbolic_representation_logic.cpp in Sources */,
+				EF2545DE30A6F66A00426F13 /* TestStorage_Status_logic.cpp in Sources */,
 				EF1DB4163097DCA400C6443C /* Relations_Logic.cpp in Sources */,
 				EF1DB43B309935BD00C6443C /* Absolute_Minimum.metal in Sources */,
 				EF49D1FC30A2FB6F00E63E9D /* Transfer_Manager.cpp in Sources */,
@@ -469,11 +503,13 @@
 				EF1DB4383099295B00C6443C /* Derived_Differences_Calculation.metal in Sources */,
 				EF51199C309FAA960072B851 /* Heirarchial_Storage.cpp in Sources */,
 				EF1DB467309B0F6300C6443C /* Synthetics_preprocessing.metal in Sources */,
+				EF2545E630A7ABD300426F13 /* Commander.mm in Sources */,
 				EF5119A430A12CC60072B851 /* Bernstein_Coefficients.metal in Sources */,
 				EF1DB456309A7FF800C6443C /* Base_types.cpp in Sources */,
 				EF78404130A53B8A006CB5E0 /* Accelerate_Init_Logic.cpp in Sources */,
 				EF1DB45B309A8F7600C6443C /* Var_Storage.cpp in Sources */,
 				EFE5A3B030A45445004B0708 /* Data_logs.cpp in Sources */,
+				EF2545E330A78B4800426F13 /* Dispatcher.cpp in Sources */,
 				EF1DB46A309C7A8100C6443C /* Ephemerality.metal in Sources */,
 				EF1DB464309AE57000C6443C /* Variable_Gen_Logic.cpp in Sources */,
 				EF2545D830A5922300426F13 /* SynthAddon_gen.cpp in Sources */,
@@ -650,6 +686,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -664,6 +701,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

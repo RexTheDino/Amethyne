@@ -7,6 +7,6 @@
 
 #pragma once
 
-#include "Var_Storage.hpp"
 
-class addonGenPasskey{friend class testingGround::statusUpdaters; addonGenPasskey() = default;};
+
+class addonGenPasskey{friend class statusUpdaters; addonGenPasskey() = default;};

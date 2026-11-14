@@ -30,7 +30,7 @@ class Dataset;
 
 //#include "Initialization_Data_header.hpp"
 
-enum class RelationshipType{//enum stores the relationship between two equally spaced datasets
+enum class RelationshipType: uint16_t{//enum stores the relationship between two equally spaced datasets
     linear = 5,
     quadratic = 6,
     cubic = 7,
@@ -39,8 +39,8 @@ enum class RelationshipType{//enum stores the relationship between two equally s
 
 struct Dataset{//contains a dataset (2 vars and their relation)
     private:
-        uint16_t yTag;
         uint16_t xTag;
+        uint16_t yTag;
         RelationshipType relationBetweenVars;
     
     public:
@@ -75,6 +75,6 @@ private:
     static inline std::span<SymEngine::RCP<const SymEngine::Basic>> returnSysOfEqns(const std::span<Dataset> relatedDSETS);//given all the relations to a certain tag, return a system of equations with the relations included relating to that tag
             static inline void addVariableDataTo_SGELSY_matrice(uint16_t tagOfVar1, uint16_t powerOfVar1, uint16_t tagOfVar2, uint16_t powerOfVar2);//adds the data of the requested tags to the sgels matrice
 public:
-    inline SymEngine::RCP<const SymEngine::Basic> calculateCoefficients(unsigned int yTag);//return expression relating variable to all others
+    static inline SymEngine::RCP<const SymEngine::Basic> calculateCoefficients(unsigned int yTag);//return expression relating variable to all others
 };
 
