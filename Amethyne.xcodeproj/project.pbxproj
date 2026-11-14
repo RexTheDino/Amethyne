@@ -52,6 +52,8 @@
 		EF5119A2309FD3600072B851 /* Equation_Form_Converter.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF5119A0309FD3600072B851 /* Equation_Form_Converter.hpp */; };
 		EF5119A430A12CC60072B851 /* Bernstein_Coefficients.metal in Sources */ = {isa = PBXBuildFile; fileRef = EF5119A330A12CC60072B851 /* Bernstein_Coefficients.metal */; };
 		EF78404130A53B8A006CB5E0 /* Accelerate_Init_Logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF78404030A53B8A006CB5E0 /* Accelerate_Init_Logic.cpp */; };
+		EFBB8CB530A84F9A00528F5E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBB8CB430A84F9A00528F5E /* Accelerate.framework */; };
+		EFBB8CB730A850B300528F5E /* libflint.24.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBB8CB630A850B300528F5E /* libflint.24.0.dylib */; };
 		EFE5A3A830A3FC8E004B0708 /* Accelerate_initialization_data.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE5A3A730A3FC8E004B0708 /* Accelerate_initialization_data.h */; };
 		EFE5A3B030A45445004B0708 /* Data_logs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EFE5A3AE30A45445004B0708 /* Data_logs.cpp */; };
 		EFE5A3B130A45445004B0708 /* Data_logs.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EFE5A3AF30A45445004B0708 /* Data_logs.hpp */; };
@@ -124,6 +126,8 @@
 		EF5119A0309FD3600072B851 /* Equation_Form_Converter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Equation_Form_Converter.hpp; sourceTree = "<group>"; };
 		EF5119A330A12CC60072B851 /* Bernstein_Coefficients.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Bernstein_Coefficients.metal; sourceTree = "<group>"; };
 		EF78404030A53B8A006CB5E0 /* Accelerate_Init_Logic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Accelerate_Init_Logic.cpp; sourceTree = "<group>"; };
+		EFBB8CB430A84F9A00528F5E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		EFBB8CB630A850B300528F5E /* libflint.24.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libflint.24.0.dylib; path = ../../../../../usr/local/Cellar/flint/3.6.0/lib/libflint.24.0.dylib; sourceTree = "<group>"; };
 		EFE5A3A730A3FC8E004B0708 /* Accelerate_initialization_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Accelerate_initialization_data.h; sourceTree = "<group>"; };
 		EFE5A3AE30A45445004B0708 /* Data_logs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Data_logs.cpp; sourceTree = "<group>"; };
 		EFE5A3AF30A45445004B0708 /* Data_logs.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Data_logs.hpp; sourceTree = "<group>"; };
@@ -135,6 +139,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFBB8CB730A850B300528F5E /* libflint.24.0.dylib in Frameworks */,
+				EFBB8CB530A84F9A00528F5E /* Accelerate.framework in Frameworks */,
 				EF1DB446309940B100C6443C /* Metal.framework in Frameworks */,
 				EF1DB445309940AD00C6443C /* MetalKit.framework in Frameworks */,
 				EF1DB42430982B6A00C6443C /* libAmethyne.a in Frameworks */,
@@ -193,6 +199,8 @@
 		EF1DB44030993EEA00C6443C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EFBB8CB630A850B300528F5E /* libflint.24.0.dylib */,
+				EFBB8CB430A84F9A00528F5E /* Accelerate.framework */,
 				EF1DB470309DA81F00C6443C /* libsymengine.0.13.0.dylib */,
 				EF1DB44330993EFE00C6443C /* MetalKit.framework */,
 				EF1DB44130993EEA00C6443C /* Metal.framework */,
@@ -223,6 +231,7 @@
 		EF1DB451309A7F9000C6443C /* Variables */ = {
 			isa = PBXGroup;
 			children = (
+				EFBB8CB330A8346900528F5E /* Updates */,
 				EF49D1F930A2FAA900E63E9D /* Transfer */,
 				EF26206D3097D7DF006C94A4 /* Relationships */,
 				EF1DB46B309D34B800C6443C /* Symbolic_Representation */,
@@ -330,6 +339,13 @@
 				EF5119A0309FD3600072B851 /* Equation_Form_Converter.hpp */,
 			);
 			path = Solver;
+			sourceTree = "<group>";
+		};
+		EFBB8CB330A8346900528F5E /* Updates */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Updates;
 			sourceTree = "<group>";
 		};
 		EFE5A3AD30A45334004B0708 /* Logs */ = {
@@ -535,14 +551,34 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"<Multiple",
+					"values>",
+					/opt/local/include,
+				);
+				"HEADER_SEARCH_PATHS[arch=*]" = (
+					"<Multiple",
+					"values>",
+					/opt/local/include,
+				);
 				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
+					"<Multiple/**",
+					"values>/**",
+					"/usr/local/lib/**",
+					"$(inherited)/**",
+					"$(PROJECT_DIR)/**",
+					/opt/local/lib,
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-lgmp",
+					"-lflint",
+					"-lsymengine",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = RexTheDinoINC.RelationshipClassTesting;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SYSTEM_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -552,14 +588,26 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"<Multiple",
+					"values>",
+					/opt/local/include,
+				);
 				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
+					"<Multiple",
+					"values>",
+					"/usr/local/lib/**",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-lgmp",
+					"-lflint",
+					"-lsymengine",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = RexTheDinoINC.RelationshipClassTesting;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SYSTEM_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -613,13 +661,25 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"<Multiple",
+					"values>",
+					"/usr/local/lib/**",
+					"/usr/local/include/**",
+				);
 				"HEADER_SEARCH_PATHS[arch=*]" = /opt/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"<Multiple",
+					"values>",
+					"/usr/local/lib/**",
+				);
 				"LIBRARY_SEARCH_PATHS[arch=*]" = /opt/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 12.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SYSTEM_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -667,12 +727,24 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"<Multiple",
+					"values>",
+					"/usr/local/lib/**",
+					"/usr/local/include/**",
+				);
 				"HEADER_SEARCH_PATHS[arch=*]" = /opt/local/include;
+				LIBRARY_SEARCH_PATHS = (
+					"<Multiple",
+					"values>",
+					"/usr/local/lib/**",
+				);
 				"LIBRARY_SEARCH_PATHS[arch=*]" = /opt/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 12.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
+				SYSTEM_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -683,10 +755,14 @@
 				EXECUTABLE_PREFIX = lib;
 				"HEADER_SEARCH_PATHS[arch=*]" = /opt/local/include;
 				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
+					"$(inherited)/**",
+					"$(PROJECT_DIR)/**",
 				);
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I/usr/local/include",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -702,6 +778,10 @@
 					"$(PROJECT_DIR)",
 				);
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-I/usr/local/include",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

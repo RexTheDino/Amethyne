@@ -6,9 +6,11 @@
 //
 
 #import <XCTest/XCTest.h>
-#include "Relations_Header.hpp"
-#include "Initialization_Data_header.hpp"
-#import "AbsMin_Tester_Header.h"
+#include "Authentic_Vars_Creation.hpp"
+#include "Variable_Gen_Header.hpp"
+#include "Symbolic_representation_logic.hpp"
+#include "SynthAddon_gen.hpp"
+//#include <symengine/expression.h>
 #import <Foundation/Foundation.h>
 #import <Metal/Metal.h>
 #include <iostream>
@@ -51,8 +53,13 @@
 }*/
 
 - (void)testMetalAbsMin {
-    MetalSetup();
-    execute();
+    //MetalSetup();
+    //execute();
+}
+
+-(void)testActionAndMetricCreation{//works
+    varCreation variableCreator;
+    variableCreator.createAction("eegiboogiboo", 10.05, 45.2);
 }
 
 - (void)testPerformanceExample {

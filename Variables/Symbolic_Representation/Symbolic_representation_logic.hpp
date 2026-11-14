@@ -10,7 +10,9 @@
 
 #pragma once
 
+#include <symengine/expression.h>
 #include "Variable_Gen_Header.hpp"
+
 
 
 //need to move this folder to a different folder as well. does not belong inside variables.
@@ -21,9 +23,9 @@ class synthetic_parser{
 public:
     static std::string varNameReturn(uint16_t tag);//names a var given a tag. if name already exists returns that.
     //give it a variable and it returns the expression for it
-    static inline SymEngine::RCP<const SymEngine::Basic> synthParser(uint16_t tag);
+    static SymEngine::RCP<const SymEngine::Basic> synthParser(uint16_t tag);
     //returns an expression given a vector of the permanent addons
-    static inline SymEngine::RCP<const SymEngine::Basic> synthParser(std::vector<permanentSynthAddon> synths);
+    static SymEngine::RCP<const SymEngine::Basic> synthParser(std::vector<permanentSynthAddon> synths);
 };
 
 //source of truth for expressions and heirarchy between variables!! however, cannot modify the variables itself.

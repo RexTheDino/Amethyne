@@ -11,7 +11,7 @@
 
 domain::domain(float provided_min, float provided_max): min{provided_min}, max{provided_max}{}
 
-metricVar::metricVar(std::string metric_name, varType typeOfVar, uint16_t theTag, domain derDomain, std::string programNameOfMetric): varDomain{derDomain}, typeOfVarHeld{typeOfVar}, nameOfMetric{metric_name}, tag{theTag}, programName{programNameOfMetric}{}
+metricVar::metricVar(std::string metric_name, uint16_t theTag, domain derDomain, std::string programNameOfMetric): varDomain{derDomain}, nameOfMetric{metric_name}, tag{theTag}, programName{programNameOfMetric}{}
 
 const uint16_t metricVar::return_tag(){return tag;}
 

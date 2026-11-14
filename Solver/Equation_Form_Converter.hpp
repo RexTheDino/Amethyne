@@ -64,28 +64,28 @@ class BernsteinDataConverter{
             };
         
         //returns the degree a certain symbol belongs in
-        static inline uint8_t returnSymbolIndice(decltype(SymEngine::free_symbols(std::declval<const SymEngine::Basic>())) &freed_symbols, SymEngine::RCP<const SymEngine::Basic> &derSymbol, std::vector<symbolAndIndex>* ptrToVector);
+        static uint8_t returnSymbolIndice(decltype(SymEngine::free_symbols(std::declval<const SymEngine::Basic>())) &freed_symbols, SymEngine::RCP<const SymEngine::Basic> &derSymbol, std::vector<symbolAndIndex>* ptrToVector);
         
         
-        static inline void writeSymbolIndexesIntoVector(SymEngine::RCP<const SymEngine::Basic> expr, std::vector<symbolAndIndex>* ptrToVector);
+        static void writeSymbolIndexesIntoVector(SymEngine::RCP<const SymEngine::Basic> expr, std::vector<symbolAndIndex>* ptrToVector);
         class NodeLogic{
             friend class helperFuncs;
                 //returns the degree of symbols and the coefficient in a single mult node given a reference to symbol_index vec
-                static inline void multNodeLogic(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<symbolAndIndex>* ptrToReferenceVector, perTermCoefficientAndSymbolDegrees* ptrToStruct, decltype(SymEngine::free_symbols(std::declval<SymEngine::Basic>())) &freeSymbols);
+                static void multNodeLogic(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<symbolAndIndex>* ptrToReferenceVector, perTermCoefficientAndSymbolDegrees* ptrToStruct, decltype(SymEngine::free_symbols(std::declval<SymEngine::Basic>())) &freeSymbols);
                 
-                static inline void Sym_or_PowNodeLogic(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<symbolAndIndex>* ptrToReferenceVector, perTermCoefficientAndSymbolDegrees* ptrToStruct, decltype(SymEngine::free_symbols(std::declval<SymEngine::Basic>())) &freeSymbols);
+                static void Sym_or_PowNodeLogic(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<symbolAndIndex>* ptrToReferenceVector, perTermCoefficientAndSymbolDegrees* ptrToStruct, decltype(SymEngine::free_symbols(std::declval<SymEngine::Basic>())) &freeSymbols);
         
         public:
-                static inline SymEngine::RCP<const SymEngine::Basic> returnBernsteinAdjustedExpression(SymEngine::RCP<const SymEngine::Basic> &expr);
+                static SymEngine::RCP<const SymEngine::Basic> returnBernsteinAdjustedExpression(SymEngine::RCP<const SymEngine::Basic> &expr);
         private:
                             //given a symbol, returns the same symbol but adjusted for with its domain to [0,1]
-                            static inline SymEngine::RCP<const SymEngine::Basic> returnBernsteinAdjustedSymbol(SymEngine::RCP<const SymEngine::Basic> &symbol);
-                            static inline SymEngine::RCP<const SymEngine::Basic> returnBernsteinAdjustedPow_Or_SymNode(SymEngine::RCP<const SymEngine::Basic> &expr);//returns the expression but with symbols converted to [0,1] domain
-                            static inline SymEngine::RCP<const SymEngine::Basic> returnBernsteinAdjustedMultNode(SymEngine::RCP<const SymEngine::Basic> &expr);
+                            static SymEngine::RCP<const SymEngine::Basic> returnBernsteinAdjustedSymbol(SymEngine::RCP<const SymEngine::Basic> &symbol);
+                            static SymEngine::RCP<const SymEngine::Basic> returnBernsteinAdjustedPow_Or_SymNode(SymEngine::RCP<const SymEngine::Basic> &expr);//returns the expression but with symbols converted to [0,1] domain
+                            static SymEngine::RCP<const SymEngine::Basic> returnBernsteinAdjustedMultNode(SymEngine::RCP<const SymEngine::Basic> &expr);
             
         };
     //writes the term degrees and coefficients of the given expression into the provided vector
-    static inline void writePerTermSymbolDegreesAndCoefficientsIntoVector(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<perTermCoefficientAndSymbolDegrees>* ptrToVector);
+    static void writePerTermSymbolDegreesAndCoefficientsIntoVector(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<perTermCoefficientAndSymbolDegrees>* ptrToVector);
     };
             //converts a given expression to the compressed bit format of the dimensions required for metal to calculate terms
             static MetalMatriceDimensionsFormat convertDimensionsOfExpr(const std::vector<helperFuncs::perTermCoefficientAndSymbolDegrees>& ptrToPolynomialInfoVector);
@@ -96,10 +96,10 @@ class BernsteinDataConverter{
     
     //it writes results to a local vector after which memcpy should be done to transfer to metal buffer
     //returns a InfoBytes vector (what the kernel needs to know) hwhen you give it the expression corresponding to terms
-    static inline void calculateInfoBytes(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<InfoBytes>* vectorToWriteTo);
+    static void calculateInfoBytes(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<InfoBytes>* vectorToWriteTo);
     
 public:
-    static inline void processExpressionForBernsteinCoefficientsCalculation(SymEngine::RCP<const SymEngine::Basic> &expression, std::vector<InfoBytes>* referenceToInfoByteBufferThatMetalAccesses);
+    static void processExpressionForBernsteinCoefficientsCalculation(SymEngine::RCP<const SymEngine::Basic> &expression, std::vector<InfoBytes>* referenceToInfoByteBufferThatMetalAccesses);
 };
 
 

@@ -15,10 +15,11 @@ using namespace SymEngine;
 
 std::string synthetic_parser::varNameReturn(uint16_t tag){
     std::srand(tag);
-    char randString[5];
+    char randString[6];
     for (int h = 0; h < 5; h++) {
         randString[h] = char(((float(std::rand())*25.0f)/float(RAND_MAX))+65.0f);
     }
+    randString[5] = 0;//null terminated
     std::string returnString(randString);
     if ((coldStorage::returnVarType_givenTag(tag) == variableCategory::action)||(coldStorage::returnVarType_givenTag(tag) == variableCategory::metric)) {
         returnString.insert(0, "~");//PROGRAM NAME OF ACTION AND METRIC VARS HAS A ~ APPENDENDED TO THE FRONT!!!

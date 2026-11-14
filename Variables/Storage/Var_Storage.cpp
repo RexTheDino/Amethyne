@@ -9,7 +9,6 @@
 //#include "Var_Storage.hpp"
 #include <numeric>
 #include <algorithm>
-#include "Metadata.h"
 //#include "Symbolic_representation_logic.hpp"
 #include "Data_logs.hpp"
 #include "SynthAddon_gen.hpp"
@@ -159,7 +158,30 @@ void coldStorage::synthVarManager::addSyntheticVariable(std::vector<permanentSyn
     syntheticAddons.insert(syntheticAddons.end(), correspondingAddons.begin(), correspondingAddons.end());
 }
 
+std::vector<uint16_t> coldStorage::synthVarManager::returnALL_SYNTH_TAGS(){
+    std::vector<uint16_t> returnVec;
+    for(int e = 0; e < syntheticVariables.size(); e++){returnVec.push_back(syntheticVariables[e].returnTag());}
+    
+    return returnVec;
+}
 
+
+void coldStorage::addActionVar(TransferManagerPasskey passkey, actionVar varToAdd){
+    std::string userAlottedName = varToAdd.return_name();
+    uint16_t tag = varToAdd.return_tag();
+    UserAllotedNameAndTag returnStruct; returnStruct.UserAllotedName = userAlottedName; returnStruct.tag = tag;
+    SymEngine::RCP<const SymEngine::Basic> symbolOfVar = SymEngine::symbol(varToAdd.return_program_name());
+    variableMap.try_emplace(symbolOfVar, returnStruct);
+    Data::actionVariables.push_back(varToAdd);
+}
+void coldStorage::addMetricVar(TransferManagerPasskey passkey, metricVar varToAdd){
+    std::string userAllotedName = varToAdd.return_name();
+    uint16_t tag = varToAdd.return_tag();
+    UserAllotedNameAndTag returnStruct; returnStruct.UserAllotedName = userAllotedName; returnStruct.tag = tag;
+    SymEngine::RCP<const SymEngine::Basic> symbolOfVar = SymEngine::symbol(varToAdd.return_program_name());
+    variableMap.try_emplace(symbolOfVar, returnStruct);
+    Data::metricVariables.push_back(varToAdd);
+}
 
 //returns empty str if var does not exist
 std::string coldStorage::return_programNameOf_taggedVar(const uint16_t tag){
@@ -189,7 +211,7 @@ std::string coldStorage::return_programNameOf_taggedVar(const uint16_t tag){
 uint16_t coldStorage::returnTag_givenVarSymbol(SymEngine::RCP<const SymEngine::Basic> varSymbol){
     auto variableIterator = variableMap.find(varSymbol);
     if(variableIterator != variableMap.end()){
-        uint16_t variableTag = variableIterator->second;
+        uint16_t variableTag = (variableIterator->second).tag;
         return variableTag;
     }else{
         throw std::invalid_argument("Symbol not stored in unordered map!!!");
@@ -226,3 +248,10 @@ domain coldStorage::returnDomain(uint16_t tag){
 }
 
 
+std::vector<uint16_t> coldStorage::returnALL_TAGS(){
+    std::vector<uint16_t> returnVec = synthVarManager::returnALL_SYNTH_TAGS();
+    for(int q = 0; q < Data::metricVariables.size(); q++){returnVec.push_back(Data::metricVariables[q].return_tag());}
+    for(int q = 0; q < Data::actionVariables.size(); q++){returnVec.push_back(Data::actionVariables[q].return_tag());}
+    
+    return returnVec;
+}

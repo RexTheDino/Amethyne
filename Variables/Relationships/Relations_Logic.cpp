@@ -237,7 +237,7 @@ void Relation_Equation_Constructor::addVariableDataTo_SGELSY_matrice(uint16_t ta
 //void VariableData::setData(std::vector<float>& varData){(*data) = varData;}
 
 //inserts the variables listed and resorts the array of variables in coldStorage
-/*inline void RelationDetector::storeVariables(std::vector<VariableData>& variablesToAdd){
+/* void RelationDetector::storeVariables(std::vector<VariableData>& variablesToAdd){
     auto& storageVec = coldStorage.variables;
     storageVec.insert(storageVec.end(), variablesToAdd.begin(),variablesToAdd.end());
     std::sort(storageVec.begin(),storageVec.end(),[](const VariableData& var1, const VariableData& var2){

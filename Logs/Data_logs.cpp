@@ -7,6 +7,7 @@
 
 #include "Data_logs.hpp"
 #include "Symbolic_representation_logic.hpp"
+#include "Var_Storage.hpp"
 
 
 tracker::tracker(std::string nameOf_varTracked){
@@ -15,14 +16,45 @@ tracker::tracker(std::string nameOf_varTracked){
     logs.reserve(10000);
 }
 
+std::span<dataLog> tracker::returnData(){std::span<dataLog> returnSpan(logs.begin(), logs.end()); return returnSpan;}
+
 void tracker::logData(float data){
+    assert(logs.size() <= RelationConstructionMetadata::points_per_var);//size of logs is always less than or equal to points_per_var.
     std::chrono::time_point<std::chrono::high_resolution_clock, std::chrono::nanoseconds> currentTime = std::chrono::high_resolution_clock::now();
-    dataLog derLog; derLog.timeStamp = currentTime; derLog.data  = data;
+    dataLog derLog; derLog.timeStamp = currentTime; derLog.data = data;
     if(data == -69.420f){data = logs[logs.size()-1].data;}//if data point provided is -69.420, then set to previous val
-    logs.push_back(derLog);
+    if(cache.size() < RelationConstructionMetadata::points_per_var){
+        cache.push_back(derLog);
+    }else{
+        std::transform(cache.begin(), cache.end(), logs.begin(), logs.begin(), [&](dataLog& cacheLog, dataLog& dLog){
+            dataLog returnLog; returnLog.timeStamp = currentTime;
+            returnLog.data = ((cacheLog.data + dLog.data)/2.0f);
+            return returnLog;//return the average of the cache and the storage log
+        });
+        cache.clear();
+    }
 }
 
 syntheticTracker::syntheticTracker(std::string assignedProgramName): program_name_ofVar{assignedProgramName}{}
+
+void syntheticTracker::logData(float data){
+    assert(logs.size() <= RelationConstructionMetadata::points_per_var);//size of logs is always less than or equal to points_per_var.
+    std::chrono::time_point<std::chrono::high_resolution_clock, std::chrono::nanoseconds> currentTime = std::chrono::high_resolution_clock::now();
+    dataLog derLog; derLog.timeStamp = currentTime; derLog.data = data;
+    if(data == -69.420f){data = logs[logs.size()-1].data;}//if data point provided is -69.420, then set to previous val
+    if(cache.size() < RelationConstructionMetadata::points_per_var){
+        cache.push_back(derLog);
+    }else{
+        std::transform(cache.begin(), cache.end(), logs.begin(), logs.begin(), [&](dataLog& cacheLog, dataLog& dLog){
+            dataLog returnLog; returnLog.timeStamp = currentTime;
+            returnLog.data = ((cacheLog.data + dLog.data)/2.0f);
+            return returnLog;//return the average of the cache and the storage log
+        });
+        cache.clear();
+    }
+}
+
+std::span<dataLog> syntheticTracker::returnData(){std::span<dataLog> returnSpan(logs.begin(), logs.end()); return returnSpan;}
 
 void logsManager::addDataTracker(std::string nameOfTrackedVariable){
     nameOfTrackedVariable.insert(0, "~");//THIS IS THE PROGRAM NAME!!!
@@ -46,7 +78,14 @@ void logsManager::logDat(std::span<std::string> varName, std::span<float> data){
             iterator->second.logData(data[b]);
             foundKeys[varName[b]] = &iterator->second;//record what keys have already been logged
         }else{
-            throw std::invalid_argument("Variable name provided for a variable that does not exist!!!");
+            SymEngine::RCP<const SymEngine::Basic> varSymbol = SymEngine::symbol(varName[b]);
+            uint16_t tagOfVar = coldStorage::returnTag_givenVarSymbol(varSymbol);
+            auto synthIterator = syntheticTrackerMap.find(tagOfVar);
+            if(synthIterator != syntheticTrackerMap.end()){
+                (synthIterator->second).logData(data[b]);
+            }else{
+                throw std::invalid_argument("Variable name provided for a variable that does not exist!!!");
+            }
         }
     }
     for(const auto& [key, value] : trackerMap){
@@ -58,7 +97,7 @@ void logsManager::logDat(std::span<std::string> varName, std::span<float> data){
     }
 }
 
-void logsManager::logSyntheticData(std::span<synthDataUpdateInfo> dataUpdateMtdt){
+/*void logsManager::logSyntheticData(std::span<synthDataUpdateInfo> dataUpdateMtdt){
     int sizeOfPreviousUpdate = (int)dataUpdateMtdt[0].dataToLog.size();
     for (int v = 0; v < dataUpdateMtdt.size(); v++) {
         auto iterator = syntheticTrackerMap.find(dataUpdateMtdt[v].tagToLogFor);
@@ -71,5 +110,23 @@ void logsManager::logSyntheticData(std::span<synthDataUpdateInfo> dataUpdateMtdt
             auto& vecToCopyFrom = dataUpdateMtdt[v].dataToLog;
             std::copy(vecToCopyFrom.begin(), vecToCopyFrom.end(), spaceToCopyDatTo.begin());//copies data to tracker
         }
+    }
+}*/
+
+std::span<dataLog> logsManager::returnDataOfRequestedTracker(std::string program_name_of_var){
+    SymEngine::RCP<const SymEngine::Basic> varSymbol = SymEngine::symbol(program_name_of_var);
+    uint16_t varTag = coldStorage::returnTag_givenVarSymbol(varSymbol);
+    if((coldStorage::returnVarType_givenTag(varTag) == variableCategory::action) || (coldStorage::returnVarType_givenTag(varTag) == variableCategory::metric)){
+        auto derTrackerIterator = trackerMap.find(program_name_of_var);
+        assert(derTrackerIterator != trackerMap.end());
+        tracker derTracker = derTrackerIterator->second;
+        return derTracker.returnData();
+    }else if(coldStorage::returnVarType_givenTag(varTag) == variableCategory::synthetic){
+        auto trackerIterator = syntheticTrackerMap.find(varTag);
+        assert(trackerIterator != syntheticTrackerMap.end());
+        syntheticTracker theTracker = trackerIterator->second;
+        return theTracker.returnData();
+    }else{
+        throw std::invalid_argument("Variable with given program name does not exist!");
     }
 }

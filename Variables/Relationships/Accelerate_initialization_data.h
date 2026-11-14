@@ -33,7 +33,7 @@ class calculate_SGELSY{
     }; static STATUS status;
 public:
     SGELSY_INIT_DATA initDat;//should be filled before below func is called!
-    inline void primeTheCalculator();//called when all data has been filled
-    inline void call_sgelsy();//checks if it has been primed
+    void primeTheCalculator();//called when all data has been filled
+    void call_sgelsy();//checks if it has been primed
 };
 

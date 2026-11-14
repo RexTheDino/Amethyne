@@ -19,7 +19,7 @@ class testingTagManager{
         createdTestTags,
         returnedTestTagPairs
         //add more if needed and also implement checks int he functions below later
-    };static managerStatus statusOfTestTagManager;
+    };inline static managerStatus statusOfTestTagManager;
     std::unordered_map<uint16_t, uint16_t> realTagsToTestTags;//key--real variable tag, value-- its test tag counterpart
     struct synthAndRealRelationTestPair{
     private:
@@ -31,20 +31,22 @@ class testingTagManager{
         uint16_t returnY_Tag();
     };
 public:
-    inline void createTestTags();//for every single currently existing variable, creates a test tag for them and stores it. clears previously stored tags.
-    inline uint16_t realTagToTestTag(uint16_t realTag);//give a real tag and returns currently stored test tag for that real tag.
-    inline uint16_t testSynthTagCounterpartOfRealTag(uint16_t realTag);//literally just hte realTag+1 since the real tag-test tag are only even indexes
-    inline std::vector<synthAndRealRelationTestPair> returnRandomSynthTestPairTags();
+    void createTestTags();//for every single currently existing variable, creates a test tag for them and stores it. clears previously stored tags.
+    uint16_t realTagToTestTag(uint16_t realTag);//give a real tag and returns currently stored test tag for that real tag.
+    uint16_t testSynthTagCounterpartOfRealTag(uint16_t realTag);//literally just hte realTag+1 since the real tag-test tag are only even indexes
+    std::vector<synthAndRealRelationTestPair> returnRandomSynthTestPairTags();
 };
 
+struct tagCounters{
+    int metric = 0;
+    int action = 0;
+    int synthetic = 0;
+};
 class tagAssigner{
-    struct tagCounters{
-        static int metric;
-        static int action;
-        static int synthetic;
-    };
+    static inline tagCounters theTagCounter;
 public:
     static testingTagManager testTagManager;
+    static uint16_t assignTag(variableCategory typeOfVar);
 };
 
 //responsible for the bridge between testingGround and coldStorage as well as updating the symbolic variables while they're being transferred! also assings TAGS.
@@ -57,5 +59,7 @@ class TransferManager{
         friend class testingGround;
         testingGroundsPasskey() = default;
     };
+public:
+    static void transferAuthentic(std::variant<actionVar, metricVar> authenticVariable);
 };
 

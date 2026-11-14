@@ -12,6 +12,7 @@
 
 #include "Symbolic_representation_logic.hpp"
 #include "Relations_Header.hpp"
+#include "Variable_Gen_Header.hpp"
 
 //#include <symengine/basic.h>
 //#include "Symbolic_representation_logic.hpp"
@@ -67,19 +68,19 @@ class testingGround{
     enum class datasetSynthTagConvertStatus{
         testSynthsTagsConverted,
         testSynthsTagsUNCONVERTED
-    }; static datasetSynthTagConvertStatus testSynthTagSTATUS;
+    }; inline static datasetSynthTagConvertStatus testSynthTagSTATUS;
     //all vecs to be reserved with enough space
     struct Data{
-        static std::vector<float> testVarsStorage;//to be reserved with enough space
-        static std::vector<synthVarAddon> morphModInstructions;//to be reserved with enough space for morph instructions
-        static std::vector<Dataset> results;//to contain results in the format listed in metal. is to be cleared with every batch tested. its size must be much mroe than needed.
+        inline static std::vector<float> testVarsStorage;//to be reserved with enough space
+        inline static std::vector<synthVarAddon> morphModInstructions;//to be reserved with enough space for morph instructions
+        inline static std::vector<Dataset> results;//to contain results in the format listed in metal. is to be cleared with every batch tested. its size must be much mroe than needed.
     };
 public:
     //returns the indice for the relationship containing the requested tag. From vector of type Dataset
-    static inline std::span<Dataset> return_req_relationTag_related_datasets(uint16_t tag, bool sort_by_y_tag = true);//returns indice of requested tag. also leaves tags sorted
-    static inline int return_yTag_of_dSet(uint16_t indexOfDset);
-    static inline int return_xTag_of_dSet(uint16_t indexOfDset);
-    static inline RelationshipType return_relation_of_dSet(uint16_t indexOfDset);
+    static std::span<Dataset> return_req_relationTag_related_datasets(uint16_t tag, bool sort_by_y_tag = true);//returns indice of requested tag. also leaves tags sorted
+    static int return_yTag_of_dSet(uint16_t indexOfDset);
+    static int return_xTag_of_dSet(uint16_t indexOfDset);
+    static RelationshipType return_relation_of_dSet(uint16_t indexOfDset);
 };
 
 //for permanently storing variables even though they may be reevaluated later. shoudld be sorted by tag.
@@ -89,20 +90,24 @@ public:
 //this way there are ZERO shared tags across variables! even synthetic addons meant for testing only contain tags as a reference to what existing variables they modify!
 class coldStorage{//primarily intended as variable and NOT data storage!
     struct Data{
-        static std::vector<metricVar> metricVariables;//all the metric variables are auto stored upon initialization
-        static std::vector<actionVar> actionVariables;//all the action variables are auto stored upon initialization
-        static std::vector<Dataset> datasetLogs;//logs all datasets from the testingGround results in time while deleting dupes
+        inline static std::vector<metricVar> metricVariables;//all the metric variables are auto stored upon initialization
+        inline static std::vector<actionVar> actionVariables;//all the action variables are auto stored upon initialization
+        inline static std::vector<Dataset> datasetLogs;//logs all datasets from the testingGround results in time while deleting dupes
+    };
+    
+    struct UserAllotedNameAndTag{
+        std::string UserAllotedName;
+        uint16_t tag;
     };
     
     //stores tag-symbol pairs
-    static std::unordered_map<SymEngine::RCP<const SymEngine::Basic>, uint16_t, SymEngine::RCPBasicHash, SymEngine::RCPBasicKeyEq> variableMap;
-    
+    inline static std::unordered_map<SymEngine::RCP<const SymEngine::Basic>, UserAllotedNameAndTag, SymEngine::RCPBasicHash, SymEngine::RCPBasicKeyEq> variableMap;
     
 public:
     class synthVarManager{
-        static std::vector<permanentSynthAddon> syntheticAddons;//all synthetic variable addons stored here
-        static std::vector<synthVar> syntheticVariables;//all synthetic variables stored here
-            static inline std::vector<permanentSynthAddon> resultVec;//the reference to this to eb output when requested
+        inline static std::vector<permanentSynthAddon> syntheticAddons;//all synthetic variable addons stored here
+        inline static std::vector<synthVar> syntheticVariables;//all synthetic variables stored here
+            inline static std::vector<permanentSynthAddon> resultVec;//the reference to this to eb output when requested
         
         static void sortSynthsByTag();//sorts synthetic variables by their tag in ascending order
         
@@ -116,24 +121,28 @@ public:
         static domain returnDomainOfTaggedVar(const uint16_t tag);
         
         static void addSyntheticVariable(std::vector<permanentSynthAddon> correspondingAddons, synthVar derVariable, addSyntheticPasskey derPasskey);
-                static inline uint16_t returnGroundedSynthTag();//returns the tag of a random grounded existing synthetic
-                    static inline std::vector<uint16_t> returnALL_SYNTH_TAGS();//tag of every single synthetic variable currently existing
+                static uint16_t returnGroundedSynthTag();//returns the tag of a random grounded existing synthetic
+                    static std::vector<uint16_t> returnALL_SYNTH_TAGS();//tag of every single synthetic variable currently existing
     };
     
+        class TransferManagerPasskey{friend class TransferManager; TransferManagerPasskey() = default;};
+    static void addActionVar(TransferManagerPasskey passkey, actionVar varToAdd);
+    static void addMetricVar(TransferManagerPasskey passkey, metricVar varToAdd);
+    
     //returns the tag for a symbol
-    static inline uint16_t returnTag_givenVarSymbol(SymEngine::RCP<const SymEngine::Basic> varSymbol);
-    static inline SymEngine::RCP<const SymEngine::Basic>& returnReferenceToRequestedSymbol(uint16_t tag);
+    static uint16_t returnTag_givenVarSymbol(SymEngine::RCP<const SymEngine::Basic> varSymbol);
+    static SymEngine::RCP<const SymEngine::Basic>& returnReferenceToRequestedSymbol(uint16_t tag);
     static std::string return_programNameOf_taggedVar(const uint16_t tag);//returns program name for var if stored.
-    static inline domain returnDomain(uint16_t tag);
+    static domain returnDomain(uint16_t tag);
     //checks what kind of tag it is through the modulo operator
-    static inline variableCategory returnVarType_givenTag(uint16_t tag);
+    static variableCategory returnVarType_givenTag(uint16_t tag);
 /*    A synthetic variable is grounded if and only if the chain/path it takes down towards the variables that comprise its base types are composed of action or metric variables.
 
     This means that when relationships are attempted to be found, action variables can only ever be on the x_tag portion which is the independent variable, never the y_tag portion! 
     Metric variables can be both in x_tag and y_tag position since it ocould be possible that they are described as a function of action variables but also that other synthetic variables are impossible to describe with a function due to randomness without accounting for that randomness using observed metrics from metric variables. Therefore both metric and action variables comprise a kind of ‘base’ tier; however, metric variables can be tested for relationships with action variables unlike the other way around.
 */
-        static inline uint16_t returnGroundedTag();//returns the tag of a random grounded existing variable
-        static inline std::vector<uint16_t> returnALL_TAGS();//tag of every single variable currently existing
+        static uint16_t returnGroundedTag();//returns the tag of a random grounded existing variable
+        static std::vector<uint16_t> returnALL_TAGS();//tag of every single variable currently existing
 };
 
 #endif /* Var_Storage_hpp */

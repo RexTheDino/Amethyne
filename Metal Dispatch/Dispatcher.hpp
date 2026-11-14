@@ -49,7 +49,7 @@ struct metalBufferStaging{
     class commanderPasskey{friend class MetalCommander; commanderPasskey() = default;};
     //initialize the staging buffer vec sizes as well as the shared buffer pointer
     //the array conains the buffer sizes for each buffer
-    static inline void initializeStagingBuffers(commanderPasskey derPasskey, std::array<metalBufferInfo, numOfMetalBufferTypes> &bufferMtdt);
+    static void initializeStagingBuffers(commanderPasskey derPasskey, std::array<metalBufferInfo, numOfMetalBufferTypes> &bufferMtdt);
     
     
 private:

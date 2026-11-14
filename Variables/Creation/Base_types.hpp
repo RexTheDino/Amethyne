@@ -10,11 +10,9 @@
 #ifndef Base_types_hpp
 #define Base_types_hpp
 
+#include <string>
 
 //#include "Relations_Header.hpp"
-#include <chrono>
-#include <variant>
-#include <symengine/expression.h>
 
 struct domain{
     float min, max = 0.0f;
@@ -23,27 +21,28 @@ struct domain{
 
 enum class varType{
     string,
-    data,
-    array
+    data
 };
 
-class stringVar{//implement later if/when needed
-    //inline void updateStr(std::string updatedStr, uint16_t tag, unsigned short indice);
+/*struct stringVar{//implement later if/when needed
+    const int indexOfStringToDereferenceAsData;//if of string type string var range is automatically adusted to be small ascii characters
+    stringVar(int indexToDereference);
 };
 //contains any numeric scalar data
-class dataVar{//implement later if/when needed
-public:
-    //inline void updateData(float data, uint16_t tag);//updates data inside VariableData
+struct dataVar{//implement later if/when needed
+    //doesnt need to contain any data
 };
 //contains a pointer to the start of an array of floats or doubles. converts doubles to floats when updating data.
-class arrayVar{//implement later if/when needed
-    //inline void updateArrayVar(void* ptrToStart, bool isTypeDouble = false);//updates data
-};
+/*struct vecVar{//implement later if/when needed
+    const int indexOfVecToDereferenceAsData;
+    const std::variant<std::span<float>, std::span<double>, std::span<int>> spanVector;
+    vecVar(int indexToDereference, std::variant<std::span<float>, std::span<double>, std::span<int>> spanOfVector);
+};*/
 
 //the metric variables
 class metricVar{
-    std::variant<stringVar, dataVar, arrayVar> baseVarTypes;
-    varType typeOfVarHeld;
+    //const std::variant<stringVar, dataVar> baseVarTypes;
+    //const varType typeOfVarHeld;
     //tag is private since we dont want things to accidentally modify tag after it has been created
     uint16_t tag;//tag relating to the data indice this struct this is linked to.
     std::string nameOfMetric;//for ease of use. defined by user.
@@ -53,15 +52,15 @@ class metricVar{
     //REMOVE BOTTOM--VARIABLES MUST ONLY CONTAIN INFO PERTAINING TO THEMSELVES, NONE ABOUT OTHER VARIABLES!
     //SymEngine::RCP<const SymEngine::Basic> varExpr;//expression that relates this to other vars if such an expr exists
 public:
-    inline metricVar(std::string metric_name, varType typeOfVar, uint16_t theTag, domain derDomain, std::string programNameOfMetric);
-    const inline uint16_t return_tag();//return tag but stuff cant modify it. either way should be able to find tag by position unless its not sorted
-    inline std::string return_name();//returns name set by user
-    const inline std::string return_program_name();//returns name set by program for symEngine expressions.
-    const inline domain returnDomain();
+    metricVar(std::string metric_name, uint16_t theTag, domain derDomain, std::string programNameOfMetric);
+    const uint16_t return_tag();//return tag but stuff cant modify it. either way should be able to find tag by position unless its not sorted
+    std::string return_name();//returns name set by user
+    const std::string return_program_name();//returns name set by program for symEngine expressions.
+    const domain returnDomain();
     
     /*implement later if/when needed
-    inline void updateData(char* charPtr);//throws exception if baseVar is NOT of enum type string
-    inline void updateData(float* datPtr);//throws exception if baseVar IS of enum type string
+    void updateData(char* charPtr);//throws exception if baseVar is NOT of enum type string
+    void updateData(float* datPtr);//throws exception if baseVar IS of enum type string
      */
 };
 
@@ -73,11 +72,11 @@ class actionVar{
     domain varDomain;//min_x_val and max_x_val of action variable
     std::string programName;//program name for var used for symEngne expressions.
 public:
-    inline actionVar(std::string nameOfVar, uint16_t tagOfVar, domain derDomain, std::string program_name_ofAction);
-    const inline uint16_t return_tag();
-    const inline std::string return_name();//USER-SET NAME NOT PROGRAM_NAME!
-    const inline std::string return_program_name();
-    const inline domain returnDomain();
+    actionVar(std::string nameOfVar, uint16_t tagOfVar, domain derDomain, std::string program_name_ofAction);
+    const uint16_t return_tag();
+    const std::string return_name();//USER-SET NAME NOT PROGRAM_NAME!
+    const std::string return_program_name();
+    const domain returnDomain();
 };
 
 #endif /* Base_types_hpp */

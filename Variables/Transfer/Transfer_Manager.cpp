@@ -66,3 +66,34 @@ std::vector<testingTagManager::synthAndRealRelationTestPair> testingTagManager::
     return resultVec;
 }
 
+uint16_t tagAssigner::assignTag(variableCategory typeOfVar){
+    switch (typeOfVar) {
+        case variableCategory::action:
+            theTagCounter.action++;
+            return theTagCounter.action*3;//since actionTag%3 == 0
+            break;
+        case variableCategory::metric:
+            theTagCounter.metric++;
+            return (theTagCounter.metric*3)+1;//since metric is metricTag%3 == 1
+            break;
+        case variableCategory::synthetic:
+            theTagCounter.synthetic++;
+            return (theTagCounter.synthetic*3)+2;//since syntheticTag%3 == 2
+            break;
+            
+        default:throw std::invalid_argument("Enum value for action/metric/synthetic variable does not fall within a valid range!");
+            break;
+    }
+}
+
+
+void TransferManager::transferAuthentic(std::variant<actionVar, metricVar> authenticVariable){
+    coldStorage::TransferManagerPasskey passkey;
+    if(std::holds_alternative<actionVar>(authenticVariable)){
+        actionVar theActionVar = std::get<actionVar>(authenticVariable);
+        coldStorage::addActionVar(passkey, theActionVar);
+    }else if(std::holds_alternative<metricVar>(authenticVariable)){
+        metricVar theMetricVar = std::get<metricVar>(authenticVariable);
+        coldStorage::addMetricVar(passkey, theMetricVar);
+    }else{throw std::invalid_argument("Variant doesnt contain an authentic!");}
+}

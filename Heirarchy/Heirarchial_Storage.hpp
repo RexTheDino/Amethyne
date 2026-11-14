@@ -28,20 +28,20 @@ private:
     std::vector<symbolicVariable> expressions;//expressions tagged with program names of all variables in this momentum
     uint16_t assignedMomentum;
 public:
-    inline MomentumStorage(uint16_t momentum);//reserves space for expressions
-    inline void appendSymbolicVariable(symbolicVariable varToAppend);
-    inline symbolicVariable returnExpressionOfRequestedVariable(std::string variableName);
-    inline uint16_t returnMomentum();
+    MomentumStorage(uint16_t momentum);//reserves space for expressions
+    void appendSymbolicVariable(symbolicVariable varToAppend);
+    symbolicVariable returnExpressionOfRequestedVariable(std::string variableName);
+    uint16_t returnMomentum();
 };
 
 class ExpressionStorage{
     static std::vector<MomentumStorage> momenti;//every expression categorized by momentum!!!
 public:
-    inline ExpressionStorage();//reserves space for the expressions
-    static inline SymEngine::RCP<const SymEngine::Basic> returnMasterExpression();//returns master expression NOT in terms of the underling goals but all the relationships that have been found with respect to the underling goals!!
+    ExpressionStorage();//reserves space for the expressions
+    static SymEngine::RCP<const SymEngine::Basic> returnMasterExpression();//returns master expression NOT in terms of the underling goals but all the relationships that have been found with respect to the underling goals!!
     
     //for non-synthetic vars simply dont add the synthVarAddon parameter
-    static inline bool appendSymbolicVar(uint16_t tagOfVar, std::span<Dataset> dSetsRelatedToVar, uint16_t momentumOfVar);
+    static bool appendSymbolicVar(uint16_t tagOfVar, std::span<Dataset> dSetsRelatedToVar, uint16_t momentumOfVar);
 };
 
 #endif /* Heirarchial_Storage_hpp */

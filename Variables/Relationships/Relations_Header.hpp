@@ -46,35 +46,35 @@ struct Dataset{//contains a dataset (2 vars and their relation)
     public:
     //IMPORTANT--TEST_SYNTH TAGS ARE NOT THE SAME AS REGULAR VAR TAGS!!! THE TAG PROVIDED TO DATASET MUST HAVE BEEN CONVERTED APPROPRIATELY!
         Dataset(uint16_t tagX, uint16_t tagY, RelationshipType derRelation);//should be constructed using a ptr to the metal results buffer!
-        const inline uint16_t returnYtag();
-        const inline uint16_t returnXtag();
-        const inline RelationshipType returnRelation();
+        const uint16_t returnYtag();
+        const uint16_t returnXtag();
+        const RelationshipType returnRelation();
 };
 
 //uses accelerate.sgels to actually construct a relationship
 class Relation_Equation_Constructor{
-        static std::vector<float> matriceData;
-            static std::vector<float> functionWork;//essentially scratch work
+        inline static std::vector<float> matriceData;
+            inline static std::vector<float> functionWork;//essentially scratch work
     
     class organization{
     public:
-        static inline void sort_by_tag(bool ascending = true, bool sort_by_y_tag = true);//sorts Dataset(s) in ascending order by y/x-tag or descending if set to false
+        static void sort_by_tag(bool ascending = true, bool sort_by_y_tag = true);//sorts Dataset(s) in ascending order by y/x-tag or descending if set to false
     };
     struct sgels_data{
         const char trans = 'N';
         AccelInitDat acclDat;
         float* x_vals = nullptr; float* y_vals = nullptr;
             std::vector<float> work;
-            inline std::vector<float>* call_sgels();
+            std::vector<float>* call_sgels();
         sgels_data();//reserves space for vector
     };
     
 private:
-    static std::vector<SymEngine::RCP<const SymEngine::Basic>> systemOfEquations;//contains the system of equatons that could define a single variable's relations
+    inline static std::vector<SymEngine::RCP<const SymEngine::Basic>> systemOfEquations;//contains the system of equatons that could define a single variable's relations
     
-    static inline std::span<SymEngine::RCP<const SymEngine::Basic>> returnSysOfEqns(const std::span<Dataset> relatedDSETS);//given all the relations to a certain tag, return a system of equations with the relations included relating to that tag
-            static inline void addVariableDataTo_SGELSY_matrice(uint16_t tagOfVar1, uint16_t powerOfVar1, uint16_t tagOfVar2, uint16_t powerOfVar2);//adds the data of the requested tags to the sgels matrice
+    static std::span<SymEngine::RCP<const SymEngine::Basic>> returnSysOfEqns(const std::span<Dataset> relatedDSETS);//given all the relations to a certain tag, return a system of equations with the relations included relating to that tag
+            static void addVariableDataTo_SGELSY_matrice(uint16_t tagOfVar1, uint16_t powerOfVar1, uint16_t tagOfVar2, uint16_t powerOfVar2);//adds the data of the requested tags to the sgels matrice
 public:
-    static inline SymEngine::RCP<const SymEngine::Basic> calculateCoefficients(unsigned int yTag);//return expression relating variable to all others
+    static SymEngine::RCP<const SymEngine::Basic> calculateCoefficients(unsigned int yTag);//return expression relating variable to all others
 };
 

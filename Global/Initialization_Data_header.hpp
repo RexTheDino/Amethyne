@@ -20,5 +20,5 @@ struct RelationsMetadata{
     static float epsilon;
 };
 
-std::random_device Amethyne_random_device;
-std::mt19937 Amethyne_rand(Amethyne_random_device());
+inline std::random_device Amethyne_random_device;
+inline std::mt19937 Amethyne_rand(Amethyne_random_device());

@@ -12,6 +12,7 @@
 //#include "Relations_Header.hpp"
 //#include "Metadata.h"
 #include "Base_types.hpp"
+#include <string>
 
 #include <span>
 
@@ -38,10 +39,10 @@ class synthVarAddon{
     //if varChainPosition is greater than the number of complex vars allowed to be chained, throw exception
     uint16_t tag;//which base_var this addon points to
 public:
-    inline synthVarAddon(morphOps morphInstruction, modOps modInstruction, uint16_t assignedTag);
-    inline uint16_t returnTag();
-    inline morphOps returnMorphOp();
-    inline modOps returnModOp();
+    synthVarAddon(morphOps morphInstruction, modOps modInstruction, uint16_t assignedTag);
+    uint16_t returnTag();
+    morphOps returnMorphOp();
+    modOps returnModOp();
 };
 
 //the one on top is NOT meant to be permanent!
@@ -63,11 +64,11 @@ private:
 public:
     
     //also need to add an expression variable from symEngine
-    inline status returnSTATUS();
-    inline linkage returnLINKAGE();
-    inline uint16_t returnAddonTag();//returns tag the var the synthVarAddon is linked to. NOT A TAG BELONGING TO ITSELF!
-    inline morphOps returnAddonMorphOp();
-    inline modOps returnAddonModOp();
+    status returnSTATUS();
+    linkage returnLINKAGE();
+    uint16_t returnAddonTag();//returns tag the var the synthVarAddon is linked to. NOT A TAG BELONGING TO ITSELF!
+    morphOps returnAddonMorphOp();
+    modOps returnAddonModOp();
     permanentSynthAddon(status derStatus, linkage derLinkage, synthVarAddon derAddon);
 };
 
@@ -77,7 +78,7 @@ class synthVar{//extremely barebones, intentionally so.
     std::string program_name;//the name the program gives to this variable for use in symbolic expressions
     domain derDomain;
 public:
-    inline synthVar(uint16_t derTag, uint16_t derAddonStartIndex, domain domainOfVar);
+    synthVar(uint16_t derTag, uint16_t derAddonStartIndex, domain domainOfVar);
     const uint16_t returnTag();
     uint16_t returnStartIndice();
     domain returnDomain();

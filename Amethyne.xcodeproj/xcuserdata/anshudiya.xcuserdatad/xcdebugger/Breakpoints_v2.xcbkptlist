@@ -14,8 +14,8 @@
             filePath = "RelationshipClassTesting/RelationshipClassTesting.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
             landmarkName = "RelationshipClassTesting"
             landmarkType = "3">
             <Locations>
@@ -289,6 +289,23 @@
             endingLineNumber = "36"
             landmarkName = "MetalSetup()"
             landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A5F21AEA-F7BA-4A54-BC95-E00660AFAA20"
+            shouldBeEnabled = "Yes"
+            nameForDebugger = "TEST_BREAKPOINT"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Storage/Var_Storage.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "coldStorage::addActionVar(passkey, varToAdd)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
