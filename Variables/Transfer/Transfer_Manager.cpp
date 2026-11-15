@@ -10,6 +10,7 @@
 #include "Var_Storage.hpp"
 #include "Initialization_Data_header.hpp"
 #include "Metadata.h"
+#include "Nucleus.hpp"
 
 testingTagManager::synthAndRealRelationTestPair::synthAndRealRelationTestPair(uint16_t assignedRealTag, uint16_t assignedSynthTestTag){
     if((assignedRealTag % 2 != 0)||(assignedSynthTestTag % 2 != 1)){
@@ -18,13 +19,16 @@ testingTagManager::synthAndRealRelationTestPair::synthAndRealRelationTestPair(ui
     
 }
 
+uint16_t testingTagManager::synthAndRealRelationTestPair::returnX_Tag(){return realTag;}
+uint16_t testingTagManager::synthAndRealRelationTestPair::returnY_Tag(){return testTag;}
+
 void testingTagManager::createTestTags(){
-    assert(statusOfTestTagManager == managerStatus::returnedTestTagPairs);//needs to have returned test pairs before this step is taken
+    assert(statusOfTestTagManager == managerStatus::cleared);//needs to have returned test pairs before this step is taken
     
     realTagsToTestTags.clear();//clears all previous vals
             statusOfTestTagManager = managerStatus::cleared;//is now freshly reset
     
-    std::vector<uint16_t> everyTag = coldStorage::returnALL_TAGS();
+    std::vector<uint16_t> everyTag = Nucleus.coldStorage.returnALL_TAGS();
     std::sort(everyTag.begin(), everyTag.end(), [](uint16_t& tag1, uint16_t& tag2){//sorts vec of tags in ascending order
         return tag1 < tag2;
     });
@@ -61,7 +65,7 @@ std::vector<testingTagManager::synthAndRealRelationTestPair> testingTagManager::
         resultVec.push_back(newTestPair);
     }
     
-    statusOfTestTagManager = managerStatus::returnedTestTagPairs;
+    statusOfTestTagManager = managerStatus::cleared;
     
     return resultVec;
 }
@@ -87,13 +91,15 @@ uint16_t tagAssigner::assignTag(variableCategory typeOfVar){
 }
 
 
-void TransferManager::transferAuthentic(std::variant<actionVar, metricVar> authenticVariable){
-    coldStorage::TransferManagerPasskey passkey;
+void Transfer_Manager::transferAuthentic(std::variant<actionVar, metricVar> authenticVariable){
+    cold_Storage::TransferManagerPasskey passkey;
     if(std::holds_alternative<actionVar>(authenticVariable)){
         actionVar theActionVar = std::get<actionVar>(authenticVariable);
-        coldStorage::addActionVar(passkey, theActionVar);
+        Nucleus.coldStorage.addActionVar(passkey, theActionVar);
+            Nucleus.logsManager.addDataTracker(theActionVar.return_program_name());
     }else if(std::holds_alternative<metricVar>(authenticVariable)){
         metricVar theMetricVar = std::get<metricVar>(authenticVariable);
-        coldStorage::addMetricVar(passkey, theMetricVar);
+        Nucleus.coldStorage.addMetricVar(passkey, theMetricVar);
+            Nucleus.logsManager.addDataTracker(theMetricVar.return_program_name());
     }else{throw std::invalid_argument("Variant doesnt contain an authentic!");}
 }

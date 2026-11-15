@@ -40,6 +40,7 @@ class synthVarAddon{
     uint16_t tag;//which base_var this addon points to
 public:
     synthVarAddon(morphOps morphInstruction, modOps modInstruction, uint16_t assignedTag);
+    synthVarAddon() = default;
     uint16_t returnTag();
     morphOps returnMorphOp();
     modOps returnModOp();
@@ -94,6 +95,6 @@ class synthVarGen{
     //writes synth vars to the adress provided through std::span
     //returns the number it decided for the addons/terms per synthVar
 public:
-    static int currentAddonsPerTestSynth;
-    static numAddonsPerTestSynth createAndWriteSynthVars(uint16_t numVarsToCreate, std::span<synthVarAddon> resultVec, addonGenPasskey passkey);
+    static inline int currentAddonsPerTestSynth;
+    static numAddonsPerTestSynth createAndWriteSynthVars(uint16_t numVarsToCreate, std::vector<synthVarAddon>& resultVec, addonGenPasskey passkey);
 };

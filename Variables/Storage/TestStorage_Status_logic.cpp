@@ -10,64 +10,72 @@
 #include "SynthAddon_gen.hpp"
 #include "Data_logs.hpp"
 #include "Transfer_Manager.hpp"
+#include "Nucleus.hpp"
 
 void groundsWatchdog::setTestingGroundMode(testingGroundMode modeToSet){
-    if((modeToSet == testingGroundMode::exploring)&&(testingGround::statusOfExploringTestingGround != testingGroundExploringStatus::POSTPROCESSING_solidified)){
+    auto& tGround = Nucleus.testingGround;
+    if(tGround.statusOfExploringTestingGround != testingGroundExploringStatus::empty){
+    if((modeToSet == testingGroundMode::exploring)&&(tGround.statusOfExploringTestingGround != testingGroundExploringStatus::POSTPROCESSING_solidified)){
         throw std::runtime_error("Testing grounds modes are being changed before it has finished processing data!!!");
-    }//else if--add conditional checks to check for vice versa, if its being switched away frome xploring without real data having solidified
+    }
+       }//else if--add conditional checks to check for vice versa, if its being switched away frome xploring without real data having solidified
     
-    testingGround::modeOfTestingGround = modeToSet;
+    tGround.modeOfTestingGround = modeToSet;
 }
 
 void groundsWatchdog::toggleStatus(){
-    if(testingGround::modeOfTestingGround == testingGroundMode::exploring){
-        int explorerStatus = static_cast<int>(testingGround::statusOfExploringTestingGround);
+    auto& tGround = Nucleus.testingGround;
+    if(tGround.modeOfTestingGround == testingGroundMode::exploring){
+        int explorerStatus = static_cast<int>(tGround.statusOfExploringTestingGround);
         int maxExplorerStatus = static_cast<int>(testingGroundExploringStatus::counter);
         explorerStatus == maxExplorerStatus-1 ? explorerStatus = 1 : explorerStatus++;//if at max explorer status/ a.k.a. the one before counter reset back to the first state
-        testingGround::statusOfExploringTestingGround = static_cast<testingGroundExploringStatus>(explorerStatus);
-    }else if(testingGround::modeOfTestingGround == testingGroundMode::analyzing){
-        int analyzationStatus = static_cast<int>(testingGround::statusOfAnalyzingTestingGround);
+        tGround.statusOfExploringTestingGround = static_cast<testingGroundExploringStatus>(explorerStatus);
+    }else if(tGround.modeOfTestingGround == testingGroundMode::analyzing){
+        int analyzationStatus = static_cast<int>(tGround.statusOfAnalyzingTestingGround);
         int maxAnalyzerStatus = static_cast<int>(testingGroundAnalyzingStatus::counter);
         analyzationStatus == maxAnalyzerStatus -1 ? analyzationStatus = 1 : analyzationStatus++;//if at max analyzer status/ a.k.a. the one before counter reset back to the first state
     }
 }
-testingGroundExploringStatus groundsWatchdog::queryExploringStatus(){return testingGround::statusOfExploringTestingGround;}
+testingGroundExploringStatus groundsWatchdog::queryExploringStatus(){return Nucleus.testingGround.statusOfExploringTestingGround;}
 
 
 
 void statusUpdaters::ExplorationUpdaters::generateSyntheticAddons(){
-    if((testingGround::modeOfTestingGround != testingGroundMode::exploring)||(testingGround::statusOfExploringTestingGround != testingGroundExploringStatus::empty)){
+    auto& tGround = Nucleus.testingGround;
+    if((tGround.modeOfTestingGround != testingGroundMode::exploring)||(tGround.statusOfExploringTestingGround != testingGroundExploringStatus::empty)){
         throw std::runtime_error("Testing ground not in exploring mode but asked to perform a preprocessing step OR state has not been cleared out to empty yet!");
     }
     
     int numVarsToMake = varCreationMetadata::synthVarBatchLimit;//obviously change when global sources of info are taken down
-    std::span<synthVarAddon> spanForAddons(testingGround::Data::morphModInstructions.begin(), testingGround::Data::morphModInstructions.end());//change later if needed.
+    auto& instrVec = tGround.Data.morphModInstructions;
     addonGenPasskey derPasskey;//passkey required to access and generate addons
-    synthVarGen::createAndWriteSynthVars(numVarsToMake, spanForAddons, derPasskey);
+    synthVarGen::createAndWriteSynthVars(numVarsToMake, instrVec, derPasskey);
     
     groundsWatchdog::toggleStatus();
 }
 
 
 int statusUpdaters::ExplorationUpdaters::copyRealDataIntoTestTagSlots(){
-    if((testingGround::modeOfTestingGround != testingGroundMode::exploring)||(testingGround::statusOfExploringTestingGround != testingGroundExploringStatus::PREPROCESSING_generatedSynthAddons)){
+    auto& tGround = Nucleus.testingGround;
+    if((tGround.modeOfTestingGround != testingGroundMode::exploring)||(tGround.statusOfExploringTestingGround != testingGroundExploringStatus::PREPROCESSING_generatedSynthAddons)){
         throw std::runtime_error("Testing ground not in exploring mode but asked to perform a preprocessing step OR synthetic addons have not been generated yet!");
     }
     
     int pointsPerVar = RelationConstructionMetadata::points_per_var;
     int maxTag = 0;
-    std::vector<uint16_t> tagsOfAllVariables = coldStorage::returnALL_TAGS();
+    std::vector<uint16_t> tagsOfAllVariables = Nucleus.coldStorage.returnALL_TAGS();
         for(int e = 0; e < tagsOfAllVariables.size(); e++){
             std::string programNameOfTaggedVar = synthetic_parser::varNameReturn(tagsOfAllVariables[e]);
-            auto spanOfRealData = logsManager::returnDataOfRequestedTracker(programNameOfTaggedVar);
+            auto spanOfRealData = Nucleus.logsManager.returnDataOfRequestedTracker(programNameOfTaggedVar);
             int testTagOfData = tagAssigner::testTagManager.realTagToTestTag(tagsOfAllVariables[e]);
             
             int newPointsPerVar = (int)spanOfRealData.size();
-            if(e == 0){pointsPerVar = newPointsPerVar;}
             if(newPointsPerVar != pointsPerVar){throw std::runtime_error("Data sizes between logs do not match!!!");}
             
             //copy over real variable data into the respective slots
-            std::transform(spanOfRealData.begin(), spanOfRealData.end(), testingGround::Data::testVarsStorage.begin()+(pointsPerVar * testTagOfData), [&](dataLog& dLog){
+            auto& testVarDat = Nucleus.testingGround.Data.testVarsStorage;
+                                                    if(testVarDat.size() <= (pointsPerVar * testTagOfData)){testVarDat.resize((pointsPerVar * testTagOfData)+1);}
+            std::transform(spanOfRealData.begin(), spanOfRealData.end(), testVarDat.begin()+(pointsPerVar * testTagOfData), [&](dataLog& dLog){
                 return dLog.data;
             });
             if(testTagOfData > maxTag){maxTag = testTagOfData;}
@@ -86,7 +94,8 @@ int statusUpdaters::ExplorationUpdaters::copyRealDataIntoTestTagSlots(){
 
 
 void statusUpdaters::ExplorationUpdaters::initializeMetadata(MtdtStruct* ptrToMetalMetadataBuffer){
-    if((testingGround::modeOfTestingGround != testingGroundMode::exploring)||(testingGround::statusOfExploringTestingGround != testingGroundExploringStatus::PREPROCESSING_realVarsInTestSlots)){
+    auto& tGround = Nucleus.testingGround;
+    if((tGround.modeOfTestingGround != testingGroundMode::exploring)||(tGround.statusOfExploringTestingGround != testingGroundExploringStatus::PREPROCESSING_realVarsInTestSlots)){
         throw std::runtime_error("Testing ground not in exploring mode but asked to perform a preprocessing step OR real var data has not been copied to test slots yet!");
     }
     
@@ -105,7 +114,8 @@ void statusUpdaters::ExplorationUpdaters::initializeMetadata(MtdtStruct* ptrToMe
 //void statusUpdaters::ExplorationUpdaters::statusUpdaters::ExplorationUpdaters::queryPreprocessingStatus()-- need to implement
 
 void statusUpdaters::ExplorationUpdaters::copyPreprocessingResultsBackToTestStorage(float* ptrToMetalBuffer){
-    if((testingGround::modeOfTestingGround != testingGroundMode::exploring)||(testingGround::statusOfExploringTestingGround != testingGroundExploringStatus::FINISHED_PREPROCESSING)){
+    auto& tGround = Nucleus.testingGround;
+    if((tGround.modeOfTestingGround != testingGroundMode::exploring)||(tGround.statusOfExploringTestingGround != testingGroundExploringStatus::FINISHED_PREPROCESSING)){
         throw std::runtime_error("Testing ground not in exploring mode but asked to perform a preprocessing step OR real var data has not been copied to test slots yet!");
     }
     
@@ -114,12 +124,13 @@ void statusUpdaters::ExplorationUpdaters::copyPreprocessingResultsBackToTestStor
     for(int w = 0; w < synthBatchSize; w++){
         //copy data thats present on the odd indexes in the metal results buffer to the var storage odd indexes for subsequent processing
         //ptrToMetalBuffer+(((w*2)+1) * numPtsPerVar)+numPtsPerVar-1 represents the end/last index of the target slot
-        std::copy(ptrToMetalBuffer+(((w*2)+1) * numPtsPerVar), ptrToMetalBuffer+(((w*2)+1) * numPtsPerVar)+numPtsPerVar-1, testingGround::Data::testVarsStorage.begin()+(((w * 2)+1) * numPtsPerVar));
+        std::copy(ptrToMetalBuffer+(((w*2)+1) * numPtsPerVar), ptrToMetalBuffer+(((w*2)+1) * numPtsPerVar)+numPtsPerVar-1, tGround.Data.testVarsStorage.begin()+(((w * 2)+1) * numPtsPerVar));
     }
 }
 
 void statusUpdaters::ExplorationUpdaters::initializeDerivedDiffsMtdt(float *ptrToMetalDerivedDiffInitBuffer){
-    if((testingGround::modeOfTestingGround != testingGroundMode::exploring)||(testingGround::statusOfExploringTestingGround != testingGroundExploringStatus::PREPROCESSING_resultsCopiedBackToStorage)){
+    auto& tGround = Nucleus.testingGround;
+    if((tGround.modeOfTestingGround != testingGroundMode::exploring)||(tGround.statusOfExploringTestingGround != testingGroundExploringStatus::PREPROCESSING_resultsCopiedBackToStorage)){
         throw std::runtime_error("Testing ground not in exploring mode but asked to perform a preprocessing step OR real var data has not been copied to test slots yet!");
     }
     

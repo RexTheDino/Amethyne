@@ -33,7 +33,7 @@ struct dataVar{//implement later if/when needed
     //doesnt need to contain any data
 };
 //contains a pointer to the start of an array of floats or doubles. converts doubles to floats when updating data.
-/*struct vecVar{//implement later if/when needed
+struct vecVar{//implement later if/when needed
     const int indexOfVecToDereferenceAsData;
     const std::variant<std::span<float>, std::span<double>, std::span<int>> spanVector;
     vecVar(int indexToDereference, std::variant<std::span<float>, std::span<double>, std::span<int>> spanOfVector);

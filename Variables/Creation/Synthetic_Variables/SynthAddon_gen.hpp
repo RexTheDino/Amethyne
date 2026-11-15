@@ -7,6 +7,6 @@
 
 #pragma once
 
+struct synthVarGenTester;
 
-
-class addonGenPasskey{friend class statusUpdaters; addonGenPasskey() = default;};
+class addonGenPasskey{friend struct synthVarGenTester; friend class statusUpdaters; addonGenPasskey() = default;};

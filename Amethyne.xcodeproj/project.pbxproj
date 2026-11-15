@@ -52,6 +52,8 @@
 		EF5119A2309FD3600072B851 /* Equation_Form_Converter.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF5119A0309FD3600072B851 /* Equation_Form_Converter.hpp */; };
 		EF5119A430A12CC60072B851 /* Bernstein_Coefficients.metal in Sources */ = {isa = PBXBuildFile; fileRef = EF5119A330A12CC60072B851 /* Bernstein_Coefficients.metal */; };
 		EF78404130A53B8A006CB5E0 /* Accelerate_Init_Logic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF78404030A53B8A006CB5E0 /* Accelerate_Init_Logic.cpp */; };
+		EF99E28B30A8EB17001B84AA /* Nucleus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EF99E28930A8EB17001B84AA /* Nucleus.cpp */; };
+		EF99E28C30A8EB17001B84AA /* Nucleus.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF99E28A30A8EB17001B84AA /* Nucleus.hpp */; };
 		EFBB8CB530A84F9A00528F5E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBB8CB430A84F9A00528F5E /* Accelerate.framework */; };
 		EFBB8CB730A850B300528F5E /* libflint.24.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBB8CB630A850B300528F5E /* libflint.24.0.dylib */; };
 		EFE5A3A830A3FC8E004B0708 /* Accelerate_initialization_data.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE5A3A730A3FC8E004B0708 /* Accelerate_initialization_data.h */; };
@@ -126,6 +128,8 @@
 		EF5119A0309FD3600072B851 /* Equation_Form_Converter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Equation_Form_Converter.hpp; sourceTree = "<group>"; };
 		EF5119A330A12CC60072B851 /* Bernstein_Coefficients.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Bernstein_Coefficients.metal; sourceTree = "<group>"; };
 		EF78404030A53B8A006CB5E0 /* Accelerate_Init_Logic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Accelerate_Init_Logic.cpp; sourceTree = "<group>"; };
+		EF99E28930A8EB17001B84AA /* Nucleus.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Nucleus.cpp; sourceTree = "<group>"; };
+		EF99E28A30A8EB17001B84AA /* Nucleus.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Nucleus.hpp; sourceTree = "<group>"; };
 		EFBB8CB430A84F9A00528F5E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		EFBB8CB630A850B300528F5E /* libflint.24.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libflint.24.0.dylib; path = ../../../../../usr/local/Cellar/flint/3.6.0/lib/libflint.24.0.dylib; sourceTree = "<group>"; };
 		EFE5A3A730A3FC8E004B0708 /* Accelerate_initialization_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Accelerate_initialization_data.h; sourceTree = "<group>"; };
@@ -258,6 +262,8 @@
 				EF1DB41A309823EB00C6443C /* Initialization_Data_header.hpp */,
 				EF1DB4173097F15200C6443C /* Initialization_Data.cpp */,
 				EF1DB461309AD58D00C6443C /* Metadata.h */,
+				EF99E28930A8EB17001B84AA /* Nucleus.cpp */,
+				EF99E28A30A8EB17001B84AA /* Nucleus.hpp */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -393,6 +399,7 @@
 				EF2545E430A78B4800426F13 /* Dispatcher.hpp in Headers */,
 				EF49D1FD30A2FB6F00E63E9D /* Transfer_Manager.hpp in Headers */,
 				EF1DB462309AD58D00C6443C /* Metadata.h in Headers */,
+				EF99E28C30A8EB17001B84AA /* Nucleus.hpp in Headers */,
 				EF2545DB30A68F8800426F13 /* Passkeys.h in Headers */,
 				EF1DB41B309823EB00C6443C /* Initialization_Data_header.hpp in Headers */,
 				EF2545E830A7AC7E00426F13 /* Commander_Header.h in Headers */,
@@ -509,6 +516,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF99E28B30A8EB17001B84AA /* Nucleus.cpp in Sources */,
 				EF1DB44F309A7EF000C6443C /* Authentic_Vars_Creation.cpp in Sources */,
 				EF1DB46E309D34E100C6443C /* Symbolic_representation_logic.cpp in Sources */,
 				EF2545DE30A6F66A00426F13 /* TestStorage_Status_logic.cpp in Sources */,

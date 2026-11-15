@@ -15,6 +15,7 @@
 #include "Var_Storage.hpp"
 #include "Metadata.h"
 #include "Data_logs.hpp"
+#include "Nucleus.hpp"
 
 using namespace std;
 /*
@@ -62,11 +63,11 @@ vector<float>* Relation_Equation_Constructor::sgels_data::call_sgels(){
 
 //still needs to set the x/y vals ptr as well as fill data!
 SymEngine::RCP<const SymEngine::Basic> Relation_Equation_Constructor::calculateCoefficients(unsigned int yTag){
-    if(coldStorage::returnVarType_givenTag(yTag) == variableCategory::action){throw std::invalid_argument("Action variable cannot be related to anything!");}
+    if(Nucleus.coldStorage.returnVarType_givenTag(yTag) == variableCategory::action){throw std::invalid_argument("Action variable cannot be related to anything!");}
     
     calculate_SGELSY sgelsy_calc;
         auto& initDat = sgelsy_calc.initDat;
-    std::span<Dataset> relatedDatasets = testingGround::return_req_relationTag_related_datasets(yTag);
+    std::span<Dataset> relatedDatasets = Nucleus.testingGround.return_req_relationTag_related_datasets(yTag);
     auto systemOfEqns = returnSysOfEqns(relatedDatasets);//ALSO FILLS MATRIX WITH REQ POINTS!
     
         int calculatedRank;
@@ -78,7 +79,7 @@ SymEngine::RCP<const SymEngine::Basic> Relation_Equation_Constructor::calculateC
     initDat.numEqnsToSolve = 1;//hardcoded, change later if needed
     
     std::string nameOfVarBeingSolvedFor = synthetic_parser::varNameReturn(yTag);
-    auto iteratorToDataOfVarBeingSolvedFor = logsManager::returnDataOfRequestedTracker(nameOfVarBeingSolvedFor);
+    auto iteratorToDataOfVarBeingSolvedFor = Nucleus.logsManager.returnDataOfRequestedTracker(nameOfVarBeingSolvedFor);
     std::vector<float> resultsVec(iteratorToDataOfVarBeingSolvedFor.size());
     //copy data points of var being solved for to the results vec so sgelsy can access it and overwrite with coefficients
     std::transform(iteratorToDataOfVarBeingSolvedFor.begin(), iteratorToDataOfVarBeingSolvedFor.end(), resultsVec.begin(), [](dataLog& dLog){
@@ -97,7 +98,7 @@ SymEngine::RCP<const SymEngine::Basic> Relation_Equation_Constructor::calculateC
         resultExpr = add(resultExpr, modifiedTerm);
     }
     
-    matriceData.clear();
+    matriceData.clear();//super important
     return resultExpr;
 }
 
@@ -171,8 +172,8 @@ span<SymEngine::RCP<const SymEngine::Basic>> Relation_Equation_Constructor::retu
 void Relation_Equation_Constructor::addVariableDataTo_SGELSY_matrice(uint16_t tagOfVar1, uint16_t powerOfVar1, uint16_t tagOfVar2, uint16_t powerOfVar2){
     std::string progNameVar1 = synthetic_parser::varNameReturn(tagOfVar1);
     std::string progNameVar2 = synthetic_parser::varNameReturn(tagOfVar2);
-        auto var1DataSpan = logsManager::returnDataOfRequestedTracker(progNameVar1);
-        auto var2DataSpan = logsManager::returnDataOfRequestedTracker(progNameVar2);
+        auto var1DataSpan = Nucleus.logsManager.returnDataOfRequestedTracker(progNameVar1);
+        auto var2DataSpan = Nucleus.logsManager.returnDataOfRequestedTracker(progNameVar2);
     
     int sizeOfDat = RelationConstructionMetadata::points_per_var_eqn_construct_calculation_SGELSY;
             functionWork.clear();

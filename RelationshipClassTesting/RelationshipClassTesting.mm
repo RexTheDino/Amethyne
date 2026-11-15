@@ -9,11 +9,15 @@
 #include "Authentic_Vars_Creation.hpp"
 #include "Variable_Gen_Header.hpp"
 #include "Symbolic_representation_logic.hpp"
+#include "Nucleus.hpp"
+#include "Initialization_Data_header.hpp"
 #include "SynthAddon_gen.hpp"
+#include "TestStorage_Status_logic.hpp"
 //#include <symengine/expression.h>
 #import <Foundation/Foundation.h>
 #import <Metal/Metal.h>
 #include <iostream>
+#include "SynthAddon_gen.hpp"
 #include <random>
 
 @interface RelationshipClassTesting : XCTestCase
@@ -21,6 +25,51 @@
 @end
 
 @implementation RelationshipClassTesting
+
+struct logsAndCache{
+    std::vector<dataLog> logs;
+    std::vector<dataLog> cache;
+};
+
+struct trackerTester{
+    static logsAndCache returnDatOfRequestedTracker(std::string program_name){
+        auto theTrackerIterator = Nucleus.logsManager.trackerMap.find(program_name);
+        if(theTrackerIterator == Nucleus.logsManager.trackerMap.end()){throw std::invalid_argument("No such authentic with requested prog name exists!");}
+            logsAndCache returnStruct;
+            returnStruct.logs = (theTrackerIterator->second).logs;
+            returnStruct.cache = (theTrackerIterator->second).cache;
+                return returnStruct;
+    };
+};
+
+struct synthVarGenTester{
+    struct addonsAndNumAddons{
+        std::vector<synthVarAddon> addons;
+        numAddonsPerTestSynth numAddonsPerBatch;
+    };
+    
+    static addonsAndNumAddons genTest(uint16_t numVarsToMake){
+        std::vector<synthVarAddon> resultVec;//will be filled by the synthetic variable generator
+            addonGenPasskey passkey;
+        auto numberOfAddonsPerBatch = synthVarGen::createAndWriteSynthVars(numVarsToMake, resultVec, passkey);
+        
+        addonsAndNumAddons returnStruct; returnStruct.addons = resultVec; returnStruct.numAddonsPerBatch = numberOfAddonsPerBatch;
+        
+        return returnStruct;
+    }
+};
+
+struct exploringTestingGround_Tester{
+    static float generateSyntheticAddonsAndCopyDatIntoTestSlots(){
+        groundsWatchdog::setTestingGroundMode(testingGroundMode::exploring);
+        
+        statusUpdaters::ExplorationUpdaters::generateSyntheticAddons();
+        statusUpdaters::ExplorationUpdaters::copyRealDataIntoTestTagSlots();
+        
+        return  Nucleus.testingGround.Data.testVarsStorage[((2 * RelationConstructionMetadata::points_per_var) + RelationConstructionMetadata::points_per_var -1)];
+    }
+};
+
 
 - (void)setUp {
     // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -59,8 +108,50 @@
 
 -(void)testActionAndMetricCreation{//works
     varCreation variableCreator;
-    variableCreator.createAction("eegiboogiboo", 10.05, 45.2);
+    std::string testPrefix = "test";
+    std::uniform_real_distribution<float> dataGen(50.0,100.0);
+        std::vector<progNameAndDat> testVec;
+    for(int u = 0; u < 100; u++){//data array and var string array need to be of equal sizes
+        std::string userAlottedName;
+        if(u % 2 == 0){
+            userAlottedName = testPrefix+std::to_string(u);
+            variableCreator.createAction(userAlottedName, u*2, u*3.5);
+        }else{
+            userAlottedName = testPrefix+std::to_string(u);
+            variableCreator.createMetric(userAlottedName, u-20, (u+55)*2);
+        }
+        
+        float randPoint = dataGen(Amethyne_rand);
+        std::string progName = Nucleus.coldStorage.returnProgName_given_UserAlottedName(userAlottedName);
+        progNameAndDat nameAndData(progName, randPoint);
+        testVec.push_back(nameAndData);
+    }
+        std::span<progNameAndDat> testSpan(testVec.begin(), testVec.end());
+    
+    for(int d = 0; d < 200; d++){
+        Nucleus.logsManager.logDat(testSpan);
+        for(int s = 0; s < testVec.size(); s++){
+            logsAndCache trackerResult = trackerTester::returnDatOfRequestedTracker(testVec[s].progName);
+            XCTAssertEqual(trackerResult.logs[d].data, testVec[s].data, @"The test vector data should be the same as was logged in the tracker.");
+        }
+        
+        for(int f = 0; f < testVec.size(); f++){
+            float randPoint = dataGen(Amethyne_rand);
+            testVec[f].data = randPoint;
+        }
+    }
+    
 }
+
+
+
+-(void)testAddonGen{
+    
+    //synthVarGenTester::addonsAndNumAddons generationResult = synthVarGenTester::genTest(20);
+    float secondTestTagSlotFirstIndex = exploringTestingGround_Tester::generateSyntheticAddonsAndCopyDatIntoTestSlots();
+    XCTAssertTrue((secondTestTagSlotFirstIndex >= 50.0f)&&(secondTestTagSlotFirstIndex <= 100.0f));
+}
+
 
 - (void)testPerformanceExample {
     // This is an example of a performance test case.

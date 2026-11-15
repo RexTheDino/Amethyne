@@ -14,11 +14,22 @@
 #include <span>
 #include "Metadata.h"
 
+struct trackerTester;
+
+struct progNameAndDat{
+    std::string progName;
+    float data;
+    progNameAndDat(std::string theProgramName, float theData);
+};
+
+
 struct dataLog{
     float data;
     std::chrono::time_point<std::chrono::high_resolution_clock, std::chrono::nanoseconds> timeStamp;
 };
 class tracker{//to track inputted data
+    friend struct trackerTester;
+    
     std::string nameOfVariableTracked;//the name given by the USER for the tracked variable BUT MODIFIED TO BE A PROGRAM NAME BY ADDING A "~" OUT FRONT
     std::vector<dataLog> logs;
     std::vector<dataLog> cache;//to be filled with points that are averaged out and written to logs once they reach a multiple of points_per_var.
@@ -44,17 +55,19 @@ struct synthDataUpdateInfo{
 };
 
 
-class logsManager{
-    inline static std::unordered_map<std::string, tracker> trackerMap;//only contains trackers for action/metric variables! stores by program_name
-    inline static std::unordered_map<uint16_t, syntheticTracker> syntheticTrackerMap;//[tag, tracker]
+class LOGS_MANAGER{
+    friend struct trackerTester;
+    
+    std::unordered_map<std::string, tracker> trackerMap;//only contains trackers for action/metric variables! stores by program_name
+    std::unordered_map<uint16_t, syntheticTracker> syntheticTrackerMap;//[tag, tracker]
     
 public:
     //routed through transfer manager to first update cold storage
-    static void addDataTracker(std::string nameOfTrackedVariable);
-    static void addSyntheticTracker(uint16_t linkedTag);
+    void addDataTracker(std::string nameOfTrackedVariable);
+    void addSyntheticTracker(uint16_t linkedTag);
     //also routed through transfer manager to convert different types of data into their appropriate float counterparts
-    static void logDat(std::span<std::string> varName, std::span<float> data);//logs a new data point for ALL trackers, even ones not listed. whats not listed defaults to the previous value.
+    void logDat(std::span<progNameAndDat> varNamesAndData);//logs a new data point for ALL trackers, even ones not listed. whats not listed defaults to the previous value.
     //static void logSyntheticData(std::span<synthDataUpdateInfo> dataUpdateMtdt);
     
-    static std::span<dataLog> returnDataOfRequestedTracker(std::string program_name_of_var);
+    std::span<dataLog> returnDataOfRequestedTracker(std::string program_name_of_var);
 };

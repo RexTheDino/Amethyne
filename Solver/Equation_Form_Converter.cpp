@@ -6,6 +6,7 @@
 //
 
 #include "Equation_Form_Converter.hpp"
+#include "Nucleus.hpp"
 
 using namespace SymEngine;
 
@@ -31,7 +32,7 @@ BernsteinDataConverter::helperFuncs::symbolAndIndex::symbolAndIndex(SymEngine::R
 
 void BernsteinDataConverter::calculateInfoBytes(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<InfoBytes>* vectorToWriteTo){
     
-    if(STATUS != varConverterStatus::varsModifiedToBernsteinEquivalents){
+    if(helperFuncs::STATUS != helperFuncs::varConverterStatus::varsModifiedToBernsteinEquivalents){
         throw std::runtime_error("Variables have not been modified to bernstein-friendly terms whose domains are mapped to [0,1]!");
     }
     
@@ -231,8 +232,8 @@ RCP<const Basic> BernsteinDataConverter::helperFuncs::NodeLogic::returnBernstein
 RCP<const Basic> BernsteinDataConverter::helperFuncs::NodeLogic::returnBernsteinAdjustedSymbol(SymEngine::RCP<const SymEngine::Basic> &symbol){
     
     if(is_a<Symbol>(*symbol)){
-        uint16_t tagOfSymbol = coldStorage::returnTag_givenVarSymbol(symbol);
-        domain domainOfSymbol = coldStorage::returnDomain(tagOfSymbol);
+        uint16_t tagOfSymbol = Nucleus.coldStorage.returnTag_givenVarSymbol(symbol);
+        domain domainOfSymbol = Nucleus.coldStorage.returnDomain(tagOfSymbol);
         RCP<const Basic> returnExpr = add(real_double((double)domainOfSymbol.min), mul(real_double((double)domainOfSymbol.max - (double)domainOfSymbol.min),symbol));
         return returnExpr;
     }else{
@@ -284,9 +285,9 @@ void BernsteinDataConverter::processExpressionForBernsteinCoefficientsCalculatio
     
     RCP<const Basic> localCopy = expression;
     localCopy = helperFuncs::NodeLogic::returnBernsteinAdjustedExpression(expression);
-        STATUS = varConverterStatus::varsModifiedToBernsteinEquivalents;
+        helperFuncs::STATUS = helperFuncs::varConverterStatus::varsModifiedToBernsteinEquivalents;
     calculateInfoBytes(localCopy, ptrToInfoByteBufferThatMetalAccesses);
-        STATUS = varConverterStatus::varsInOriginalState;//original expression remains unmodified
+    helperFuncs::STATUS = helperFuncs::varConverterStatus::varsInOriginalState;//original expression remains unmodified
 }
 
 

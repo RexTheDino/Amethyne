@@ -140,7 +140,6 @@ struct threadsPerGroup{
 };
 
 class GPU_lieutenant{
-    static threadsPerGroup threadsPerGroupInfo;
 public:
     static void addMetalCommand(std::vector<subcommands>& instructionsToAdd, int numberOfThreadgroups);
     static void addCopyCommand(std::span<std::byte> spanOfDataInQuestion, bufferTypes typeOfBuffer);//typeOfBuffer decides wether to copy to or from

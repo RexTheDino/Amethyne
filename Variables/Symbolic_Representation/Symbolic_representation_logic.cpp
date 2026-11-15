@@ -10,6 +10,7 @@
 #include "Symbolic_representation_logic.hpp"
 #include "Initialization_Data_header.hpp"
 #include "Var_Storage.hpp"
+#include "Nucleus.hpp"
 
 using namespace SymEngine;
 
@@ -21,7 +22,7 @@ std::string synthetic_parser::varNameReturn(uint16_t tag){
     }
     randString[5] = 0;//null terminated
     std::string returnString(randString);
-    if ((coldStorage::returnVarType_givenTag(tag) == variableCategory::action)||(coldStorage::returnVarType_givenTag(tag) == variableCategory::metric)) {
+    if ((Nucleus.coldStorage.returnVarType_givenTag(tag) == variableCategory::action)||(Nucleus.coldStorage.returnVarType_givenTag(tag) == variableCategory::metric)) {
         returnString.insert(0, "~");//PROGRAM NAME OF ACTION AND METRIC VARS HAS A ~ APPENDENDED TO THE FRONT!!!
     }
     return returnString;

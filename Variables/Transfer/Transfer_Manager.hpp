@@ -16,8 +16,7 @@ class testingGround;
 class testingTagManager{
     enum class managerStatus{
         cleared,
-        createdTestTags,
-        returnedTestTagPairs
+        createdTestTags
         //add more if needed and also implement checks int he functions below later
     };inline static managerStatus statusOfTestTagManager;
     std::unordered_map<uint16_t, uint16_t> realTagsToTestTags;//key--real variable tag, value-- its test tag counterpart
@@ -45,7 +44,7 @@ struct tagCounters{
 class tagAssigner{
     static inline tagCounters theTagCounter;
 public:
-    static testingTagManager testTagManager;
+    static inline testingTagManager testTagManager;
     static uint16_t assignTag(variableCategory typeOfVar);
 };
 
@@ -54,12 +53,12 @@ public:
 //tag%3==1 tags are reserved for metric variables
 //and finally tag%3==2 tags are reserved for synthetic variables
 //this way there are ZERO shared tags across variables! even synthetic addons meant for testing only contain tags as a reference to what existing variables they modify!
-class TransferManager{
+class Transfer_Manager{
     class testingGroundsPasskey{
         friend class testingGround;
         testingGroundsPasskey() = default;
     };
 public:
-    static void transferAuthentic(std::variant<actionVar, metricVar> authenticVariable);
+    void transferAuthentic(std::variant<actionVar, metricVar> authenticVariable);
 };
 

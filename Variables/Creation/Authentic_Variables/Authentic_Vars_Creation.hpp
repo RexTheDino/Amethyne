@@ -39,7 +39,7 @@ struct range{
 
 //goal func as a composition of all underling goals.
 class MasterGoal{
-    static std::vector<GoalVariable> Underlings;//all the underling goals as alloted by the user
+    std::vector<GoalVariable> Underlings;//all the underling goals as alloted by the user
     enum class status{
         updated,
         notUpdated//set by trasnfer manager and toggled back by this class when it has finished updating
@@ -54,7 +54,7 @@ public:
 //DOES NOT automatically append to cold storage but is rather routed through transfer manager!!!
 class varCreation{
 public:
-    void createMetric(std::string metric_name, float data, float minRange, float maxRange);//tag is auto-decided
+    void createMetric(std::string metric_name, float minRange, float maxRange);//tag is auto-decided
     void createAction(std::string nameOfVar, float minDomain, float maxDomain);//tag is auto-decided
     void addGoal(std::string goalExpression, float minVal, float maxVal);
 };

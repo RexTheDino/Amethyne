@@ -38,12 +38,12 @@ struct InfoBytes{//mirrors struct found in metal
 //*needs to convert existing variables into a polynomial with domain [0,1]!*
 class BernsteinDataConverter{
     //when the solver runs, it replaces the variables with their bernstein equiavelnts to suit [0,1] domain. after it finishes running, its supposed to reverse engineer the variables. before doing any of that, it NEEDS to SAVE A LOCAL COPY and only perform the pre-processing modifications and processing ON THAT LOCAL COPY! This will not result in any conflict with coldStorage since its still the exact same symbols.
-    enum class varConverterStatus{
-      varsModifiedToBernsteinEquivalents,
-        varsInOriginalState
-    };static varConverterStatus STATUS;
     
     class helperFuncs{
+        enum class varConverterStatus{
+          varsModifiedToBernsteinEquivalents,
+            varsInOriginalState
+        };static varConverterStatus STATUS;
         friend class BernsteinDataConverter;
         struct symbolAndIndex{
             SymEngine::RCP<const SymEngine::Symbol> symbol;

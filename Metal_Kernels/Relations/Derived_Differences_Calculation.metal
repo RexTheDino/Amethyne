@@ -5,7 +5,6 @@
 //  Created by AnshuDiya on 11/2/26.
 //
 
-#pragma once
 
 #include <metal_stdlib>
 using namespace metal;

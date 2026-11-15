@@ -5,11 +5,6 @@
 //  Created by AnshuDiya on 11/1/26.
 //
 
-#ifndef Initialization_Data_header_hpp
-#define Initialization_Data_header_hpp
-
-
-#endif /* Initialization_Data_header_h */
 
 #pragma once
 #include <random>

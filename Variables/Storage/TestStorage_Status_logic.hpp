@@ -7,9 +7,12 @@
 
 #pragma once
 
+struct exploringTestingGround_Tester;
+
 enum class testingGroundMode;
 struct MtdtStruct;
 class Dataset;
+
 
 enum class testingGroundMode{
     analyzing,//for when it is testing relationships between ALREADY EXISTING VARIABLES
@@ -43,6 +46,7 @@ enum class testingGroundAnalyzingStatus{
 };
 
 class groundsWatchdog{
+    friend struct exploringTestingGround_Tester;
 private:
     
 public:
@@ -52,7 +56,11 @@ public:
 };
 
     class statusUpdaters{//updates the testing ground to be of a certain status
+        friend struct exploringTestingGround_Tester;
+        
         class ExplorationUpdaters{//clean up later to match GPU_lieutenant syntax and requirements.
+            friend struct exploringTestingGround_Tester;
+            
             static void generateSyntheticAddons();
             //returns the index to write back sythetic preprocessing results to
             static int copyRealDataIntoTestTagSlots();//copies the data of existing variables into their assigned test tag slots into testVarsStorage.
