@@ -7,20 +7,23 @@
 
 #pragma once
 
-#import <Foundation/Foundation.h>
-#import <Metal/Metal.h>
+
 #include <iostream>
 
 struct metalDispatchCommand;
 struct subcommands;
 
-@interface MetalBundleLocator : NSObject
-@end
+
 
 class MetalCommander{
+    friend class GPU_lieutenant;
 private:
-    static void instructionExecute(id<MTLCommandBuffer> commdBuffer, std::vector<subcommands>& instructions, int indexInInstructions);
-    
     static void MetalCommanderSetup();
-    static void CommanderExecute(metalDispatchCommand commandToExecute);
+    /*static void instructionExecute(id<MTLCommandBuffer> commdBuffer, std::vector<subcommands>& instructions, int indexInInstructions);*/
+    static bool hasBeenSetup;
+public:
+    class LieutenantPasskey{friend class GPU_lieutenant; LieutenantPasskey() = default;};
+    
+    static void CommanderExecute(metalDispatchCommand commandToExecute, LieutenantPasskey passkey);
+    
 };

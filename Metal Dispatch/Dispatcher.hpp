@@ -9,6 +9,7 @@
 #include <span>
 #include <vector>
 
+
 enum class kernels{
     synthetics_preprocessing,
     relationEstimation,
@@ -23,6 +24,10 @@ enum class bufferTypes{
     PRIVATE_inputDataBuffer,
     PRIVATE_outputBuffer,
     SHARED_initializerBuffer,
+    CLEAR_PRIVATE_instructionBuffer,//buffers shoudl be cleared in between command queue elements but this is for clearing within the same command.
+    CLEAR_PRIVATE_inputDataBuffer,
+    CLEAR_PRIVATE_outputBuffer,
+    CLEAR_SHARED_initializerBuffer,
     count
 };
     constexpr int numOfMetalBufferTypes = static_cast<int>(bufferTypes::count);
@@ -65,23 +70,9 @@ private:
 class returnBuffer{//returns the span of the requested buffer
     friend class GPU_lieutenant;
     friend class MetalCommander;
-    static std::span<std::byte*> returnRequestedBuffer(bufferTypes typeOfBufferToReturn);
+    static std::span<std::byte>* returnRequestedBuffer(bufferTypes typeOfBufferToReturn);
 };
 
-struct spanOfIntakeOrOutputData{
-    std::span<std::byte> spanOfTheDat;//very convenient since also gives size of input data
-    spanOfIntakeOrOutputData(std::span<std::byte> theSpanThatBelongsToThis);
-};
-
-struct dataCopyOp{
-    spanOfIntakeOrOutputData dataSpanner;
-    bufferTypes correspondingBufferType;
-};
-struct kernelOp{
-    kernels selectedKernel;
-    int numThreadgroups;
-    int threadsPerThreadgroup;//set automatically through the constexpr struct by the constructor
-};
 
 template <typename intakeOutputDatClass>
 std::span<std::byte> convertClassSpanToByteSpan(std::span<intakeOutputDatClass> givenSpan){
@@ -92,10 +83,44 @@ std::span<std::byte> convertClassSpanToByteSpan(std::span<intakeOutputDatClass> 
     return returnSpan;
 }
 
+struct spanOfIntakeOrOutputData{
+    std::span<std::byte> spanOfTheDat;//very convenient since also gives size of input data
+    spanOfIntakeOrOutputData(std::span<std::byte> theSpanThatBelongsToThis);
+};
+
+
+//DATA COPy OP IS FOR COPYING TO AND FRO FROM STAGING BUFFERS! ADD_COPY_COMMAND IS WHAT ACTUALLY COPIES BACK TO A C++ VEC!
+struct dataCopyOp{
+    friend struct subcommands;
+    friend struct subcommandsHelper;
+    spanOfIntakeOrOutputData dataSpanner;
+    bufferTypes correspondingBufferType;
+private:
+        dataCopyOp(spanOfIntakeOrOutputData theSpanGiven, bufferTypes theTypeOfBuffer);
+};
+struct kernelOp{
+    friend struct subcommands;
+    friend struct subcommandsHelper;
+    kernels selectedKernel;
+    int numThreadgroups;
+    int threadsPerThreadgroup;//set automatically through the constexpr struct by the constructor
+private:
+        kernelOp(kernels givenKernel, int numberOfThreadgroupsForThisKernel, int theThreadsToRunPerThreadgroupInThisKernel);
+};
+
 struct subcommands{
     std::variant<dataCopyOp, kernelOp> typeOfsubcommand;
-    subcommands(kernels selectedKernelOp, int numberOfThreadgroups);
-    template <typename intakeOrOutputDatClass> subcommands(std::span<intakeOrOutputDatClass> intakeOrOutputClassDatSpan, bufferTypes providedTypeOfBuffer);
+    
+    subcommands(dataCopyOp appendDataCopyOp);
+    subcommands(kernelOp appendKernelOp);
+};
+
+class subcommandsHelper{
+public:
+    //constructor should carry out the above template functions to make everything easy. this constructor is meant to construct a subcommand w// a data Op
+    template <typename intakeOrOutputDatClass> static void appendDataCopyOp(std::span<intakeOrOutputDatClass> intakeOrOutputClassDatSpan, bufferTypes providedTypeOfBuffer, std::vector<subcommands>& vecToAppendTo);
+    
+    static void appendKernelOp(kernels givenKernel, int numberOfThreadgroupsForThisKernel, int theThreadsToRunPerThreadgroupInThisKernel, std::vector<subcommands>& vecToAppendTo);
 };
 
 
@@ -116,15 +141,17 @@ subcommands convertIntakeDatPtrToMetalBufferCommand(std::span<intakeOrOutputData
 //contains all the commands required to carry out a succesful dispatch from start to end
 struct metalDispatchCommand{
     std::vector<subcommands> commands;
-    int numThreadgroups;
-    kernels selectedKernel;//selected kernel is initialized in constructor as the first kernel-type subcommand seen in instructions.
-    metalDispatchCommand(std::vector<subcommands> instructions, int numberOfThreadgroups);//threadgroups depends on how many kernel is designed to execute with. either way not something this class needs to know, thats the job of the thing calling this function.
+    metalDispatchCommand(std::vector<subcommands>& instructions);//threadgroups depends on how many kernel is designed to execute with. either way not something this class needs to know, thats the job of the thing calling this function.
 };
 
+//THIS IS THE COMMAND THAT EXECUTES A COPY BACK TO THE REQUESTED RESULT VEC!
 struct copyCommand{
+    friend class GPU_lieutenant;
+    
     std::span<std::byte> spanOfDataInQuestion;
     bufferTypes typeOfBuffer;
-    copyCommand(std::span<std::byte> theSpanOfTheData, bufferTypes theTypeOfBuffer);
+private:
+    copyCommand(std::span<std::byte> theSpanOfTheData, bufferTypes theTypeOfBuffer);//type of buffer is the kind of buffer to copy back from.
 };
 
 //the funcs that want to dispatch a metal command create a vector of type subcommands, sequentially add their instructions to it, then send it over to the lieutenant which packages it into a dispatch command object and adds it to teh command queue. further down the line the metal objc++ class queries the dispatch command everytime it finishes up with a command to see if theres another command it should then execute. this way the instructions can be added squentially as they are determined instead of needing to maintain a local master metadata storage while different functions execute.
@@ -140,9 +167,13 @@ struct threadsPerGroup{
 };
 
 class GPU_lieutenant{
+    static void executeCopyCommand(copyCommand commandToExecute);
 public:
-    static void addMetalCommand(std::vector<subcommands>& instructionsToAdd, int numberOfThreadgroups);
-    static void addCopyCommand(std::span<std::byte> spanOfDataInQuestion, bufferTypes typeOfBuffer);//typeOfBuffer decides wether to copy to or from
+    //when copying to shared buffer do NOT use dataCopyOp. instead use COPY COMMAND.
+    static void addMetalCommand(std::vector<subcommands>& instructionsToAdd);
+    
+    //THIS is whats to be used for ocpying to staging buffer AND copying to SHARED buffer(s)!
+    template <typename resultVecType> static void addCopyCommand(std::span<resultVecType> spanOfDataInQuestion, bufferTypes typeOfBuffer);//typeOfBuffer decides wether to copy to or from
     static void clearCommands();
     static void FIRE_AWAY();
 };

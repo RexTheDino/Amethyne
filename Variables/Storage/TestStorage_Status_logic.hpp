@@ -6,6 +6,7 @@
 //
 
 #pragma once
+#include "Dispatcher.hpp"
 
 struct exploringTestingGround_Tester;
 
@@ -61,29 +62,41 @@ public:
         class ExplorationUpdaters{//clean up later to match GPU_lieutenant syntax and requirements.
             friend struct exploringTestingGround_Tester;
             
-            static void generateSyntheticAddons();
-            //returns the index to write back sythetic preprocessing results to
-            static int copyRealDataIntoTestTagSlots();//copies the data of existing variables into their assigned test tag slots into testVarsStorage.
-            static void initializeMetadata(MtdtStruct* ptrToMetalMetadataBuffer);//implement a later version that requires no parameter
+            struct explorationReference{//filled by the functions as they move on
+                std::vector<MtdtStruct> initDatSpan;
+                int numberOfBatchesOfSynthAddons = -1;
+                //add as needed...
+                
+                std::vector<uint16_t> relationTestTags;
+                uint16_t numTagPairsToTest;
+            };
+            
+            //every function has the subcommands parameter and same return type even if it doesnt need it so it can be called through array of function pointers.
+            static void generateSyntheticAddons(std::vector<subcommands>& subcommandsVec, explorationReference& referenceData);
+            static void copyRealDataIntoTestTagSlots(std::vector<subcommands>& subcommandsVec, explorationReference& referenceData);//copies the data of existing variables into their assigned test tag slots into testVarsStorage.
+            static void initializeMetadata(std::vector<subcommands>& subcommandsVec, explorationReference& referenceData);//implement a later version that requires no parameter
+            
             
             //the kernel is formulated such that the input data for derived diffs (except for metadata) is written back to the metla buffer in the exact place it needs to be so no copies are needed
-            static void dispatchSynthPreprocessing();//to be implemented when the asynchronous metal dispatcher class has been implemented
-            static bool queryPreprocessingStatus();//if metal finished, toggle mode. else return false. implement after metal dispatcher class
+            static void dispatchSynthPreprocessing(std::vector<subcommands>& subcommandsVec, explorationReference& referenceData);//to be implemented when the asynchronous metal dispatcher class has been implemented
+            //REMOVE THE FUNC BELOW, IT IS UNNECESSARY
+            static void queryPreprocessingStatus(std::vector<subcommands>& subcommandsVec, explorationReference& referenceData);//if metal finished, toggle mode. else return false. implement after metal dispatcher class
             
-            static void copyPreprocessingResultsBackToTestStorage(float* ptrToMetalBuffer);//implement a later version that requires no parameter
-            static void initializeDerivedDiffsMtdt(float* ptrToMetalDerivedDiffInitBuffer);
-            static void dispatchRelationEstimation();//dispatch the relation estimation kernel.
-            static bool queryPostProcessingResultStatus();
-            static void copyPostProcessingResultsToDatasetsVec(Dataset* ptrToMetalResultsBuffer, int numTestedRelations);
+            //remove the function below, copying back results is not needed
+            static void copyPreprocessingResultsBackToTestStorage(std::vector<subcommands>& subcommandsVec, explorationReference& referenceData);//implement a later version that requires no parameter
+            static void initializeDerivedDiffsMtdt(std::vector<subcommands>& subcommandsVec, explorationReference& referenceData);
+            static void dispatchRelationEstimation(std::vector<subcommands>& subcommandsVec, explorationReference& referenceData);//dispatch the relation estimation kernel.
+            static void queryPostProcessingResultStatus(std::vector<subcommands>& subcommandsVec, explorationReference& referenceData);
+            static void copyPostProcessingResultsToDatasetsVec(std::vector<subcommands>& subcommandsVec, explorationReference& referenceData);
             static void clearStorage();
         };
         class analyzationUpdaters{
-            static void copyVariableDataIntoTestSlots();
-            static void initializeRelationEstimationMetadata();
-            static void dispatchMetal();
+            static void copyVariableDataIntoTestSlots(std::vector<subcommands>& subcommandsVec);
+            static void initializeRelationEstimationMetadata(std::vector<subcommands>& subcommandsVec);
+            static void dispatchMetal(std::vector<subcommands>& subcommandsVec);
             static void queryRelationEstimationStatus();
-            static void copyResultsBackToStorage();
-            static void clearStorage();
+            static void copyResultsBackToStorage(std::vector<subcommands>& subcommandsVec);
+            static void clearStorage(std::vector<subcommands>& subcommandsVec);
         };
         
         static void queryMetalStatus();

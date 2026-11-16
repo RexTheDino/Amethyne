@@ -28,7 +28,6 @@ enum class testingGroundMode;
 enum class testingGroundAnalyzingStatus;
 
 struct MtdtStruct{
-    uint16_t pointsPerVar_as_multiple_of_64;//*as a multiple of 64! change derived_differences to also look for num_points and as a multiple of 64*
     uint16_t num_terms_per_synthetic;//the term count of this batch!
 };
 struct relationshipResult{

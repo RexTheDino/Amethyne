@@ -26,9 +26,20 @@
 
 @implementation RelationshipClassTesting
 
+struct progNameAndVectorOfData{
+    std::string progName;
+    std::vector<float> vecOfData;
+};
+
 struct logsAndCache{
     std::vector<dataLog> logs;
     std::vector<dataLog> cache;
+};
+
+struct domainAndVecOfProgNames{
+    domain theDomain;
+    std::vector<std::string> theProgramNames;
+    domainAndVecOfProgNames(domain providedDomain, std::vector<std::string> providedProgNames): theDomain{providedDomain}, theProgramNames{providedProgNames}{}
 };
 
 struct trackerTester{
@@ -40,6 +51,68 @@ struct trackerTester{
             returnStruct.cache = (theTrackerIterator->second).cache;
                 return returnStruct;
     };
+    static domainAndVecOfProgNames addRequestedVariables(int numActionVariables, int numMetricVariables){//adds variables with a random name and domain. returns the random domain chosen.
+        varCreation variableCreator;
+        
+        std::vector<std::string> progNames; progNames.reserve(numActionVariables + numMetricVariables);
+        std::uniform_real_distribution<float> randDomain(0, 1000.0);
+        domain selectedDomain(randDomain(Amethyne_rand), 1001.5);
+        std::string prefix = "actionTest";
+        std::string userAlottedName;
+        std::string programName;
+        for(int y = 0; y < numActionVariables; y++){
+            userAlottedName = prefix + std::to_string(y);
+            variableCreator.createAction(userAlottedName, selectedDomain.min, selectedDomain.max);
+            programName = Nucleus.coldStorage.returnProgName_given_UserAlottedName(userAlottedName);
+            progNames.push_back(programName);
+        }
+        prefix = "metricTest";
+        for(int j = 0; j < numMetricVariables; j++){
+            userAlottedName = prefix + std::to_string(j);
+            variableCreator.createMetric(userAlottedName, selectedDomain.min, selectedDomain.max);
+            programName = Nucleus.coldStorage.returnProgName_given_UserAlottedName(userAlottedName);
+            progNames.push_back(programName);
+        }
+        
+        domainAndVecOfProgNames returnStruct(selectedDomain, progNames);
+        return returnStruct;
+    }
+    static void addData(int numPtsToAdd, domain domainOfDat, int numTotalVariables, std::vector<std::string> programNames){//returns the vector of data it added
+            assert(numTotalVariables == programNames.size());
+        assert((numPtsToAdd < RelationConstructionMetadata::points_per_var)&&(numPtsToAdd > 4));
+        
+        std::uniform_real_distribution<float> randPoints(domainOfDat.min, domainOfDat.max);
+        
+        std::vector<progNameAndDat> testVec; testVec.reserve(numTotalVariables);
+        std::vector<progNameAndVectorOfData> dataVec; dataVec.resize(numTotalVariables);
+        
+        for(int o = 0; o < numTotalVariables; o++){
+            dataVec[o].vecOfData.resize(numPtsToAdd);
+            dataVec[o].progName = programNames[o];
+            
+            for(int y = 0; y < numPtsToAdd; y++){
+                float randPoint = randPoints(Amethyne_rand);
+                dataVec[o].vecOfData[y] = randPoint;
+            }
+        }
+        
+        for(int g = 0; g < numPtsToAdd; g++){
+            for(int u = 0; u < numTotalVariables; u++){
+                if(g != 0){
+                    testVec[u] = progNameAndDat(programNames[u], dataVec[u].vecOfData[g]);//the program names in data vec correspond to testVec.
+                }else{
+                    testVec.push_back(progNameAndDat(programNames[u], dataVec[u].vecOfData[g]));//the program names in data vec correspond to testVec.
+                }
+            }
+            std::span<progNameAndDat> spanOfTestVec(testVec.begin(), testVec.end());
+            Nucleus.logsManager.logDat(spanOfTestVec);
+        }
+        
+        for(int h = 0; h < numTotalVariables; h++){
+            logsAndCache theLogsAndCache = returnDatOfRequestedTracker(dataVec[h].progName);
+            XCTAssertTrue(theLogsAndCache.logs[3].data == dataVec[h].vecOfData[3]);
+        }
+    }
 };
 
 struct synthVarGenTester{
@@ -59,16 +132,16 @@ struct synthVarGenTester{
     }
 };
 
-struct exploringTestingGround_Tester{
+/*struct exploringTestingGround_Tester{
     static float generateSyntheticAddonsAndCopyDatIntoTestSlots(){
         groundsWatchdog::setTestingGroundMode(testingGroundMode::exploring);
         
-        statusUpdaters::ExplorationUpdaters::generateSyntheticAddons();
-        statusUpdaters::ExplorationUpdaters::copyRealDataIntoTestTagSlots();
+        //statusUpdaters::ExplorationUpdaters::generateSyntheticAddons();
+        //statusUpdaters::ExplorationUpdaters::copyRealDataIntoTestTagSlots();
         
-        return  Nucleus.testingGround.Data.testVarsStorage[((2 * RelationConstructionMetadata::points_per_var) + RelationConstructionMetadata::points_per_var -1)];
+        return  Nucleus.testingGround.Data.testVarsStorage[(2 * RelationConstructionMetadata::points_per_var) +1];
     }
-};
+};*/
 
 
 - (void)setUp {
@@ -107,49 +180,15 @@ struct exploringTestingGround_Tester{
 }
 
 -(void)testActionAndMetricCreation{//works
-    varCreation variableCreator;
-    std::string testPrefix = "test";
-    std::uniform_real_distribution<float> dataGen(50.0,100.0);
-        std::vector<progNameAndDat> testVec;
-    for(int u = 0; u < 100; u++){//data array and var string array need to be of equal sizes
-        std::string userAlottedName;
-        if(u % 2 == 0){
-            userAlottedName = testPrefix+std::to_string(u);
-            variableCreator.createAction(userAlottedName, u*2, u*3.5);
-        }else{
-            userAlottedName = testPrefix+std::to_string(u);
-            variableCreator.createMetric(userAlottedName, u-20, (u+55)*2);
-        }
-        
-        float randPoint = dataGen(Amethyne_rand);
-        std::string progName = Nucleus.coldStorage.returnProgName_given_UserAlottedName(userAlottedName);
-        progNameAndDat nameAndData(progName, randPoint);
-        testVec.push_back(nameAndData);
-    }
-        std::span<progNameAndDat> testSpan(testVec.begin(), testVec.end());
-    
-    for(int d = 0; d < 200; d++){
-        Nucleus.logsManager.logDat(testSpan);
-        for(int s = 0; s < testVec.size(); s++){
-            logsAndCache trackerResult = trackerTester::returnDatOfRequestedTracker(testVec[s].progName);
-            XCTAssertEqual(trackerResult.logs[d].data, testVec[s].data, @"The test vector data should be the same as was logged in the tracker.");
-        }
-        
-        for(int f = 0; f < testVec.size(); f++){
-            float randPoint = dataGen(Amethyne_rand);
-            testVec[f].data = randPoint;
-        }
-    }
-    
+    domainAndVecOfProgNames initializerStruct = trackerTester::addRequestedVariables(20, 15);
+    trackerTester::addData(65, initializerStruct.theDomain, 35, initializerStruct.theProgramNames);
 }
 
 
 
 -(void)testAddonGen{
     
-    //synthVarGenTester::addonsAndNumAddons generationResult = synthVarGenTester::genTest(20);
-    float secondTestTagSlotFirstIndex = exploringTestingGround_Tester::generateSyntheticAddonsAndCopyDatIntoTestSlots();
-    XCTAssertTrue((secondTestTagSlotFirstIndex >= 50.0f)&&(secondTestTagSlotFirstIndex <= 100.0f));
+    
 }
 
 

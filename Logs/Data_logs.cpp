@@ -40,7 +40,7 @@ void tracker::logData(float data){
             std::transform(cache.begin(), cache.end(), logs.begin(), logs.begin(), [&](dataLog& cacheLog, dataLog& dLog){
                 dataLog returnLog; returnLog.timeStamp = currentTime;
                 returnLog.data = ((cacheLog.data + dLog.data)/2.0f);
-                return returnLog;//return the average of the cache and the storage log
+                return returnLog;//return the average of the cache and the storage log and store it back in logs.
             });
             cache.clear();
         }

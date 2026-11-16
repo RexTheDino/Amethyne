@@ -7,6 +7,7 @@
 
 
 #include <metal_stdlib>
+#include "Metadata.h"
 using namespace metal;
 
 enum class relationships: uint16_t{
@@ -23,33 +24,39 @@ struct relationshipResult{
     relationshipResult(uint16_t tagY, uint16_t tagX, relationships derRelation): yTag{tagY}, xTag{tagX}, relationship{derRelation}{}
 };
 
-struct numPtsAndVarTags{
+struct varTags{
     uint16_t tagX;
     uint16_t tagY;
 };
 
 //threadgroups of 64 means each threadgroup on a SIMD unit
-//half configuration to save on byte loads
+//number of threadgroups equals number of pairs to test
 kernel void derivedDiffs(device relationshipResult* resultOutBuffer [[buffer(2)]], //to output in [tagX, tagY, relationship]
                          device const float* variableData [[buffer(0)]],
-                         device const numPtsAndVarTags* numberOfPointsAndVarTags [[buffer(1)]],//contains [tagX, tagY]. 0th index is pointsPerVar
+                         device const varTags* numberOfPointsAndVarTags [[buffer(1)]],//contains [tagX, tagY]. 0th index is pointsPerVar
                          uint16_t group_id [[threadgroup_position_in_grid]],
                          unsigned short simd_thread_id [[thread_index_in_simdgroup]]){
     
     const float epsilon = 0.0005;
     const float cutoffThreshold = 1.1f;
-    numPtsAndVarTags varData;
-     uint16_t pointsPerVar = numberOfPointsAndVarTags[0].tagX;
-    if(simd_thread_id == 5){varData = numberOfPointsAndVarTags[group_id+1];}//doing plus 1 cuz first element/first 2 indexes contains points per var
+    varTags varData;
+    uint16_t pointsPerVar = RelationConstructionMetadata::points_per_var;
+        if(simd_thread_id == 5){varData = numberOfPointsAndVarTags[group_id];}
+    
     varData.tagX = simd_broadcast(varData.tagX, 5); varData.tagY = simd_broadcast(varData.tagY, 5);
     const uint32_t var1Start = varData.tagX * pointsPerVar;//tagX*pointsPerVar. this is *varY*
     const uint32_t var2Start = varData.tagY * pointsPerVar;//tagY*pointsPerVar. this is *varX*
     
-    //fix so it cant use dynamic point numbers through averaging later
     //y is var1, x is var 2
-    float y1 = variableData[var1Start+simd_thread_id]; float x1 = variableData[var2Start+simd_thread_id];
+    float y1 = 0.0f; float x1 = 0.0f;
+        for(int y = 0; y < (pointsPerVar/64); y++){
+            y1 += variableData[var1Start + simd_thread_id +(y * 64)];
+            x1 += variableData[var2Start + simd_thread_id +(y * 64)];
+        }
+    y1 /= (pointsPerVar/64);
+    x1 /= (pointsPerVar/64);
+    
     float y2 = simd_shuffle(y1, clamp((uint32_t)simd_thread_id+1U, 1U, 63U)); float x2 = simd_shuffle(x1, clamp((uint16_t)simd_thread_id+1U, 1U, 63U));
-    //use these two to calculate the 128pts
     
     float ratio;
     float sDiffFinal1;

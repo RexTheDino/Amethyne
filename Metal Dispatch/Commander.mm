@@ -7,10 +7,16 @@
 
 #import "Commander_Header.h"
 #include "Dispatcher.hpp"
+#import <Metal/Metal.h>
+#import <Foundation/Foundation.h>
 
+@interface MetalBundleLocator : NSObject
+@end
 
 @implementation MetalBundleLocator
 @end
+
+bool MetalCommander::hasBeenSetup = false;//initialized to not being set up
 
 id<MTLDevice> device = nil;
 id<MTLComputePipelineState> relationEstimation_CompPipeState = nil;
@@ -26,8 +32,11 @@ id<MTLBuffer> InputBuffer = nil;//private
 id<MTLBuffer> InputMetadataBuffer = nil;//private
     id<MTLBuffer> InputMetadata_STAGING_Buffer = nil;
 
+
+
 //index starts at 0
-void MetalCommander::instructionExecute(id<MTLCommandBuffer> commdBuffer, std::vector<subcommands>& instructions, int indexInInstructions){
+//this is a global func
+static void instructionExecute(id<MTLCommandBuffer> commdBuffer, std::vector<subcommands>& instructions, int indexInInstructions){
     assert((SharedMetadataBuffer)&&(OutputBuffer)&&(InputBuffer)&&(InputMetadataBuffer));//none of them can be null, shouldve been initialized before this func.
     
     if(indexInInstructions < instructions.size()){
@@ -39,7 +48,7 @@ void MetalCommander::instructionExecute(id<MTLCommandBuffer> commdBuffer, std::v
             
             switch (OP.correspondingBufferType) {
                 case bufferTypes::PRIVATE_outputBuffer:{//need to copy results from private output buffer back
-                    [blitter copyFromBuffer:OutputBuffer sourceOffset:0 toBuffer:Output_STAGING_Buffer destinationOffset:0 size:sizeOfDat];
+                    [blitter copyFromBuffer:Output_STAGING_Buffer sourceOffset:0 toBuffer:OutputBuffer destinationOffset:0 size:sizeOfDat];
                 }
                     break;
                     
@@ -52,8 +61,24 @@ void MetalCommander::instructionExecute(id<MTLCommandBuffer> commdBuffer, std::v
                     [blitter copyFromBuffer:InputMetadata_STAGING_Buffer sourceOffset:0 toBuffer:InputMetadataBuffer destinationOffset:0 size:sizeOfDat];
                 }
                     break;
+                case bufferTypes::CLEAR_PRIVATE_outputBuffer:{
+                    [blitter fillBuffer:OutputBuffer range:NSMakeRange(0, OutputBuffer.length) value:0];
+                }
+                    break;
+                
+                case bufferTypes::CLEAR_PRIVATE_inputDataBuffer:{
+                    [blitter fillBuffer:InputBuffer range:NSMakeRange(0, InputBuffer.length) value:0];
+                }
+                    break;
+                case bufferTypes::CLEAR_PRIVATE_instructionBuffer:{
+                    [blitter fillBuffer:InputMetadataBuffer range:NSMakeRange(0, InputMetadataBuffer.length) value:0];
+                }
+                    break;
+                case bufferTypes::CLEAR_SHARED_initializerBuffer:{
+                    [blitter fillBuffer:SharedMetadataBuffer range:NSMakeRange(0, SharedMetadataBuffer.length) value:0];
+                }
                     
-                default://means shared metadata buffer copy instruction was a subcommand which doesnt make sense of enum val is corrupted
+                default://means shared metadata buffer copy instruction was a subcommand which doesnt make sense of enum val that is corrupted or is a command to copy to a shared buffer which doesnt make sense sicne it should be handled by copyCommand
                     throw std::runtime_error("Illegal buffer copy operation command!");
                     break;
             }
@@ -161,7 +186,9 @@ void MetalCommander::MetalCommanderSetup(){
     metalBufferStaging::initializeStagingBuffers(initializationPasskey, stagingBuffersInit);
 }
 
-void MetalCommander::CommanderExecute(metalDispatchCommand commandToExecute){
+void MetalCommander::CommanderExecute(metalDispatchCommand commandToExecute, LieutenantPasskey passkey){
+    if(!hasBeenSetup){MetalCommanderSetup(); hasBeenSetup = true;}//only set up once
+    
     id<MTLCommandBuffer> commdBuffer = [commdQueue commandBuffer];
     id<MTLComputeCommandEncoder> cmdEncoder = [commdBuffer computeCommandEncoder];
     
