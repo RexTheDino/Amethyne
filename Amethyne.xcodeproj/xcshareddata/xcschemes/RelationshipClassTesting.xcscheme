@@ -38,8 +38,16 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
+      enableGPUFrameCaptureMode = "1"
       enableGPUShaderValidationMode = "2"
       allowLocationSimulation = "YES">
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "METAL_CAPTURE_ENABLED"
+            value = "1"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
          <AdditionalOption
             key = "NSZombieEnabled"

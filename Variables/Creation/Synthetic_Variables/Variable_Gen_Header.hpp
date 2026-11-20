@@ -15,10 +15,12 @@
 #include <string>
 
 #include <span>
+#include <vector>
+#include <optional>
 
 class addonGenPasskey;
 
-enum class morphOps{
+enum class morphOps: uint16_t{
     add = 1,//add the next term to this
     subtract = 2,//subtract the next term from this
     multiply = 3,//multiply the next term times this
@@ -26,10 +28,11 @@ enum class morphOps{
 };
 
 //modifiers to this variable
-enum class modOps{
+enum class modOps: uint16_t{
     recp = 1,//set this number to its reciprocal
     square = 2,//set this number to its square
-    count = 3
+    none = 3,
+    count = 4
 };
 
 //can/should be chained
@@ -41,49 +44,44 @@ class synthVarAddon{
 public:
     synthVarAddon(morphOps morphInstruction, modOps modInstruction, uint16_t assignedTag);
     synthVarAddon() = default;
-    uint16_t returnTag();
-    morphOps returnMorphOp();
-    modOps returnModOp();
+    uint16_t returnTag() const;
+    morphOps returnMorphOp() const;
+    modOps returnModOp() const;
 };
 
 //the one on top is NOT meant to be permanent!
 class permanentSynthAddon{
 public:
-    enum class status{//status of the addon
-        rowStart,
-        qualifier,
-        rowEnd
-    };
     enum class linkage{//wether the addon links to a metric/action variable or not (linked to another synthetic).
-        linked,
-        not_linked
+        linkedToAuthentic,
+        linkedToSynthetic
     };
 private:
-    status STATUS;
     linkage LINKAGE;
     synthVarAddon addon;
 public:
     
     //also need to add an expression variable from symEngine
-    status returnSTATUS();
-    linkage returnLINKAGE();
-    uint16_t returnAddonTag();//returns tag the var the synthVarAddon is linked to. NOT A TAG BELONGING TO ITSELF!
-    morphOps returnAddonMorphOp();
-    modOps returnAddonModOp();
-    permanentSynthAddon(status derStatus, linkage derLinkage, synthVarAddon derAddon);
+    linkage returnLINKAGE() const;
+    uint16_t returnAddonTag() const;//returns tag the var the synthVarAddon is linked to. NOT A TAG BELONGING TO ITSELF!
+    morphOps returnAddonMorphOp() const;
+    modOps returnAddonModOp() const;
+    permanentSynthAddon(linkage derLinkage, synthVarAddon derAddon);
 };
 
 class synthVar{//extremely barebones, intentionally so.
-    uint16_t synthAddonStartIndice;
+    std::span<const permanentSynthAddon> addonsVarIsLinkedTo;
     uint16_t tag;//tag of the synthetic var
     std::string program_name;//the name the program gives to this variable for use in symbolic expressions
-    domain derDomain;
+    //cant have domain becuase it violates the varibale only knowing info about itself that belongs in heirarchial storage.
+    std::optional<domain> rangeOfSynth;//to be initialized after its transferred but only once! (by synthVarManager when it adds it and differentiates the expression to find min/max values)
 public:
-    synthVar(uint16_t derTag, uint16_t derAddonStartIndex, domain domainOfVar);
+    synthVar(uint16_t derTag, std::span<permanentSynthAddon> linkedAddons, std::string assigned_prog_name);
     const uint16_t returnTag();
-    uint16_t returnStartIndice();
-    domain returnDomain();
-    std::string returnName();//PROGRAM NAME
+    std::span<const permanentSynthAddon> returnLinkedAddons() const;
+    std::string returnName() const;//PROGRAM NAME
+    domain returnRange() const;
+    
 };
 
 
@@ -92,9 +90,24 @@ struct numAddonsPerTestSynth{
 };
 
 class synthVarGen{
+    friend struct exploringTestingGround_Tester;
+    
+    struct riggedSynthVar_Info{
+        uint16_t baseTag;
+        synthVarAddon theAddonApplied;
+    };
+public:
+    struct riggedSynthVarFuncReturn{
+        std::vector<synthVarGen::riggedSynthVar_Info> riggedAddons;
+        numAddonsPerTestSynth numAddons;
+    };
+
     //writes synth vars to the adress provided through std::span
     //returns the number it decided for the addons/terms per synthVar
 public:
     static inline int currentAddonsPerTestSynth;
     static numAddonsPerTestSynth createAndWriteSynthVars(uint16_t numVarsToCreate, std::vector<synthVarAddon>& resultVec, addonGenPasskey passkey);
+    
+    //creates and writes synth vars that have been rigged with a specific operation, so only one addon. returns a struct containing the info for the rigged synthetic variables
+    static riggedSynthVarFuncReturn createAndWrite_RIGGED_synthVars(uint16_t numVarsToCreate, std::vector<synthVarAddon>& resultVec, addonGenPasskey passkey);
 };

@@ -34,7 +34,8 @@ enum class RelationshipType: uint16_t{//enum stores the relationship between two
     linear = 5,
     quadratic = 6,
     cubic = 7,
-    null = 8
+    null = 8,
+    sentinel = 67
 };
 
 struct Dataset{//contains a dataset (2 vars and their relation)
@@ -45,10 +46,11 @@ struct Dataset{//contains a dataset (2 vars and their relation)
     
     public:
     //IMPORTANT--TEST_SYNTH TAGS ARE NOT THE SAME AS REGULAR VAR TAGS!!! THE TAG PROVIDED TO DATASET MUST HAVE BEEN CONVERTED APPROPRIATELY!
-        Dataset(uint16_t tagX, uint16_t tagY, RelationshipType derRelation);//should be constructed using a ptr to the metal results buffer!
-        const uint16_t returnYtag();
-        const uint16_t returnXtag();
-        const RelationshipType returnRelation();
+        Dataset(uint16_t tagX, uint16_t tagY, RelationshipType derRelation);
+    Dataset();//constructs with sentinel values.
+        const uint16_t returnYtag() const;
+        const uint16_t returnXtag() const;
+        const RelationshipType returnRelation() const;
 };
 
 //uses accelerate.sgels to actually construct a relationship

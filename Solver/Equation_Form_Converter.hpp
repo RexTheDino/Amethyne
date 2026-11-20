@@ -5,8 +5,7 @@
 //  Created by AnshuDiya on 11/7/26.
 //
 
-#ifndef Equation_Form_Converter_hpp
-#define Equation_Form_Converter_hpp
+#pragma once
 
 #include <stdio.h>
 #include <symengine/integer.h>
@@ -16,10 +15,15 @@
 
 #include "Var_Storage.hpp"
 #include <symengine/visitor.h>
+#include "Dispatcher.hpp"
 
 
 struct MetalMatriceDimensionsFormat{
     unsigned char dimensionsOneThruFour = 0; unsigned char dimensionsFourThruEight = 0;
+};
+struct matriceDimensionsAndTheirProduct{
+    MetalMatriceDimensionsFormat matriceDimensions;
+    int productOfDimensions;
 };
 struct varDegreesAndCoefficient{//degrees and coefficient given a certain term of an expression
     float coefficient = 0.0f;
@@ -32,6 +36,10 @@ struct InfoBytes{//mirrors struct found in metal
     InfoBytes(MetalMatriceDimensionsFormat derDimensions, varDegreesAndCoefficient termByTermInfo);
     InfoBytes() = default;
 };
+struct InfoBytesAndN_Choose_R{//what metal actually needs
+    InfoBytes the_infoBytes;
+    const uint32_t nChooseR_vals[12] = {1, 1, 0, 0, 1, 2, 1, 0, 1, 3, 3, 1};
+};
 
 
 //give it a symEngine expresson and indicate the term to input as well as a pointer to the metal buffer and it writes the require ddata into the metal buffers in metal format. also capable of reading the data
@@ -43,7 +51,7 @@ class BernsteinDataConverter{
         enum class varConverterStatus{
           varsModifiedToBernsteinEquivalents,
             varsInOriginalState
-        };static varConverterStatus STATUS;
+        };static inline varConverterStatus STATUS  = varConverterStatus::varsInOriginalState;
         friend class BernsteinDataConverter;
         struct symbolAndIndex{
             SymEngine::RCP<const SymEngine::Symbol> symbol;
@@ -88,31 +96,49 @@ class BernsteinDataConverter{
     static void writePerTermSymbolDegreesAndCoefficientsIntoVector(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<perTermCoefficientAndSymbolDegrees>* ptrToVector);
     };
             //converts a given expression to the compressed bit format of the dimensions required for metal to calculate terms
-            static MetalMatriceDimensionsFormat convertDimensionsOfExpr(const std::vector<helperFuncs::perTermCoefficientAndSymbolDegrees>& ptrToPolynomialInfoVector);
+            static matriceDimensionsAndTheirProduct convertDimensionsOfExpr(const std::vector<helperFuncs::perTermCoefficientAndSymbolDegrees>& ptrToPolynomialInfoVector);
             //converts a given expression's term to the term degrees and coefficient format and fills a vector with the info
             static void convertDegreesAndCoefficientOfExprGivenTerm(SymEngine::RCP<const SymEngine::Basic> &ProvidedExpr, const std::vector<helperFuncs::perTermCoefficientAndSymbolDegrees>& polynomialInfoArray,  std::vector<varDegreesAndCoefficient>* vectorToWriteInto);
     
     
     
     //it writes results to a local vector after which memcpy should be done to transfer to metal buffer
-    //returns a InfoBytes vector (what the kernel needs to know) hwhen you give it the expression corresponding to terms
-    static void calculateInfoBytes(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<InfoBytes>* vectorToWriteTo);
+    //writes a InfoBytes vector (what the kernel needs to know) hwhen you give it the expression corresponding to terms
+    //returns the PRODUCT OF THE DIMENSIONS OF THE MATRICE
+    static int calculateInfoBytes(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<InfoBytes>* vectorToWriteTo);
     
 public:
-    static void processExpressionForBernsteinCoefficientsCalculation(SymEngine::RCP<const SymEngine::Basic> &expression, std::vector<InfoBytes>* referenceToInfoByteBufferThatMetalAccesses);
+    //returns the PRODUCT OF THE DIMENSIONS OF THE MATRICE
+    static int processExpressionForBernsteinCoefficientsCalculation(SymEngine::RCP<const SymEngine::Basic> &expression, std::vector<InfoBytes>* ptrToInfoByteBuffer);
 };
 
 
+enum class bernsteinCoeffCalculationStatus{
+    unprimed,
+    DISPATCHED_INFO_BYTES,
+    DISPATCHED_KERNEL_OP,
+    DISPATCHED_COPY_BACK_CMD,
+};
 
+struct bernsteinCoeffsReferenceData{
+    std::vector<subcommands> subcommandsVec;
+    uint32_t productOfAllDimensions;//for the number of threadgroups
+    domain* writeBackValsTo = nullptr;//to be filled by the public func. this is the space that the caller wants to record the domain results in.
+    std::vector<InfoBytesAndN_Choose_R> metalInfVec;
+    void(*funcToCallbackAferResult)();
+};
 
-
-
-
-
-
-
-
-
-
-
-#endif /* Equation_Form_Converter_hpp */
+//given an expression returns the bernstein coefficient for that
+class calculateBernsteinCoeffs{
+private:
+    
+    bernsteinCoeffCalculationStatus bernCoeffStatus = bernsteinCoeffCalculationStatus::unprimed;
+    static inline bernsteinCoeffsReferenceData refDat;
+    
+    void calculateAndWriteInfoBytes_AND_NchooseR_vals(SymEngine::RCP<const SymEngine::Basic>& expr, std::vector<subcommands> subcommandsVec);
+    void bindCalculationAndMAXMIN_FINDER_kernels(std::vector<subcommands> subcommandsVec);
+    void dispatchResultCopyCommand(std::vector<subcommands> subcommandsVec);//also dispatches command to copy back into result variable
+    
+public:
+    void findMaxAndMinBernsteinCoeffs(SymEngine::RCP<const SymEngine::Basic>& expr, domain* writeBackResultsTo, void(*funcToCallbackAferResult)());
+};

@@ -73,10 +73,10 @@ class actionVar{
     std::string programName;//program name for var used for symEngne expressions.
 public:
     actionVar(std::string nameOfVar, uint16_t tagOfVar, domain derDomain, std::string program_name_ofAction);
-    const uint16_t return_tag();
-    const std::string return_name();//USER-SET NAME NOT PROGRAM_NAME!
-    const std::string return_program_name();
-    const domain returnDomain();
+    const uint16_t return_tag() const;
+    const std::string return_name() const;//USER-SET NAME NOT PROGRAM_NAME!
+    const std::string return_program_name() const;
+    const domain returnDomain() const;
 };
 
 #endif /* Base_types_hpp */

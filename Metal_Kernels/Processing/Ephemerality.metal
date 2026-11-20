@@ -22,10 +22,10 @@ struct Metadata{
     float epsilon = 0.0005;
 };
 
-kernel void Ephemerality_Calculation(device const float* data [[buffer(0)]],
-                                     device const var_tag* instructions [[buffer(1)]],
-                                     device const Metadata* MetadataBffr [[buffer(2)]],
-                                     device momentum_classification* results [[buffer(3)]],
+kernel void Ephemerality_Calculation(device const float* data [[buffer(2)]],
+                                     device const var_tag* instructions [[buffer(3)]],
+                                     device const Metadata* MetadataBffr [[buffer(0)]],
+                                     device momentum_classification* results [[buffer(1)]],
                                      uint16_t group_id [[threadgroup_position_in_grid]],
                                      uint16_t simd_id [[thread_index_in_simdgroup]]){
     

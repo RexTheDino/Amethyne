@@ -10,6 +10,8 @@
 #include <unordered_map>
 #include "Var_Storage.hpp"
 
+struct transferTester;
+
 class testingGround;
 
 
@@ -32,7 +34,10 @@ class testingTagManager{
 public:
     void createTestTags();//for every single currently existing variable, creates a test tag for them and stores it. clears previously stored tags.
     uint16_t realTagToTestTag(uint16_t realTag);//give a real tag and returns currently stored test tag for that real tag.
-    uint16_t testSynthTagCounterpartOfRealTag(uint16_t realTag);//literally just hte realTag+1 since the real tag-test tag are only even indexes
+    
+    //unordered map of key--test tag, value-- real tag
+    std::unordered_map<uint16_t, uint16_t> mapOftestTagsToRealTags();
+    uint16_t convertTestSynthTagToTagCorrespondingPositionInBatch(uint16_t tag);//does (tag-1)/2
     std::vector<synthAndRealRelationTestPair> returnRandomSynthTestPairTags();
 };
 
@@ -54,10 +59,16 @@ public:
 //and finally tag%3==2 tags are reserved for synthetic variables
 //this way there are ZERO shared tags across variables! even synthetic addons meant for testing only contain tags as a reference to what existing variables they modify!
 class Transfer_Manager{
+    friend struct transferTester;
     class testingGroundsPasskey{
+        friend struct transferTester;
+        
         friend class testingGround;
         testingGroundsPasskey() = default;
     };
+    
+    void transferTestingResultsToColdStorage();
+    
 public:
     void transferAuthentic(std::variant<actionVar, metricVar> authenticVariable);
 };

@@ -14,7 +14,7 @@ struct nChooseR_values{//combinations of values for n choose r where (0 < n < 4)
     //int ONE_choose_ZERO, ONE_choose_ONE;
     //int TWO_choose_ZERO, TWO_choose_ONE, TWO_choose_TWO;
     //int THREE_choose_ZERO, THREE_choose_ONE, THREE_choose_TWO, THREE_choose_THREE;
-    int values[12];//arranged in order respective to the format above except it has padding so each row has 4 elements. needs to be filled still!
+    uint32_t values[12];//arranged in order respective to the format above except it has padding so each row has 4 elements. needs to be filled still!
 };
 
 //first we need to know the dimensions of the matrice. since the max and min lenghts along any specific dimension range from (2,4) a.k.a. 3 possible values for each dimension that actually exists create a for loop that reads bytes from pvt buffer and stops when it reaches 00
@@ -98,6 +98,7 @@ inline variableInfo returnVariableInfo(InfoBytes rawBytes){
 }
 
 //dimension parameter corresponds to what dimension its in
+//the fucn returns the product of all the matrice dimensions up to but not including the specified dimension
 inline int matriceFactorReturn(dimensionsReturn derDimensions, int dimension){
     int returnVal = 1;
     for(int u = 0; u < 8; u++){
@@ -138,7 +139,8 @@ inline dimensionsAndVarInfo returnIndexInDimensions(thread dimensionsAndVarInfo 
 
 
 //fills buffer with bernstein coefficients
-kernel void Bernstein_Coeffs_Filler(device const InfoBytesAndN_Choose_R* inputDat[[buffer(0)]],
+//num threads dispatched is equal to the product of all the dimensions of the matrice.
+kernel void Bernstein_Coeffs_Filler(device const InfoBytesAndN_Choose_R* inputDat[[buffer(2)]],
                                     device float* outBuffer[[buffer(1)]],
                                     uint32_t thread_ID [[thread_position_in_grid]]){
     
@@ -166,31 +168,32 @@ kernel void Bernstein_Coeffs_Filler(device const InfoBytesAndN_Choose_R* inputDa
             
             result *= multiplier/divider;//multiply by each fraction
     }
-    outBuffer[thread_ID+1] += result; //outBuffer[0] contains volume of the matrice!
+    outBuffer[thread_ID] += result;
 }
 
-struct outBufferInfo{
-    int num_points_in_outBuffer;//the number of points output by all the threads when calculating bernstein coeffs
-};
 
 //rewrites the very first element with the maximum value found in all the bernstein coefficients
-//to be dispatched as a single threadgroup of 64
-//outBuffer[0] contains volume of the matrice!
-kernel void findMaxCoeffInBuffer(device float* outBuffer[[buffer(1)]],
+//numpts[0] == matrice_volume!!!
+kernel void findMaxAndMinCoeffInBuffer(device const uint32_t* numPts[[buffer(0)]], device float* outBuffer[[buffer(1)]],
                                  uint32_t simd_id [[thread_index_in_simdgroup]]){
-    int num_points_in_outBuffer = outBuffer[0];
-    int num_points_to_search = num_points_in_outBuffer/64;
-    uint32_t remainderPts = num_points_in_outBuffer % 64;
+    //int num_points_in_outBuffer = outBuffer[0];
+    int num_points_to_search = numPts[0]/64;
+    uint32_t remainderPts = numPts[0] % 64;
     
     float maxCoeffFound = 0.0f;
+    float minCoeffFound = 0.0f;
     int indexToReference = (simd_id * num_points_to_search);//what indice this thread will start searching from
     for(int d = 0; d < num_points_to_search; d++){
         maxCoeffFound = max(outBuffer[indexToReference+d+1], maxCoeffFound);//dont check [0] cuz it contains volume of matrice
+        minCoeffFound = min(outBuffer[indexToReference+d+1], minCoeffFound);//dont check [0] cuz it contains volume of matrice
     }
     if(remainderPts > 0){//if the number of pts output wasnt a clean 64 have each thread compare remaining pts
         indexToReference = 1+(num_points_to_search*63);//start at one plus the index where the threads mustve left off
         maxCoeffFound = max(outBuffer[indexToReference+clamp(simd_id, 0U, remainderPts)], maxCoeffFound);
+        minCoeffFound = min(outBuffer[indexToReference+clamp(simd_id, 0U, remainderPts)], minCoeffFound);
     }
     maxCoeffFound = simd_max(maxCoeffFound);//get the max all threads found
-        outBuffer[0] = maxCoeffFound;//fill first element of out buffer with the max coefficient found
+    minCoeffFound = simd_min(minCoeffFound);//get min all the threads found
+        outBuffer[1] = maxCoeffFound;//fill second element of out buffer with the max coefficient found
+        outBuffer[0] = minCoeffFound;//filled in format min,max
 }

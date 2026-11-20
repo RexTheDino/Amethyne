@@ -14,11 +14,57 @@
 #include "SynthAddon_gen.hpp"
 #include "Transfer_Manager.hpp"
 #include <random>
+#include "TestStorage_Status_logic.hpp"
 #include "Initialization_Data_header.hpp"
 #include "Nucleus.hpp"
 
 
 using namespace std;
+
+
+testingGroundMode TESTING_GROUND::queryMode(){return modeOfTestingGround;}
+
+std::span<const Dataset> TESTING_GROUND::returnSpanOfDatasets(passkeyForDatasetTransfer transferPasskey){
+    assert(Nucleus.testingGround.Data.results.size() > 0);
+    std::span<const Dataset> resultSpan(Nucleus.testingGround.Data.results.begin(), Nucleus.testingGround.Data.results.end());
+    return resultSpan;
+}
+
+//testing results with eachs truct containign the datasets related to a single variable thats the y-tag
+std::vector<testGroundResultReturn> TESTING_GROUND::returnTestingResults(passkeyForDatasetTransfer transferPasskey){
+    
+    auto& resultsvec = Nucleus.testingGround.Data.results;
+    std::unordered_map<uint16_t, uint16_t> unique_yTags;//records all the unique y-tags in the results vec
+    for(int j = 0; j < resultsvec.size(); j++){
+        assert(static_cast<uint16_t>(resultsvec[j].returnRelation()) < static_cast<uint16_t>(RelationshipType::sentinel));//no illegal vals
+        if(resultsvec[j].returnRelation() != RelationshipType::null){
+            //if the y-tag was a synth then the y-tag is the tag that relates hte synth's position in the batch it was created.
+            unique_yTags.try_emplace(resultsvec[j].returnYtag(), resultsvec[j].returnXtag());//stores y-tag, x-tag.
+        }
+    }
+    std::vector<testGroundResultReturn> returnVec; returnVec.reserve(resultsvec.size());
+    for(const auto& [key, value]: unique_yTags){
+        testGroundResultReturn resultStruct;
+        auto spanOfCorrespondingDatasets = return_req_relationTag_related_datasets(key);//dSets related to y-tag
+        resultStruct.datasetsCorrespondingToVar = spanOfCorrespondingDatasets;
+        resultStruct.tagOfVar = key;
+        
+        auto addonsPasskey = statusUpdaters::ExplorationUpdaters::testingGroundPasskey();
+        auto potentialSynthAddons = statusUpdaters::ExplorationUpdaters::returnAddonsCorrespondingToTag(key, addonsPasskey);
+        if(!potentialSynthAddons.empty()){//if not empty then the y-tag is a test synthetic!
+            std::span<const synthVarAddon> correspondingAddons = potentialSynthAddons;
+            resultStruct.correspondingAddons = correspondingAddons;
+            
+            auto spanOfCalculatedDat = statusUpdaters::ExplorationUpdaters::returnPointsCorrespondingToTag(key, addonsPasskey);
+            resultStruct.spanOfCorrespondingSynthData = spanOfCalculatedDat;
+        }
+        
+        returnVec.push_back(resultStruct);
+    }
+    
+    return returnVec;
+}
+
 
 //returns a span of all the datasets related to the requested tag. for example if y tag requested then span of all dataset with that tag as the y_tag
 std::span<Dataset> TESTING_GROUND::return_req_relationTag_related_datasets(uint16_t tag, bool sort_by_y_tag){
@@ -88,6 +134,26 @@ variableCategory cold_Storage::returnVarType_givenTag(uint16_t tag){
     }
 }
 
+const actionVar& cold_Storage::returnConstReferenceToActionVar(uint16_t tag){
+    auto& actionVarsVec = Nucleus.coldStorage.Data.actionVariables;
+    auto indexOfActionVar_ITER = std::find_if(actionVarsVec.begin(), actionVarsVec.end(), [&](actionVar& aVar){
+        return aVar.return_tag() == tag;
+    });
+    assert(indexOfActionVar_ITER != actionVarsVec.end());
+    const auto& returnVal =  *indexOfActionVar_ITER;
+    return returnVal;
+}
+
+const metricVar& cold_Storage::returnConstReferenceToMetricVar(uint16_t tag){
+    auto& metricVarsVec = Nucleus.coldStorage.Data.metricVariables;
+    auto indexOfmetricVar_ITER = std::find_if(metricVarsVec.begin(), metricVarsVec.end(), [&](metricVar& mVar){
+        return mVar.return_tag() == tag;
+    });
+    assert(indexOfmetricVar_ITER != metricVarsVec.end());
+    const auto& returnVal =  *indexOfmetricVar_ITER;
+    return returnVal;
+}
+
 std::vector<uint16_t> cold_Storage::returnRandTags(int numTags){
     assert(numTags <= (returnALL_TAGS()).size());//numTags to generate must be lesser than or equal to the number of total tags
     
@@ -149,7 +215,8 @@ cold_Storage::SYNTH_VAR_MANAGER::SYNTH_VAR_MANAGER(){
 }
 
 void cold_Storage::SYNTH_VAR_MANAGER::sortSynthsByTag(){
-    std::sort(syntheticVariables.begin(), syntheticVariables.end(), [&](synthVar& var1, synthVar& var2){
+    auto& sVarsVec = Nucleus.coldStorage.synthVarManager.syntheticVariables;
+    std::sort(sVarsVec.begin(), sVarsVec.end(), [](synthVar& var1, synthVar& var2){
         return var1.returnTag() < var2.returnTag();
     });
 }
@@ -164,28 +231,11 @@ std::vector<permanentSynthAddon>* cold_Storage::SYNTH_VAR_MANAGER::returnOpsForR
     });
     int startIndice = int(syntheticVariables.begin()-startIterator);
     auto targetSynth = syntheticVariables[startIndice];
-    if(syntheticAddons[targetSynth.returnStartIndice()].returnSTATUS() != permanentSynthAddon::status::rowStart){
-        throw runtime_error("Error: The index pointed to by the synthetic variable for the start of the synthetic addon isnt actually a row start!");
-    }
-    int counter = 0;//counter for the length of the chain of synthetic addons
-    int tempIndice = targetSynth.returnStartIndice();
-    while(tempIndice < syntheticAddons.size()-targetSynth.returnStartIndice()){
-        //if have reached the end of the row, increment counter and break.
-        if(syntheticAddons[tempIndice].returnSTATUS() == permanentSynthAddon::status::rowEnd){
-            counter++;
-            break;
-        }//if reached row start before end throw an exception!
-        else if (syntheticAddons[tempIndice].returnSTATUS() == permanentSynthAddon::status::rowStart){
-            throw runtime_error("Reached start of another synthetic addon row before reaching the end!!!");
-            break;
-        }
-        tempIndice++;
-        counter++;
-    }
-    resultVec.reserve(counter);//resizes to number of synthetic addons chained for this variable
-    for(int n = 0; n < counter;n ++){
+    auto linkedAddons = targetSynth.returnLinkedAddons();
+    resultVec.reserve(linkedAddons.size());//resizes to number of synthetic addons chained for this variable
+    for(int n = 0; n < linkedAddons.size();n ++){
         //fill the result vector with the synthetic addons
-        resultVec.push_back(syntheticAddons[targetSynth.returnStartIndice()+n]);
+        resultVec.push_back(linkedAddons[n]);
     }
     return &resultVec;
 }
@@ -202,21 +252,31 @@ std::string cold_Storage::SYNTH_VAR_MANAGER::return_programNameOf_taggedVar(cons
     }
 }
 
-domain cold_Storage::SYNTH_VAR_MANAGER::returnDomainOfTaggedVar(const uint16_t tag){
+domain cold_Storage::SYNTH_VAR_MANAGER::returnRangeOfTaggedVar(const uint16_t tag){
     domain emptyDomain(0.0f, 0.0f);
     if(Nucleus.coldStorage.returnVarType_givenTag(tag) == variableCategory::synthetic){
         auto iterator = std::find_if(syntheticVariables.begin(), syntheticVariables.end(), [&](synthVar& derSynth){
             return derSynth.returnTag() == tag;
         });
-        return (iterator != syntheticVariables.end()) ? iterator->returnDomain() : emptyDomain;
+        return (iterator != syntheticVariables.end()) ? iterator->returnRange() : emptyDomain;
     }else{
         return emptyDomain;
     }
 }
 
-void cold_Storage::SYNTH_VAR_MANAGER::addSyntheticVariable(std::vector<permanentSynthAddon> correspondingAddons, synthVar derVariable, addSyntheticPasskey derPasskey){
+uint16_t cold_Storage::SYNTH_VAR_MANAGER::returnTagGivenVarSymbol(const SymEngine::RCP<const SymEngine::Symbol>& symbolToSearchFor){
+    
+    auto iteratorToSymbol = synthVarMap.find(symbolToSearchFor);
+    assert(iteratorToSymbol != synthVarMap.end());
+    return iteratorToSymbol->second;
+}
+
+void cold_Storage::SYNTH_VAR_MANAGER::addSyntheticVariable(synthVar derVariable, addSyntheticPasskey derPasskey){
     syntheticVariables.push_back(derVariable);
+    const auto& correspondingAddons = derVariable.returnLinkedAddons();
     syntheticAddons.insert(syntheticAddons.end(), correspondingAddons.begin(), correspondingAddons.end());
+    SymEngine::RCP<const SymEngine::Basic> exprOfVar = SymEngine::symbol(derVariable.returnName());
+    synthVarMap.try_emplace(exprOfVar, derVariable.returnTag());
 }
 
 std::vector<uint16_t> cold_Storage::SYNTH_VAR_MANAGER::returnALL_SYNTH_TAGS(){
@@ -224,6 +284,29 @@ std::vector<uint16_t> cold_Storage::SYNTH_VAR_MANAGER::returnALL_SYNTH_TAGS(){
     for(int e = 0; e < syntheticVariables.size(); e++){returnVec.push_back(syntheticVariables[e].returnTag());}
     
     return returnVec;
+}
+
+
+void cold_Storage::addDataset(Dataset dataSetToAdd, TransferManagerPasskey thePasskey){
+    Nucleus.coldStorage.Data.datasetLogs.push_back(dataSetToAdd);
+}
+
+std::span<Dataset> cold_Storage::returnDatasets_relatedTo_tag(uint16_t relatedTag){
+    auto& theDsets = Nucleus.coldStorage.Data.datasetLogs;
+    assert(theDsets.size() > 0);
+    std::sort(theDsets.begin(), theDsets.end(), [&](Dataset& dSet1, Dataset& dSet2){//sorts dSets to begin with
+        return dSet1.returnYtag() < dSet1.returnYtag();
+    });
+    
+    auto startDSetIterator = (lower_bound(theDsets.begin(), theDsets.end(), relatedTag, [&](Dataset& dSet, uint16_t tag){
+        return dSet.returnYtag() < tag;
+    }));
+    auto endDSetIterator = (upper_bound(theDsets.begin(), theDsets.end(), relatedTag, [&](uint16_t tag, Dataset& dSet){
+        return tag < dSet.returnYtag();
+    }));
+    std::span<Dataset> dSetSpanReturn(startDSetIterator, endDSetIterator-startDSetIterator);
+    
+    return dSetSpanReturn;
 }
 
 
@@ -269,13 +352,14 @@ std::string cold_Storage::return_programNameOf_taggedVar(const uint16_t tag){
         return emptyStr;
 }
 
-uint16_t cold_Storage::returnTag_givenVarSymbol(SymEngine::RCP<const SymEngine::Basic> varSymbol){
+uint16_t cold_Storage::returnTag_givenVarSymbol(const SymEngine::RCP<const SymEngine::Symbol>& varSymbol){
     auto variableIterator = variableMap.find(varSymbol);
     if(variableIterator != variableMap.end()){
         uint16_t variableTag = (variableIterator->second).tag;
         return variableTag;
     }else{
-        throw std::invalid_argument("Symbol not stored in unordered map!!!");
+        return Nucleus.coldStorage.synthVarManager.returnTagGivenVarSymbol(varSymbol);//if not in this map must be in synth var map. if not there too assertion catches it.
+        //throw std::invalid_argument("Symbol not stored in unordered map!!!");
     }
 }
 
@@ -304,7 +388,7 @@ domain cold_Storage::returnDomain(uint16_t tag){
         }
             break;
         case variableCategory::synthetic: {
-            return Nucleus.coldStorage.synthVarManager.returnDomainOfTaggedVar(tag);
+            return Nucleus.coldStorage.synthVarManager.returnRangeOfTaggedVar(tag);
         }
     }
     return emptyDomain;
@@ -320,6 +404,13 @@ std::string cold_Storage::returnProgName_given_UserAlottedName(std::string UserA
         if(DataStruct.metricVariables[w].return_name() == UserAlottedName){return DataStruct.metricVariables[w].return_program_name();}
     }
     throw std::invalid_argument("No such authentic variable with given user-alotted name exists!");
+}
+
+std::string cold_Storage::returnUserAlottedName_givenSymbol(SymEngine::RCP<const SymEngine::Basic> symbol){
+    auto userName_andDat = variableMap.find(symbol);
+    if(userName_andDat == variableMap.end()){throw std::invalid_argument("Symbol does not exist as an authentic!");}
+    std::string userAlottedName = userName_andDat->second.UserAllotedName;
+    return userAlottedName;
 }
 
 

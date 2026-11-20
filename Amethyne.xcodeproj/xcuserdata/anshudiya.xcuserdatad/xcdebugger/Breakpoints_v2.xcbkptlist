@@ -14,8 +14,8 @@
             filePath = "RelationshipClassTesting/RelationshipClassTesting.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
             landmarkName = "RelationshipClassTesting"
             landmarkType = "3">
             <Locations>
@@ -302,28 +302,13 @@
             filePath = "Variables/Storage/Var_Storage.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
+            startingLineNumber = "318"
+            endingLineNumber = "318"
             landmarkName = "cold_Storage::addActionVar(passkey, varToAdd)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "A5F21AEA-F7BA-4A54-BC95-E00660AFAA20 - 3c3c82cf5f8078f1"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "cold_Storage::return_programNameOf_taggedVar(unsigned short)"
-                  moduleName = "RelationshipClassTesting"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Storage/Var_Storage.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "237"
-                  endingLineNumber = "237"
-                  offsetFromSymbolStart = "54">
-               </Location>
-               <Location
-                  uuid = "A5F21AEA-F7BA-4A54-BC95-E00660AFAA20 - 3cc77f6b18336f25"
+                  uuid = "A5F21AEA-F7BA-4A54-BC95-E00660AFAA20 - 3cc77f6b183356dc"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -333,8 +318,53 @@
                   urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Storage/Var_Storage.cpp"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "235"
-                  endingLineNumber = "235"
+                  startingLineNumber = "308"
+                  endingLineNumber = "308"
+                  offsetFromSymbolStart = "317">
+               </Location>
+               <Location
+                  uuid = "A5F21AEA-F7BA-4A54-BC95-E00660AFAA20 - 3cc77f6b183356dc"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "cold_Storage::addActionVar(cold_Storage::TransferManagerPasskey, actionVar)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Storage/Var_Storage.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "308"
+                  endingLineNumber = "308"
+                  offsetFromSymbolStart = "232">
+               </Location>
+               <Location
+                  uuid = "A5F21AEA-F7BA-4A54-BC95-E00660AFAA20 - 3cc77f6b183359f5"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "cold_Storage::addActionVar(cold_Storage::TransferManagerPasskey, actionVar)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Storage/Var_Storage.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "315"
+                  endingLineNumber = "315"
+                  offsetFromSymbolStart = "232">
+               </Location>
+               <Location
+                  uuid = "A5F21AEA-F7BA-4A54-BC95-E00660AFAA20 - 3cc77f6b18335996"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "cold_Storage::addActionVar(cold_Storage::TransferManagerPasskey, actionVar)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Storage/Var_Storage.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "318"
+                  endingLineNumber = "318"
                   offsetFromSymbolStart = "232">
                </Location>
             </Locations>
@@ -378,8 +408,8 @@
             filePath = "Variables/Storage/TestStorage_Status_logic.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "statusUpdaters::ExplorationUpdaters::copyRealDataIntoTestTagSlots(subcommandsVec, referenceData)"
             landmarkType = "7">
          </BreakpointContent>
@@ -394,8 +424,8 @@
             filePath = "RelationshipClassTesting/RelationshipClassTesting.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
             landmarkName = "RelationshipClassTesting"
             landmarkType = "3">
          </BreakpointContent>
@@ -410,10 +440,1068 @@
             filePath = "Logs/Data_logs.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "LOGS_MANAGER::returnDataOfRequestedTracker(program_name_of_var)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F8830784-2AE8-46A4-AD61-BA52A81FC040"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Storage/TestStorage_Status_logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "statusUpdaters::ExplorationUpdaters::initializeMetadata(subcommandsVec, referenceData)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F8830784-2AE8-46A4-AD61-BA52A81FC040 - c6f2ac89f2b08d37"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "statusUpdaters::ExplorationUpdaters::initializeMetadata(std::__1::vector&lt;subcommands, std::__1::allocator&lt;subcommands&gt; &gt;&amp;, statusUpdaters::ExplorationUpdaters::explorationReference&amp;)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Storage/TestStorage_Status_logic.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "121"
+                  endingLineNumber = "121"
+                  offsetFromSymbolStart = "297">
+               </Location>
+               <Location
+                  uuid = "F8830784-2AE8-46A4-AD61-BA52A81FC040 - c6f2ac89f2b08df1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "statusUpdaters::ExplorationUpdaters::initializeMetadata(std::__1::vector&lt;subcommands, std::__1::allocator&lt;subcommands&gt; &gt;&amp;, statusUpdaters::ExplorationUpdaters::explorationReference&amp;)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Storage/TestStorage_Status_logic.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "123"
+                  endingLineNumber = "123"
+                  offsetFromSymbolStart = "297">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0F397E16-9C8C-4FF8-B37B-A24EB20E96EA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Storage/TestStorage_Status_logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "statusUpdaters::ExplorationUpdaters::generateSyntheticAddons(subcommandsVec, referenceData)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0F397E16-9C8C-4FF8-B37B-A24EB20E96EA - 42f0a02dc693868c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "statusUpdaters::ExplorationUpdaters::generateSyntheticAddons(std::__1::vector&lt;subcommands, std::__1::allocator&lt;subcommands&gt; &gt;&amp;, statusUpdaters::ExplorationUpdaters::explorationReference&amp;)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Storage/TestStorage_Status_logic.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "233">
+               </Location>
+               <Location
+                  uuid = "0F397E16-9C8C-4FF8-B37B-A24EB20E96EA - 42f0a02dc693f94e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "statusUpdaters::ExplorationUpdaters::generateSyntheticAddons(std::__1::vector&lt;subcommands, std::__1::allocator&lt;subcommands&gt; &gt;&amp;, statusUpdaters::ExplorationUpdaters::explorationReference&amp;)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Storage/TestStorage_Status_logic.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "56"
+                  endingLineNumber = "56"
+                  offsetFromSymbolStart = "354">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F2D13870-D273-4850-B3C7-FB4BA45FEBA6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Creation/Synthetic_Variables/SynthAddon_gen.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "synthVarGen::createAndWriteSynthVars(numVarsToCreate, resultVec, passkey)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F2D13870-D273-4850-B3C7-FB4BA45FEBA6 - 87b6c8cff9fb2e15"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "synthVarGen::createAndWriteSynthVars(unsigned short, std::__1::vector&lt;synthVarAddon, std::__1::allocator&lt;synthVarAddon&gt; &gt;&amp;, addonGenPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Creation/Synthetic_Variables/SynthAddon_gen.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "339">
+               </Location>
+               <Location
+                  uuid = "F2D13870-D273-4850-B3C7-FB4BA45FEBA6 - 87b6c8cff9fb2e15"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "synthVarGen::createAndWriteSynthVars(unsigned short, std::__1::vector&lt;synthVarAddon, std::__1::allocator&lt;synthVarAddon&gt; &gt;&amp;, addonGenPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Creation/Synthetic_Variables/SynthAddon_gen.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "333">
+               </Location>
+               <Location
+                  uuid = "F2D13870-D273-4850-B3C7-FB4BA45FEBA6 - 87b6c8cff9fb2e15"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "synthVarGen::createAndWriteSynthVars(unsigned short, std::__1::vector&lt;synthVarAddon, std::__1::allocator&lt;synthVarAddon&gt; &gt;&amp;, addonGenPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Creation/Synthetic_Variables/SynthAddon_gen.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "342">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6AEC0216-7B08-45D7-9FE3-82C8768E419C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Storage/TestStorage_Status_logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
+            landmarkName = "statusUpdaters::ExplorationUpdaters::initializeDerivedDiffsMtdt(subcommandsVec, referenceData)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4E39CB08-4170-4D8C-A7AE-F505BAAE8EC4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RelationshipClassTesting/RelationshipClassTesting.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
+            landmarkName = "RelationshipClassTesting"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "4E39CB08-4170-4D8C-A7AE-F505BAAE8EC4 - f6cc2eb88ebd724f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "exploringTestingGround_Tester::generateSyntheticAddonsAndCopyDatIntoTestSlots()"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/RelationshipClassTesting/RelationshipClassTesting.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "151"
+                  endingLineNumber = "151"
+                  offsetFromSymbolStart = "165">
+               </Location>
+               <Location
+                  uuid = "4E39CB08-4170-4D8C-A7AE-F505BAAE8EC4 - f6cc2eb88ebd7589"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "exploringTestingGround_Tester::generateSyntheticAddonsAndCopyDatIntoTestSlots()"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/RelationshipClassTesting/RelationshipClassTesting.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "149"
+                  endingLineNumber = "149"
+                  offsetFromSymbolStart = "173">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F6DABEE7-A69F-484D-A4F7-5BEEB8D89050"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal Dispatch/Commander.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
+            landmarkName = "MetalCommander::MetalCommanderSetup()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F6DABEE7-A69F-484D-A4F7-5BEEB8D89050 - 4c12a78dfec238cb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "203"
+                  endingLineNumber = "203"
+                  offsetFromSymbolStart = "198">
+               </Location>
+               <Location
+                  uuid = "F6DABEE7-A69F-484D-A4F7-5BEEB8D89050 - 9981527e81cb5732"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::MetalCommanderSetup()"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "203"
+                  endingLineNumber = "203"
+                  offsetFromSymbolStart = "2224">
+               </Location>
+               <Location
+                  uuid = "F6DABEE7-A69F-484D-A4F7-5BEEB8D89050 - 9981527e81cb57d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::MetalCommanderSetup()"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "206"
+                  endingLineNumber = "206"
+                  offsetFromSymbolStart = "2326">
+               </Location>
+               <Location
+                  uuid = "F6DABEE7-A69F-484D-A4F7-5BEEB8D89050 - 9981527e81cb57d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::MetalCommanderSetup()"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "206"
+                  endingLineNumber = "206"
+                  offsetFromSymbolStart = "2314">
+               </Location>
+               <Location
+                  uuid = "F6DABEE7-A69F-484D-A4F7-5BEEB8D89050 - 9981527e81cb5419"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::MetalCommanderSetup()"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "212"
+                  endingLineNumber = "212"
+                  offsetFromSymbolStart = "2314">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D41B3866-EFA3-4A88-B3CE-C0552C7961AD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal Dispatch/Commander.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
+            landmarkName = "MetalCommander::MetalCommanderSetup()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D41B3866-EFA3-4A88-B3CE-C0552C7961AD - 9981527e81cb4d8b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::MetalCommanderSetup()"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "162"
+                  endingLineNumber = "162"
+                  offsetFromSymbolStart = "676">
+               </Location>
+               <Location
+                  uuid = "D41B3866-EFA3-4A88-B3CE-C0552C7961AD - 9981527e81cb4a28"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::MetalCommanderSetup()"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "165"
+                  endingLineNumber = "165"
+                  offsetFromSymbolStart = "778">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6AC2693A-2D6D-4A34-A6EF-0E59A08FC7B6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal Dispatch/Dispatcher.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
+            landmarkName = "GPU_lieutenant::FIRE_AWAY()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "609F91DD-9888-4041-8133-9B46DA231FBE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal Dispatch/Dispatcher.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
+            landmarkName = "GPU_lieutenant::FIRE_AWAY()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "06320C29-AB62-4216-AD26-CD9D397CD25A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal Dispatch/Dispatcher.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "metalBufferStaging::initializeStagingBuffers(derPasskey, bufferMtdt)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "440409D8-AA31-47E3-BBA9-93F11C4C4CAA"
+            shouldBeEnabled = "No"
+            condition = "commandToExecute.typeOfBuffer == bufferTypes::PRIVATE_outputBuffer"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal Dispatch/Dispatcher.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
+            landmarkName = "GPU_lieutenant::executeCopyCommand(commandToExecute)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal Dispatch/Commander.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
+            landmarkName = "MetalCommander::CommanderExecute(commandToExecute, passkey)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 4c12a78dfec23fad"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "241"
+                  endingLineNumber = "241"
+                  offsetFromSymbolStart = "1116">
+               </Location>
+               <Location
+                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 4c12a78dfec23f8c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "240"
+                  endingLineNumber = "240"
+                  offsetFromSymbolStart = "1114">
+               </Location>
+               <Location
+                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 4c12a78dfec23fc2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "242"
+                  endingLineNumber = "242"
+                  offsetFromSymbolStart = "1114">
+               </Location>
+               <Location
+                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 4c12a78dfec23f46"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "246"
+                  endingLineNumber = "246"
+                  offsetFromSymbolStart = "1114">
+               </Location>
+               <Location
+                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 4c12a78dfec23f46"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "246"
+                  endingLineNumber = "246"
+                  offsetFromSymbolStart = "854">
+               </Location>
+               <Location
+                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 738b429f15b2c315"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey, void (*)())"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "251"
+                  endingLineNumber = "251"
+                  offsetFromSymbolStart = "871">
+               </Location>
+               <Location
+                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 738b429f15b2ccdf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey, void (*)())"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "261"
+                  endingLineNumber = "261"
+                  offsetFromSymbolStart = "871">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6FF60A3D-4E82-4222-87FC-07A44DBBE52D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal Dispatch/Commander.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
+            landmarkName = "MetalCommander::CommanderExecute(commandToExecute, passkey)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6FF60A3D-4E82-4222-87FC-07A44DBBE52D - 4c12a78dfec23fc2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "242"
+                  endingLineNumber = "242"
+                  offsetFromSymbolStart = "886">
+               </Location>
+               <Location
+                  uuid = "6FF60A3D-4E82-4222-87FC-07A44DBBE52D - 4c12a78dfec23fc2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "242"
+                  endingLineNumber = "242"
+                  offsetFromSymbolStart = "1142">
+               </Location>
+               <Location
+                  uuid = "6FF60A3D-4E82-4222-87FC-07A44DBBE52D - 4c12a78dfec23f00"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "244"
+                  endingLineNumber = "244"
+                  offsetFromSymbolStart = "1142">
+               </Location>
+               <Location
+                  uuid = "6FF60A3D-4E82-4222-87FC-07A44DBBE52D - 4c12a78dfec23e84"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "248"
+                  endingLineNumber = "248"
+                  offsetFromSymbolStart = "1142">
+               </Location>
+               <Location
+                  uuid = "6FF60A3D-4E82-4222-87FC-07A44DBBE52D - 4c12a78dfec23e84"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "248"
+                  endingLineNumber = "248"
+                  offsetFromSymbolStart = "882">
+               </Location>
+               <Location
+                  uuid = "6FF60A3D-4E82-4222-87FC-07A44DBBE52D - 738b429f15b2c3d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey, void (*)())"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "253"
+                  endingLineNumber = "253"
+                  offsetFromSymbolStart = "899">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "113FF775-B1AF-4DB9-9EBE-20D1B116D5B8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal Dispatch/Commander.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "instructionExecute(commdBuffer, instructions, indexInInstructions)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CF1947FD-6A1E-48A8-A7BD-B3EAB6192031"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal Dispatch/Dispatcher.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
+            landmarkName = "GPU_lieutenant::FIRE_AWAY()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "74835587-7FFA-42DB-BAF6-9F1916E6660E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Transfer/Transfer_Manager.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "testingTagManager::returnRandomSynthTestPairTags()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E5219B88-D061-4265-8D78-0173E4B80A8C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Storage/Var_Storage.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "279"
+            endingLineNumber = "279"
+            landmarkName = "cold_Storage::SYNTH_VAR_MANAGER::addSyntheticVariable(derVariable, derPasskey)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6BE2A3B5-835B-4276-AE0F-E742C28EAF85"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
+            landmarkName = "Relation_Equation_Constructor::addVariableDataTo_SGELSY_matrice(tagOfVar1, powerOfVar1, tagOfVar2, powerOfVar2)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6BE2A3B5-835B-4276-AE0F-E742C28EAF85 - d7b9dfb6a5b01b8d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Relation_Equation_Constructor::addVariableDataTo_SGELSY_matrice(unsigned short, unsigned short, unsigned short, unsigned short)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Relationships/Relations_Logic.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "224"
+                  endingLineNumber = "224"
+                  offsetFromSymbolStart = "1539">
+               </Location>
+               <Location
+                  uuid = "6BE2A3B5-835B-4276-AE0F-E742C28EAF85 - d7b9dfb6a5b01b20"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Relation_Equation_Constructor::addVariableDataTo_SGELSY_matrice(unsigned short, unsigned short, unsigned short, unsigned short)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Relationships/Relations_Logic.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "229"
+                  endingLineNumber = "229"
+                  offsetFromSymbolStart = "1539">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "272FEBD0-6282-488F-839F-74EB0513C6CC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "Relation_Equation_Constructor::returnSysOfEqns(relatedDSETS)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "177C9474-85E7-4058-B00F-F86C0B3AFE57"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "Relation_Equation_Constructor::calculateCoefficients(yTag)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "81BD3706-3E21-41A0-BE80-FEA3E7CBB6C9"
+            shouldBeEnabled = "No"
+            condition = "commandToExecute.reverseCopy == true"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal Dispatch/Dispatcher.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "GPU_lieutenant::executeCopyCommand(commandToExecute)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "087FD723-EAA1-4E37-88E9-34B7E81CF8BA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RelationshipClassTesting/RelationshipClassTesting.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
+            landmarkName = "RelationshipClassTesting"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "087FD723-EAA1-4E37-88E9-34B7E81CF8BA - f6cc2eb88ebd6e0c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "exploringTestingGround_Tester::generateSyntheticAddonsAndCopyDatIntoTestSlots()"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/RelationshipClassTesting/RelationshipClassTesting.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "184"
+                  endingLineNumber = "184"
+                  offsetFromSymbolStart = "244">
+               </Location>
+               <Location
+                  uuid = "087FD723-EAA1-4E37-88E9-34B7E81CF8BA - c7849b5f3a91c3fc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "exploringTestingGround_Tester::generateSyntheticAddonsAndCopyDatIntoTestSlots()::&apos;lambda&apos;(Dataset&amp;)::operator()(Dataset&amp;) const"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/RelationshipClassTesting/RelationshipClassTesting.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "185"
+                  endingLineNumber = "185"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "087FD723-EAA1-4E37-88E9-34B7E81CF8BA - f6cc2eb88ebd6e0c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "exploringTestingGround_Tester::generateSyntheticAddonsAndCopyDatIntoTestSlots()"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/RelationshipClassTesting/RelationshipClassTesting.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "184"
+                  endingLineNumber = "184"
+                  offsetFromSymbolStart = "216">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "763333EB-FE39-49D8-A3DB-4D5A6E84E106"
+            shouldBeEnabled = "No"
+            condition = "funcToExecuteAfterBufferComitt != nullptr"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal Dispatch/Dispatcher.hpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
+            landmarkName = "addCopyCommand(spanOfDataInQuestion, typeOfBuffer)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "763333EB-FE39-49D8-A3DB-4D5A6E84E106 - 490554e5b9796619"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "void GPU_lieutenant::addCopyCommand&lt;synthVarAddon&gt;(std::__1::span&lt;synthVarAddon, 18446744073709551615ul&gt;, bufferTypes, bool, void (*)())"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Dispatcher.hpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "189"
+                  endingLineNumber = "189"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "763333EB-FE39-49D8-A3DB-4D5A6E84E106 - 72cf2dd66a3e07fd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "void GPU_lieutenant::addCopyCommand&lt;float&gt;(std::__1::span&lt;float, 18446744073709551615ul&gt;, bufferTypes, bool, void (*)())"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Dispatcher.hpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "189"
+                  endingLineNumber = "189"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "763333EB-FE39-49D8-A3DB-4D5A6E84E106 - 12a0a82897bff0a9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "void GPU_lieutenant::addCopyCommand&lt;MtdtStruct&gt;(std::__1::span&lt;MtdtStruct, 18446744073709551615ul&gt;, bufferTypes, bool, void (*)())"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Dispatcher.hpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "189"
+                  endingLineNumber = "189"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "763333EB-FE39-49D8-A3DB-4D5A6E84E106 - fb984e80f86ae7c3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "void GPU_lieutenant::addCopyCommand&lt;unsigned short&gt;(std::__1::span&lt;unsigned short, 18446744073709551615ul&gt;, bufferTypes, bool, void (*)())"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Dispatcher.hpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "189"
+                  endingLineNumber = "189"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "763333EB-FE39-49D8-A3DB-4D5A6E84E106 - 8e960301421cd4b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "void GPU_lieutenant::addCopyCommand&lt;Dataset&gt;(std::__1::span&lt;Dataset, 18446744073709551615ul&gt;, bufferTypes, bool, void (*)())"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Dispatcher.hpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "189"
+                  endingLineNumber = "189"
+                  offsetFromSymbolStart = "76">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8B70B0CF-A87B-46BA-A5A1-1B4FBD631D1F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Metal Dispatch/Commander.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "instructionExecute(commdBuffer, instructions, indexInInstructions)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "81EF8008-AEA8-4BC3-84B3-C98EEC72E2D8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Storage/TestStorage_Status_logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
+            landmarkName = "statusUpdaters::ExplorationUpdaters::returnPointsCorrespondingToTag(synthTestTag, passkey)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "20A85D74-586B-4A4A-902C-49581BA26710"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "Relation_Equation_Constructor::returnSysOfEqns(relatedDSETS)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7D9AC7B4-D792-4E25-8C7A-5DEE5F4AED55"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Solver/Equation_Form_Converter.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
+            landmarkName = "BernsteinDataConverter::helperFuncs::NodeLogic::returnBernsteinAdjustedExpression(expr)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "09D63276-7C71-4C5F-986A-2017E88F494C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RelationshipClassTesting/RelationshipClassTesting.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "RelationshipClassTesting"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -24,13 +24,13 @@ const  domain metricVar::returnDomain(){return varDomain;}
 
 actionVar::actionVar(std::string nameOfVar, uint16_t tagOfVar, domain derDomain, std::string program_name_ofAction): nameOfAction{nameOfVar}, tag{tagOfVar}, varDomain{derDomain}, programName{program_name_ofAction}{}
 
-const  uint16_t actionVar::return_tag(){return tag;}
+const  uint16_t actionVar::return_tag() const{return tag;}
 
-const  std::string actionVar::return_name(){return nameOfAction;}
+const  std::string actionVar::return_name() const{return nameOfAction;}
 
-const  std::string actionVar::return_program_name(){return programName;}
+const  std::string actionVar::return_program_name() const{return programName;}
 
-const  domain actionVar::returnDomain(){return varDomain;}
+const  domain actionVar::returnDomain() const{return varDomain;}
 
 
 

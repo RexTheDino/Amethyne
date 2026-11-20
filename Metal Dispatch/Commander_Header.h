@@ -24,6 +24,6 @@ private:
 public:
     class LieutenantPasskey{friend class GPU_lieutenant; LieutenantPasskey() = default;};
     
-    static void CommanderExecute(metalDispatchCommand commandToExecute, LieutenantPasskey passkey);
+    static void CommanderExecute(metalDispatchCommand commandToExecute, LieutenantPasskey passkey, void(*addCompletedHandlerFunc)());
     
 };

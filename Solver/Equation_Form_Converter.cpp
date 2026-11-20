@@ -30,7 +30,8 @@ BernsteinDataConverter::helperFuncs::symbolAndIndex::symbolAndIndex(SymEngine::R
     index = derIndex;
 }
 
-void BernsteinDataConverter::calculateInfoBytes(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<InfoBytes>* vectorToWriteTo){
+//returns the PRODUCT OF THE METAL MATRICE DIMENSIONS
+int BernsteinDataConverter::calculateInfoBytes(SymEngine::RCP<const SymEngine::Basic> &expr, std::vector<InfoBytes>* vectorToWriteTo){
     
     if(helperFuncs::STATUS != helperFuncs::varConverterStatus::varsModifiedToBernsteinEquivalents){
         throw std::runtime_error("Variables have not been modified to bernstein-friendly terms whose domains are mapped to [0,1]!");
@@ -39,7 +40,8 @@ void BernsteinDataConverter::calculateInfoBytes(SymEngine::RCP<const SymEngine::
     std::vector<helperFuncs::perTermCoefficientAndSymbolDegrees> polynomialInfoVec;
     helperFuncs::writePerTermSymbolDegreesAndCoefficientsIntoVector(expr, &polynomialInfoVec);//fills vector
     
-    MetalMatriceDimensionsFormat matriceDimensions = convertDimensionsOfExpr(polynomialInfoVec);
+    matriceDimensionsAndTheirProduct matriceDimensionsAndProduct = convertDimensionsOfExpr(polynomialInfoVec);
+    MetalMatriceDimensionsFormat matriceDimensions = matriceDimensionsAndProduct.matriceDimensions;
     
     std::vector<varDegreesAndCoefficient> degreeAndCoeffInfo_forMetal;
     convertDegreesAndCoefficientOfExprGivenTerm(expr, polynomialInfoVec, &degreeAndCoeffInfo_forMetal);//fills vector
@@ -49,11 +51,15 @@ void BernsteinDataConverter::calculateInfoBytes(SymEngine::RCP<const SymEngine::
         InfoBytes returnStruct(matriceDimensions, degreeAndCoeffInfo_forMetal[v]);
         (*vectorToWriteTo)[v] = returnStruct;
     }
+    
+    return matriceDimensionsAndProduct.productOfDimensions;
 }
 
 //assumes the vector has already been filled wth the variable degree and coefficient info!
-MetalMatriceDimensionsFormat BernsteinDataConverter::convertDimensionsOfExpr(const std::vector<helperFuncs::perTermCoefficientAndSymbolDegrees>& ptrToPolynomialInfoVector){
-    MetalMatriceDimensionsFormat returnStruct;
+matriceDimensionsAndTheirProduct BernsteinDataConverter::convertDimensionsOfExpr(const std::vector<helperFuncs::perTermCoefficientAndSymbolDegrees>& ptrToPolynomialInfoVector){
+    matriceDimensionsAndTheirProduct returnStruct;
+    
+    MetalMatriceDimensionsFormat dimensionsStruct;
     if(ptrToPolynomialInfoVector.empty()){throw std::runtime_error("Variable degree and coefficient vector unfilled!");}
     
     std::vector<uint8_t> maxDimensions = {0,0,0,0,0,0,0,0};//8 slots corresponding to 8 variables max
@@ -63,13 +69,20 @@ MetalMatriceDimensionsFormat BernsteinDataConverter::convertDimensionsOfExpr(con
             maxDimensions[counter] = std::max(e->degree, maxDimensions[counter]);//fills with max dimensions
         }
     }
+    int product = 1;
+    for(int j = 0; j < maxDimensions.size(); j++){
+        if(maxDimensions[j] == 0){break;}
+        product *= maxDimensions[j];
+    }
     
     for (int w = 0; w < 8; w++) {
         int bitshiftVal = w < 4 ? w*2 : (w-4)*2;
-        unsigned char& modifierDimensionReference = w < 4 ? returnStruct.dimensionsOneThruFour : returnStruct.dimensionsFourThruEight;
+        unsigned char& modifierDimensionReference = w < 4 ? dimensionsStruct.dimensionsOneThruFour : dimensionsStruct.dimensionsFourThruEight;
         modifierDimensionReference = (maxDimensions[w] << bitshiftVal) | modifierDimensionReference;
     }
     
+    returnStruct.matriceDimensions = dimensionsStruct;
+    returnStruct.productOfDimensions = product;
     return returnStruct;
 }
 
@@ -232,7 +245,8 @@ RCP<const Basic> BernsteinDataConverter::helperFuncs::NodeLogic::returnBernstein
 RCP<const Basic> BernsteinDataConverter::helperFuncs::NodeLogic::returnBernsteinAdjustedSymbol(SymEngine::RCP<const SymEngine::Basic> &symbol){
     
     if(is_a<Symbol>(*symbol)){
-        uint16_t tagOfSymbol = Nucleus.coldStorage.returnTag_givenVarSymbol(symbol);
+        
+        uint16_t tagOfSymbol = Nucleus.coldStorage.returnTag_givenVarSymbol(rcp_static_cast<const SymEngine::Symbol>(symbol));
         domain domainOfSymbol = Nucleus.coldStorage.returnDomain(tagOfSymbol);
         RCP<const Basic> returnExpr = add(real_double((double)domainOfSymbol.min), mul(real_double((double)domainOfSymbol.max - (double)domainOfSymbol.min),symbol));
         return returnExpr;
@@ -281,15 +295,84 @@ RCP<const Basic> BernsteinDataConverter::helperFuncs::NodeLogic::returnBernstein
 
 
 
-void BernsteinDataConverter::processExpressionForBernsteinCoefficientsCalculation(SymEngine::RCP<const SymEngine::Basic> &expression, std::vector<InfoBytes>* ptrToInfoByteBufferThatMetalAccesses){
+int BernsteinDataConverter::processExpressionForBernsteinCoefficientsCalculation(SymEngine::RCP<const SymEngine::Basic> &expression, std::vector<InfoBytes>* ptrToInfoByteBuffer){
     
     RCP<const Basic> localCopy = expression;
     localCopy = helperFuncs::NodeLogic::returnBernsteinAdjustedExpression(expression);
         helperFuncs::STATUS = helperFuncs::varConverterStatus::varsModifiedToBernsteinEquivalents;
-    calculateInfoBytes(localCopy, ptrToInfoByteBufferThatMetalAccesses);
+    int productOfDimensions = calculateInfoBytes(localCopy, ptrToInfoByteBuffer);
     helperFuncs::STATUS = helperFuncs::varConverterStatus::varsInOriginalState;//original expression remains unmodified
+    
+    return productOfDimensions;
 }
 
 
+
+
+void calculateBernsteinCoeffs::calculateAndWriteInfoBytes_AND_NchooseR_vals(SymEngine::RCP<const SymEngine::Basic>& expr, std::vector<subcommands> subcommandsVec){
+    assert(bernCoeffStatus == bernsteinCoeffCalculationStatus::unprimed);
+    assert(subcommandsVec.empty());//shoudlnt have been filled before this
+    
+    //calculate info bytes
+    std::vector<InfoBytes> infoByteBuffer; refDat.productOfAllDimensions = BernsteinDataConverter::processExpressionForBernsteinCoefficientsCalculation(expr, &infoByteBuffer);
+    assert(infoByteBuffer.size() > 0);//shouldve been filled
+    auto& metalInfBuffer = refDat.metalInfVec;
+    for(int i = 0; i < infoByteBuffer.size(); i++){
+        InfoBytesAndN_Choose_R infBytesAndCombinatorialVals;
+        infBytesAndCombinatorialVals.the_infoBytes = infoByteBuffer[i];//n choose r vals default initialized
+        metalInfBuffer.push_back(infBytesAndCombinatorialVals);
+    }
+    
+    bernCoeffStatus = bernsteinCoeffCalculationStatus::DISPATCHED_INFO_BYTES;
+}
+
+void calculateBernsteinCoeffs::bindCalculationAndMAXMIN_FINDER_kernels(std::vector<subcommands> subcommandsVec){
+    assert(bernCoeffStatus == bernsteinCoeffCalculationStatus::DISPATCHED_INFO_BYTES);
+    assert(subcommandsVec.size() == 1);//the one command it should have is the data copy op of the infobytes
+    
+    int threadsPerGroup = 64;
+    
+    auto& metalInfBuffer = refDat.metalInfVec;
+    //stuff is broken not functioning yet fix the bernstein kernel such that you only fire it once for a whole groupp of polynomials so that the result finding func only fires once and also fix up result finder kernel to be more than just one threadgroup of 64 leaving it now just to test
+    for(int u = 0; u < metalInfBuffer.size(); u++){
+        std::span<InfoBytesAndN_Choose_R> infoByteSpan(metalInfBuffer.begin()+u, 1);//need to fire bernstein coeffs seperately for each term, and also need to copy it to the very first slot.
+        
+        GPU_lieutenant::addCopyCommand<InfoBytesAndN_Choose_R>(infoByteSpan, bufferTypes::PRIVATE_inputDataBuffer);
+        subcommandsHelper::appendDataCopyOp(infoByteSpan, bufferTypes::PRIVATE_inputDataBuffer, subcommandsVec);
+        
+        subcommandsHelper::appendKernelOp(kernels::bernstein_coefficient_calculations, refDat.productOfAllDimensions, threadsPerGroup, subcommandsVec);
+    }
+    
+    int threadgroupsForMaxMin = 1;//change later if needed
+    int threadsPerGroupForMaxMin = 64;
+    std::span<uint32_t> spanOfMatriceVolume(&refDat.productOfAllDimensions, 1);
+    GPU_lieutenant::addCopyCommand(spanOfMatriceVolume, bufferTypes::SHARED_initializerBuffer);//copy over number of points
+    subcommandsHelper::appendKernelOp(kernels::bernstein_coeffs_max_min_finder, threadgroupsForMaxMin, threadsPerGroupForMaxMin, subcommandsVec);
+    
+    bernCoeffStatus = bernsteinCoeffCalculationStatus::DISPATCHED_KERNEL_OP;
+}
+
+void calculateBernsteinCoeffs::dispatchResultCopyCommand(std::vector<subcommands> subcommandsVec){
+    assert(bernCoeffStatus == bernsteinCoeffCalculationStatus::DISPATCHED_KERNEL_OP);
+    std::span<domain> domainSpan(refDat.writeBackValsTo, 1);
+    subcommandsHelper::appendDataCopyOp<domain>(domainSpan, bufferTypes::PRIVATE_outputBuffer, subcommandsVec);//data copy op only looks at span for size and not where to write to. unlike copyCommand.
+    GPU_lieutenant::addMetalCommand(subcommandsVec);
+    
+    GPU_lieutenant::addCopyCommand(domainSpan, bufferTypes::PRIVATE_outputBuffer, false, refDat.funcToCallbackAferResult);
+    
+    bernCoeffStatus = bernsteinCoeffCalculationStatus::DISPATCHED_COPY_BACK_CMD;
+    
+    //still needs to be fired away...
+}
+
+void calculateBernsteinCoeffs::findMaxAndMinBernsteinCoeffs(SymEngine::RCP<const SymEngine::Basic>& expr, domain* writeBackResultsTo, void(*funcToCallbackAferResult)()){
+    refDat.writeBackValsTo = writeBackResultsTo;
+    //assert(funcToCallbackAferResult != nullptr);//metal is supposed to check if its nullptr
+    refDat.funcToCallbackAferResult = funcToCallbackAferResult;
+    
+    calculateAndWriteInfoBytes_AND_NchooseR_vals(expr, refDat.subcommandsVec);
+    bindCalculationAndMAXMIN_FINDER_kernels(refDat.subcommandsVec);
+    dispatchResultCopyCommand(refDat.subcommandsVec);
+}
 
 

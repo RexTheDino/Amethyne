@@ -20,6 +20,8 @@
 
 //#include "Transfer_Manager.hpp"
 
+struct transferTester;
+
 enum class RelationshipType: uint16_t;
 class groundsWatchdog;
 class statusUpdaters;
@@ -51,10 +53,16 @@ enum class variableCategory{
 };
 
 
-
+        struct testGroundResultReturn{
+            uint16_t tagOfVar;//the tag of the variable. if it was a synth then contains the synth's positon in the batch. else contains the real-tag.
+            std::span<Dataset> datasetsCorrespondingToVar;//all the datasets witht he variable as the y-tag
+            std::span<const synthVarAddon> correspondingAddons;//only to be filled if the y-tag was a test synthetic variable
+            std::span<float> spanOfCorrespondingSynthData;//only to be filled if y-tag was a synth. contains synth preprocessing results
+        };
 //testing ground to store variables in only to be moved if a relationship is found
 class TESTING_GROUND{
     friend struct exploringTestingGround_Tester;
+    struct transferTester;
     
     friend class groundsWatchdog;
     friend class statusUpdaters;
@@ -70,6 +78,7 @@ class TESTING_GROUND{
         testSynthsTagsConverted,
         testSynthsTagsUNCONVERTED
     }testSynthTagSTATUS;
+    
     //all vecs to be reserved with enough space
     struct DATA{
         friend struct exploringTestingGround_Tester;
@@ -78,7 +87,16 @@ class TESTING_GROUND{
         std::vector<synthVarAddon> morphModInstructions;//to be reserved with enough space for morph instructions
         std::vector<Dataset> results;//to contain results in the format listed in metal. is to be cleared with every batch tested. its size must be much mroe than needed.
     }Data;
+    
 public:
+    
+    testingGroundMode queryMode();
+    
+    class passkeyForDatasetTransfer{friend class Transfer_Manager; passkeyForDatasetTransfer() = default;};
+    std::span<const Dataset> returnSpanOfDatasets(passkeyForDatasetTransfer transferPasskey);//for transferring results vec.
+    std::vector<testGroundResultReturn> returnTestingResults(passkeyForDatasetTransfer transferPasskey);
+    
+    
     //returns the indice for the relationship containing the requested tag. From vector of type Dataset
     std::span<Dataset> return_req_relationTag_related_datasets(uint16_t tag, bool sort_by_y_tag = true);//returns indice of requested tag. also leaves tags sorted
     int return_yTag_of_dSet(uint16_t indexOfDset);
@@ -114,32 +132,43 @@ public:
         
         void sortSynthsByTag();//sorts synthetic variables by their tag in ascending order
         
-        //passkey required for adding a synthetic variable since constructor is private
-        class addSyntheticPasskey{friend class TransferManager; addSyntheticPasskey() = default;};
+        std::unordered_map<SymEngine::RCP<const SymEngine::Basic>, uint16_t, SymEngine::RCPBasicHash, SymEngine::RCPBasicKeyEq> synthVarMap;//symbol-tag pairs
+        
     public:
         SYNTH_VAR_MANAGER();
+        
+        //passkey required for adding a synthetic variable since constructor is private
+        class addSyntheticPasskey{friend class Transfer_Manager; addSyntheticPasskey() = default;};
         //returns the synthVarAddon operations for the specified tag
         std::vector<permanentSynthAddon>* returnOpsForRequestedTag(const uint16_t tag);
         std::string return_programNameOf_taggedVar(const uint16_t tag);//returns program name for var if stored.
-        domain returnDomainOfTaggedVar(const uint16_t tag);
+        domain returnRangeOfTaggedVar(const uint16_t tag);
         
-        void addSyntheticVariable(std::vector<permanentSynthAddon> correspondingAddons, synthVar derVariable, addSyntheticPasskey derPasskey);
+        uint16_t returnTagGivenVarSymbol(const SymEngine::RCP<const SymEngine::Symbol>& symbolToSearchFor);
+        
+        void addSyntheticVariable(synthVar derVariable, addSyntheticPasskey derPasskey);
                 uint16_t returnGroundedSynthTag();//returns the tag of a random grounded existing synthetic
                     std::vector<uint16_t> returnALL_SYNTH_TAGS();//tag of every single synthetic variable currently existing
     }synthVarManager;
     
         class TransferManagerPasskey{friend class Transfer_Manager; TransferManagerPasskey() = default;};
+        void addDataset(Dataset dataSetToAdd, TransferManagerPasskey thePasskey);
+        std::span<Dataset> returnDatasets_relatedTo_tag(uint16_t relatedTag);//sorts the datasets by y-tag and returns span of the datasets related to tag in y-tag as a span.
+    
     void addActionVar(TransferManagerPasskey passkey, actionVar varToAdd);
     void addMetricVar(TransferManagerPasskey passkey, metricVar varToAdd);
     
     //returns the tag for a symbol
-    uint16_t returnTag_givenVarSymbol(SymEngine::RCP<const SymEngine::Basic> varSymbol);
+    uint16_t returnTag_givenVarSymbol(const SymEngine::RCP<const SymEngine::Symbol>& varSymbol);
     SymEngine::RCP<const SymEngine::Basic>& returnReferenceToRequestedSymbol(uint16_t tag);
     std::string return_programNameOf_taggedVar(const uint16_t tag);//returns program name for var if stored.
     domain returnDomain(uint16_t tag);
     std::string returnProgName_given_UserAlottedName(std::string UserAlottedName);
+    std::string returnUserAlottedName_givenSymbol(SymEngine::RCP<const SymEngine::Basic> symbol);
     //checks what kind of tag it is through the modulo operator
     variableCategory returnVarType_givenTag(uint16_t tag);
+    const actionVar& returnConstReferenceToActionVar(uint16_t tag);
+    const metricVar& returnConstReferenceToMetricVar(uint16_t tag);
 /*    A synthetic variable is grounded if and only if the chain/path it takes down towards the variables that comprise its base types are composed of action or metric variables.
 
     This means that when relationships are attempted to be found, action variables can only ever be on the x_tag portion which is the independent variable, never the y_tag portion! 

@@ -5,7 +5,6 @@
 //  Created by AnshuDiya on 11/3/26.
 //
 
-#pragma once
 
 #include <stdio.h>
 #include "Variable_Gen_Header.hpp"
@@ -16,37 +15,37 @@ using namespace std;
 
  synthVarAddon::synthVarAddon(morphOps morphInstruction, modOps modInstruction, uint16_t assignedTag): morph{morphInstruction}, mod{modInstruction}, tag{assignedTag}{}
 
- uint16_t synthVarAddon::returnTag(){return tag;}
+ uint16_t synthVarAddon::returnTag() const{return tag;}
 
- morphOps synthVarAddon::returnMorphOp(){return morph;}
+ morphOps synthVarAddon::returnMorphOp() const{return morph;}
 
- modOps synthVarAddon::returnModOp(){return mod;}
-
-
-
-permanentSynthAddon::permanentSynthAddon(status derStatus, linkage derLinkage, synthVarAddon derAddon): STATUS{derStatus}, LINKAGE{derLinkage}, addon{derAddon}{}
-
- permanentSynthAddon::status permanentSynthAddon::returnSTATUS(){return STATUS;}
-
- permanentSynthAddon::linkage permanentSynthAddon::returnLINKAGE(){return LINKAGE;}
-
- uint16_t permanentSynthAddon::returnAddonTag(){return addon.returnTag();}
-
- morphOps permanentSynthAddon::returnAddonMorphOp(){return addon.returnMorphOp();}
-
- modOps permanentSynthAddon::returnAddonModOp(){return addon.returnModOp();}
+ modOps synthVarAddon::returnModOp() const{return mod;}
 
 
 
- synthVar::synthVar(uint16_t derTag, uint16_t derAddonStartIndex, domain domainOfVar): tag{derTag}, synthAddonStartIndice{derAddonStartIndex}, derDomain{domainOfVar}{}
+permanentSynthAddon::permanentSynthAddon(linkage derLinkage, synthVarAddon derAddon): LINKAGE{derLinkage}, addon{derAddon}{}
+
+ permanentSynthAddon::linkage permanentSynthAddon::returnLINKAGE() const{return LINKAGE;}
+
+ uint16_t permanentSynthAddon::returnAddonTag() const{return addon.returnTag();}
+
+ morphOps permanentSynthAddon::returnAddonMorphOp() const{return addon.returnMorphOp();}
+
+ modOps permanentSynthAddon::returnAddonModOp() const{return addon.returnModOp();}
+
+
+
+synthVar::synthVar(uint16_t derTag, std::span<permanentSynthAddon> linkedAddons, std::string assigned_prog_name): tag{derTag}, addonsVarIsLinkedTo{linkedAddons}, program_name{assigned_prog_name}{}
 
 const uint16_t synthVar::returnTag(){return tag;}
 
-uint16_t synthVar::returnStartIndice(){return synthAddonStartIndice;}
+std::span<const permanentSynthAddon> synthVar::returnLinkedAddons() const{  std::span<const permanentSynthAddon> returnVal = addonsVarIsLinkedTo; return returnVal;}
 
-domain synthVar::returnDomain(){return derDomain;}
+std::string synthVar::returnName() const{return program_name;}
 
-std::string synthVar::returnName(){return program_name;}
+domain synthVar::returnRange() const{if(rangeOfSynth.has_value()){return rangeOfSynth.value();}else{throw std::runtime_error("Synthetic variable did not have range defined when it was requested!");}}
+
+
     
 
 

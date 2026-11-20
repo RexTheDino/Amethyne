@@ -56,8 +56,6 @@
 		EF99E28C30A8EB17001B84AA /* Nucleus.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EF99E28A30A8EB17001B84AA /* Nucleus.hpp */; };
 		EFBB8CB530A84F9A00528F5E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBB8CB430A84F9A00528F5E /* Accelerate.framework */; };
 		EFBB8CB730A850B300528F5E /* libflint.24.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBB8CB630A850B300528F5E /* libflint.24.0.dylib */; };
-		EFD1543830AA76A00064C7EB /* GPU_Messenger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EFD1543630AA76A00064C7EB /* GPU_Messenger.cpp */; };
-		EFD1543930AA76A00064C7EB /* GPU_Messenger.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EFD1543730AA76A00064C7EB /* GPU_Messenger.hpp */; };
 		EFE5A3A830A3FC8E004B0708 /* Accelerate_initialization_data.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE5A3A730A3FC8E004B0708 /* Accelerate_initialization_data.h */; };
 		EFE5A3B030A45445004B0708 /* Data_logs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EFE5A3AE30A45445004B0708 /* Data_logs.cpp */; };
 		EFE5A3B130A45445004B0708 /* Data_logs.hpp in Headers */ = {isa = PBXBuildFile; fileRef = EFE5A3AF30A45445004B0708 /* Data_logs.hpp */; };
@@ -134,8 +132,7 @@
 		EF99E28A30A8EB17001B84AA /* Nucleus.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Nucleus.hpp; sourceTree = "<group>"; };
 		EFBB8CB430A84F9A00528F5E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		EFBB8CB630A850B300528F5E /* libflint.24.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libflint.24.0.dylib; path = ../../../../../usr/local/Cellar/flint/3.6.0/lib/libflint.24.0.dylib; sourceTree = "<group>"; };
-		EFD1543630AA76A00064C7EB /* GPU_Messenger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GPU_Messenger.cpp; sourceTree = "<group>"; };
-		EFD1543730AA76A00064C7EB /* GPU_Messenger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GPU_Messenger.hpp; sourceTree = "<group>"; };
+		EFD1543A30ABB5E10064C7EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EFE5A3A730A3FC8E004B0708 /* Accelerate_initialization_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Accelerate_initialization_data.h; sourceTree = "<group>"; };
 		EFE5A3AE30A45445004B0708 /* Data_logs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Data_logs.cpp; sourceTree = "<group>"; };
 		EFE5A3AF30A45445004B0708 /* Data_logs.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Data_logs.hpp; sourceTree = "<group>"; };
@@ -170,6 +167,7 @@
 		EF1DB42130982B6A00C6443C /* RelationshipClassTesting */ = {
 			isa = PBXGroup;
 			children = (
+				EFD1543A30ABB5E10064C7EB /* Info.plist */,
 				EF1DB42230982B6A00C6443C /* RelationshipClassTesting.mm */,
 			);
 			path = RelationshipClassTesting;
@@ -308,8 +306,6 @@
 				EF2545E230A78B4800426F13 /* Dispatcher.hpp */,
 				EF2545E530A7ABD300426F13 /* Commander.mm */,
 				EF2545E730A7AC7E00426F13 /* Commander_Header.h */,
-				EFD1543630AA76A00064C7EB /* GPU_Messenger.cpp */,
-				EFD1543730AA76A00064C7EB /* GPU_Messenger.hpp */,
 			);
 			path = "Metal Dispatch";
 			sourceTree = "<group>";
@@ -406,7 +402,6 @@
 				EF49D1FD30A2FB6F00E63E9D /* Transfer_Manager.hpp in Headers */,
 				EF1DB462309AD58D00C6443C /* Metadata.h in Headers */,
 				EF99E28C30A8EB17001B84AA /* Nucleus.hpp in Headers */,
-				EFD1543930AA76A00064C7EB /* GPU_Messenger.hpp in Headers */,
 				EF2545DB30A68F8800426F13 /* Passkeys.h in Headers */,
 				EF1DB41B309823EB00C6443C /* Initialization_Data_header.hpp in Headers */,
 				EF2545E830A7AC7E00426F13 /* Commander_Header.h in Headers */,
@@ -537,7 +532,6 @@
 				EF2545E630A7ABD300426F13 /* Commander.mm in Sources */,
 				EF5119A430A12CC60072B851 /* Bernstein_Coefficients.metal in Sources */,
 				EF1DB456309A7FF800C6443C /* Base_types.cpp in Sources */,
-				EFD1543830AA76A00064C7EB /* GPU_Messenger.cpp in Sources */,
 				EF78404130A53B8A006CB5E0 /* Accelerate_Init_Logic.cpp in Sources */,
 				EF1DB45B309A8F7600C6443C /* Var_Storage.cpp in Sources */,
 				EFE5A3B030A45445004B0708 /* Data_logs.cpp in Sources */,
@@ -577,6 +571,8 @@
 					"values>",
 					/opt/local/include,
 				);
+				INFOPLIST_FILE = RelationshipClassTesting/Info.plist;
+				INFOPLIST_KEY_MetalCaptureEnabled = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"<Multiple/**",
 					"values>/**",
@@ -609,6 +605,8 @@
 					"values>",
 					/opt/local/include,
 				);
+				INFOPLIST_FILE = RelationshipClassTesting/Info.plist;
+				INFOPLIST_KEY_MetalCaptureEnabled = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"<Multiple",
 					"values>",

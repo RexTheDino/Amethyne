@@ -10,14 +10,15 @@
 using namespace metal;
 
 //to be constructed from the start of the buffer
-enum class morphOperations{
+enum class morphOperations: uint16_t{
     add = 1,
     subtract = 2,
     multiply = 3
 };
-enum class modOperations{
+enum class modOperations: uint16_t{
     recp = 1,
-    square = 2
+    square = 2,
+    none = 3
 };
 
 struct operations{
@@ -56,6 +57,11 @@ float modOpCalculator(modOperations modOp, float valToModify){
         case modOperations::square:
             return (valToModify*valToModify);
             break;
+        case modOperations::none:
+            return valToModify;//dont do anything
+            break;
+        default:
+            break;
     }
 }
 
@@ -63,8 +69,8 @@ float modOpCalculator(modOperations modOp, float valToModify){
 //also set bytes in metadata to format outlined above plz
 //  !!!dispatched in threadgroups of 64 where each threadgroup handles one chain of instructions!!!
 kernel void syntheticsPreprocesser(device const MtdtStruct* metadata [[buffer(0)]],
-                                   device float* data[[buffer(1)]],//private buffer. write results back to this buffer!
-                                   device const synthVarAddonCopy* instructions[[buffer(2)]],
+                                   device float* data[[buffer(2)]],//private buffer. write results back to this buffer!
+                                   device const synthVarAddonCopy* instructions[[buffer(3)]],
                                    uint16_t group_id [[threadgroup_position_in_grid]],
                                    uint16_t simd_id [[thread_index_in_simdgroup]]){//private buffer! synthetic relaitonship processing occurs immediately afterwards
     MtdtStruct mtdt = *metadata;//equivaelnt to metadata[0]
@@ -77,6 +83,14 @@ kernel void syntheticsPreprocesser(device const MtdtStruct* metadata [[buffer(0)
         //threadgroup one means 1st group of instructions. group 3 means 3rd group of synthetics.
         synthVarAddonCopy currentInstructions = *(instructions+(mtdt.num_terms_per_synthetic * group_id)+f);//instruction it grabs depends on what threadgroup it was
         //var tag will start from 0 and only be even nums since only even testing tags are provided for synth preprocessing
+        
+                        //FOR DEBUGGING
+                        modOperations currentModOp = static_cast<modOperations>(currentInstructions.ops.modOps);
+                        morphOperations currentMorphOp = static_cast<morphOperations>(currentInstructions.ops.morphOps);
+                        uint16_t intModOp = static_cast<uint16_t>(currentModOp);
+                        uint16_t intMorphOp = static_cast<uint16_t>(currentMorphOp);
+                    if((intModOp == 99)||(intMorphOp == 99)){return;}//to keep compiler from removing it as dead code
+        
         indiceToDereference = (currentInstructions.var_tag * pointsPerVarAsMultipleOfSixtyFour * 64)+(64*h)+simd_id;//if at tag 3 & 128pts and simd_id 1, goes to indice 384 which is correct
         calculatedVal = data[indiceToDereference];
         calculatedVal = modOpCalculator(currentInstructions.ops.modOps, calculatedVal);

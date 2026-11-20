@@ -54,7 +54,10 @@ void syntheticTracker::logData(float data){
     std::chrono::time_point<std::chrono::high_resolution_clock, std::chrono::nanoseconds> currentTime = std::chrono::high_resolution_clock::now();
     dataLog derLog; derLog.timeStamp = currentTime; derLog.data = data;
     if(data == -69.420f){data = logs[logs.size()-1].data;}//if data point provided is -69.420, then set to previous val
-    if(cache.size() < RelationConstructionMetadata::points_per_var){
+    
+    if(logs.size() < RelationConstructionMetadata::points_per_var){
+        logs.push_back(derLog);
+    } else if(cache.size() < RelationConstructionMetadata::points_per_var){
         cache.push_back(derLog);
     }else{
         std::transform(cache.begin(), cache.end(), logs.begin(), logs.begin(), [&](dataLog& cacheLog, dataLog& dLog){
@@ -78,11 +81,19 @@ void LOGS_MANAGER::addDataTracker(std::string nameOfTrackedVariable){
     }
 }
 
-void LOGS_MANAGER::addSyntheticTracker(uint16_t linkedTag){
+void LOGS_MANAGER::addSyntheticTracker(uint16_t linkedTag, std::span<float> dataToinitializeWith){
+    assert(dataToinitializeWith.size() > 0);//the data calculated through synth processing!
+    
     std::string nameForSynthTracker = synthetic_parser::varNameReturn(linkedTag);//returns name for the synthetic variable
     if(syntheticTrackerMap.find(linkedTag) == syntheticTrackerMap.end()){
         syntheticTracker newSyntheticTracker(nameForSynthTracker);
         syntheticTrackerMap.insert_or_assign(linkedTag, newSyntheticTracker);
+        
+        auto theSynthTracker_ITER = syntheticTrackerMap.find(linkedTag); assert(theSynthTracker_ITER != syntheticTrackerMap.end());
+        auto& theSynthTracker = theSynthTracker_ITER->second;
+        for(int k = 0; k < dataToinitializeWith.size(); k++){
+            theSynthTracker.logData(dataToinitializeWith[k]);//logs data calculated for the synth
+        }
     }else{
         throw std::invalid_argument("Synthetic tracker already exists, cant add it agan!!");
     }
@@ -97,7 +108,7 @@ void LOGS_MANAGER::logDat(std::span<progNameAndDat> varNamesAndData){
             iterator->second.logData(varNamesAndData[b].data);
             foundKeys[varNamesAndData[b].progName] = &iterator->second;//record what keys have already been logged
         }else{
-            SymEngine::RCP<const SymEngine::Basic> varSymbol = SymEngine::symbol(varNamesAndData[b].progName);
+            SymEngine::RCP<const SymEngine::Symbol> varSymbol = SymEngine::symbol(varNamesAndData[b].progName);
             uint16_t tagOfVar = Nucleus.coldStorage.returnTag_givenVarSymbol(varSymbol);
             auto synthIterator = syntheticTrackerMap.find(tagOfVar);
             if(synthIterator != syntheticTrackerMap.end()){
@@ -134,7 +145,7 @@ void LOGS_MANAGER::logDat(std::span<progNameAndDat> varNamesAndData){
 }*/
 
 std::span<dataLog> LOGS_MANAGER::returnDataOfRequestedTracker(std::string program_name_of_var){
-    SymEngine::RCP<const SymEngine::Basic> varSymbol = SymEngine::symbol(program_name_of_var);
+    SymEngine::RCP<const SymEngine::Symbol> varSymbol = SymEngine::symbol(program_name_of_var);
     uint16_t varTag = Nucleus.coldStorage.returnTag_givenVarSymbol(varSymbol);
     if((Nucleus.coldStorage.returnVarType_givenTag(varTag) == variableCategory::action) || (Nucleus.coldStorage.returnVarType_givenTag(varTag) == variableCategory::metric)){
         auto derTrackerIterator = trackerMap.find(program_name_of_var);
@@ -144,7 +155,7 @@ std::span<dataLog> LOGS_MANAGER::returnDataOfRequestedTracker(std::string progra
     }else if(Nucleus.coldStorage.returnVarType_givenTag(varTag) == variableCategory::synthetic){
         auto trackerIterator = syntheticTrackerMap.find(varTag);
         assert(trackerIterator != syntheticTrackerMap.end());
-        syntheticTracker theTracker = trackerIterator->second;
+        syntheticTracker& theTracker = trackerIterator->second;
         return theTracker.returnData();
     }else{
         throw std::invalid_argument("Variable with given program name does not exist!");

@@ -44,11 +44,13 @@ void Relation_Equation_Constructor::organization::sort_by_tag(bool ascending, bo
 
 Dataset::Dataset(uint16_t tagX, uint16_t tagY, RelationshipType derRelation): xTag{tagX}, yTag{tagY}, relationBetweenVars{derRelation}{}
 
-const uint16_t Dataset::returnYtag(){return yTag;}
+Dataset::Dataset(){xTag = 69; yTag = 69; relationBetweenVars = RelationshipType::sentinel;}
 
-const uint16_t Dataset::returnXtag(){return xTag;}
+const uint16_t Dataset::returnYtag() const{return yTag;}
 
-const RelationshipType Dataset::returnRelation(){return relationBetweenVars;}
+const uint16_t Dataset::returnXtag() const{return xTag;}
+
+const RelationshipType Dataset::returnRelation() const{return relationBetweenVars;}
 
 vector<float>* Relation_Equation_Constructor::sgels_data::call_sgels(){
     float queryResult = 0.0f;
@@ -67,7 +69,8 @@ SymEngine::RCP<const SymEngine::Basic> Relation_Equation_Constructor::calculateC
     
     calculate_SGELSY sgelsy_calc;
         auto& initDat = sgelsy_calc.initDat;
-    std::span<Dataset> relatedDatasets = Nucleus.testingGround.return_req_relationTag_related_datasets(yTag);
+    std::span<Dataset> relatedDatasets = Nucleus.coldStorage.returnDatasets_relatedTo_tag(yTag);//Nucleus.testingGround.return_req_relationTag_related_datasets(yTag);//modify later to request tags from cold storage
+    if(relatedDatasets.size() <= 0){SymEngine::RCP<const SymEngine::Basic> nullexpr; return nullexpr;}
     auto systemOfEqns = returnSysOfEqns(relatedDatasets);//ALSO FILLS MATRIX WITH REQ POINTS!
     
         int calculatedRank;
@@ -108,9 +111,14 @@ using namespace std;
 //a system of equations ofr all the variables related to a single variable since all y-tags in dsets are supposed to be the same. only x-tags differ
 span<SymEngine::RCP<const SymEngine::Basic>> Relation_Equation_Constructor::returnSysOfEqns(const std::span<Dataset> relatedDSETS){
     systemOfEquations.clear();
-    if(relatedDSETS.size() > 8){throw std::runtime_error("COMBINATORIAL EXPLOSION OF NUMBER OF VARIABLES!");}
+    /*if(relatedDSETS.size() > 8){
+        std::uniform_int_distribution<int> selectRandDSet(0, (int)relatedDSETS.size()-1);
+        
+        throw std::runtime_error("COMBINATORIAL EXPLOSION OF NUMBER OF VARIABLES!");
+        
+    }*/
     using namespace SymEngine;
-    for(int b = 0; b < relatedDSETS.size(); b++){
+    for(int b = 0; b < (relatedDSETS.size() <= 8 ? relatedDSETS.size() : 8); b++){//if more than 8 dsets just choose first 
         int numTimesToRunBasedOnPow;
         switch (relatedDSETS[b].returnRelation()) {
             case RelationshipType::linear:
@@ -128,7 +136,7 @@ span<SymEngine::RCP<const SymEngine::Basic>> Relation_Equation_Constructor::retu
                 break;
         }
         RCP<const Basic> dominantVariable = symbol(synthetic_parser::varNameReturn(relatedDSETS[b].returnXtag()));
-        for(int h = b+1; h < relatedDSETS.size(); h++){
+        for(int h = b+1; h < (relatedDSETS.size() <= 8 ? relatedDSETS.size() : 8); h++){
             RCP<const Basic> twoTermPair = integer(0);//all the combinations of powers between two terms
             RCP<const Basic> nonDominantVariable = symbol(synthetic_parser::varNameReturn(relatedDSETS[h].returnXtag()));//all y-tags in the datasets should be the same
             int maxDegreeOfNonDominant;
@@ -173,15 +181,20 @@ void Relation_Equation_Constructor::addVariableDataTo_SGELSY_matrice(uint16_t ta
     std::string progNameVar1 = synthetic_parser::varNameReturn(tagOfVar1);
     std::string progNameVar2 = synthetic_parser::varNameReturn(tagOfVar2);
         auto var1DataSpan = Nucleus.logsManager.returnDataOfRequestedTracker(progNameVar1);
+    std::span<dataLog> var2DataSpan;
+    if(powerOfVar2 != 0){//if calculating for multipel variables then request var 2 data span.
         auto var2DataSpan = Nucleus.logsManager.returnDataOfRequestedTracker(progNameVar2);
+    }
     
     int sizeOfDat = RelationConstructionMetadata::points_per_var_eqn_construct_calculation_SGELSY;
             functionWork.clear();
             functionWork.reserve(sizeOfDat);
-                //transfers var 2's data over to function work
-                std::transform(var2DataSpan.begin(), var2DataSpan.end(), std::back_inserter(functionWork), [&](dataLog& dLog){
-                    return dLog.data;
-                });
+    if(powerOfVar2 != 0){
+        //transfers var 2's data over to function scratch work
+        std::transform(var2DataSpan.begin(), var2DataSpan.end(), std::back_inserter(functionWork), [&](dataLog& dLog){
+            return dLog.data;
+        });
+    }
     int strideSize = int(var1DataSpan.size()/sizeOfDat);
     //if matrix does not have enough capacity to hold new data, reserve enough
     if((matriceData.capacity()-matriceData.size()) <= sizeOfDat){matriceData.reserve(matriceData.capacity()+sizeOfDat+1);}

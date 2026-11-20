@@ -18,6 +18,7 @@
 #import <Metal/Metal.h>
 #include <iostream>
 #include "SynthAddon_gen.hpp"
+#include "Equation_Form_Converter.hpp"
 #include <random>
 
 @interface RelationshipClassTesting : XCTestCase
@@ -55,8 +56,9 @@ struct trackerTester{
         varCreation variableCreator;
         
         std::vector<std::string> progNames; progNames.reserve(numActionVariables + numMetricVariables);
-        std::uniform_real_distribution<float> randDomain(0, 1000.0);
-        domain selectedDomain(randDomain(Amethyne_rand), 1001.5);
+        std::uniform_real_distribution<float> randDomain(50.0f, 200.0f);
+                float selectedMinDomain = randDomain(Amethyne_rand);
+        domain selectedDomain(selectedMinDomain, selectedMinDomain + 50.0f);
         std::string prefix = "actionTest";
         std::string userAlottedName;
         std::string programName;
@@ -77,22 +79,39 @@ struct trackerTester{
         domainAndVecOfProgNames returnStruct(selectedDomain, progNames);
         return returnStruct;
     }
-    static void addData(int numPtsToAdd, domain domainOfDat, int numTotalVariables, std::vector<std::string> programNames){//returns the vector of data it added
+    static void addData(int numPtsToAdd, domain domainOfDat, int numTotalVariables, std::vector<std::string> programNames){ //returns the vector of data it added
             assert(numTotalVariables == programNames.size());
-        assert((numPtsToAdd < RelationConstructionMetadata::points_per_var)&&(numPtsToAdd > 4));
+        assert((numPtsToAdd <= RelationConstructionMetadata::points_per_var)&&(numPtsToAdd > 4));
         
+        
+        float averageDomain = (domainOfDat.max + domainOfDat.min)/2;
         std::uniform_real_distribution<float> randPoints(domainOfDat.min, domainOfDat.max);
         
         std::vector<progNameAndDat> testVec; testVec.reserve(numTotalVariables);
         std::vector<progNameAndVectorOfData> dataVec; dataVec.resize(numTotalVariables);
         
         for(int o = 0; o < numTotalVariables; o++){
+            std::uniform_real_distribution<float> randNearConstPoints(averageDomain - (averageDomain * o/2), averageDomain + (averageDomain * o/2));
+            
             dataVec[o].vecOfData.resize(numPtsToAdd);
             dataVec[o].progName = programNames[o];
             
             for(int y = 0; y < numPtsToAdd; y++){
-                float randPoint = randPoints(Amethyne_rand);
-                dataVec[o].vecOfData[y] = randPoint;
+                //float randPoint = randPoints(Amethyne_rand);
+                
+                float nearConstPoint = randNearConstPoints(Amethyne_rand);
+                float linearPoint = nearConstPoint + (10 * y);
+                float quadraticPoint = nearConstPoint + (0.5 * y * y);
+                
+                if(o%10 == 0){
+                    dataVec[o].vecOfData[y] = linearPoint;
+                }else if(o%5 == 0){
+                    dataVec[o].vecOfData[y] = quadraticPoint;
+                }else{
+                    dataVec[o].vecOfData[y] = nearConstPoint;
+                }
+                
+                //dataVec[o].vecOfData[y] = randPoint;
             }
         }
         
@@ -132,16 +151,51 @@ struct synthVarGenTester{
     }
 };
 
-/*struct exploringTestingGround_Tester{
-    static float generateSyntheticAddonsAndCopyDatIntoTestSlots(){
-        groundsWatchdog::setTestingGroundMode(testingGroundMode::exploring);
-        
-        //statusUpdaters::ExplorationUpdaters::generateSyntheticAddons();
-        //statusUpdaters::ExplorationUpdaters::copyRealDataIntoTestTagSlots();
-        
-        return  Nucleus.testingGround.Data.testVarsStorage[(2 * RelationConstructionMetadata::points_per_var) +1];
+struct transferTester{
+    static void transferDSetsAndCallSGELS_Y(){
+        Nucleus.TransferManager.transferTestingResultsToColdStorage();
+        auto allTags = Nucleus.coldStorage.returnALL_TAGS();
+        assert(allTags.size() != 0);
+        for(int y = 0; y < allTags.size(); y++){
+            if(Nucleus.coldStorage.returnVarType_givenTag(allTags[y]) != variableCategory::action){
+                SymEngine::RCP<const SymEngine::Basic> resultExprofRelatedDatasets = Relation_Equation_Constructor::calculateCoefficients(allTags[y]);
+                if(!resultExprofRelatedDatasets.is_null()){//its null when it has no relations.
+                    calculateBernsteinCoeffs calcTheCoeffs;
+                    domain bernsteinResultWriteback(0.0f,0.0f);//should be overwritten by metal results.
+                    calcTheCoeffs.findMaxAndMinBernsteinCoeffs(resultExprofRelatedDatasets, &bernsteinResultWriteback, nullptr);
+                }
+            }
+        }
     }
-};*/
+};
+
+struct exploringTestingGround_Tester{
+    static void generateSyntheticAddonsAndCopyDatIntoTestSlots(){
+        groundsWatchdog::setTestingGroundMode(testingGroundMode::exploring);
+        std::vector<subcommands> vecToModify;
+        statusUpdaters::ExplorationUpdaters::explorationReference referenceDat;
+        
+        statusUpdaters::ExplorationUpdaters::generateSyntheticAddons(vecToModify, referenceDat);//statusUpdaters::ExplorationUpdaters::GENERATE_RIGGED_SYNTHETIC_ADDONS(vecToModify, referenceDat);
+        statusUpdaters::ExplorationUpdaters::copyRealDataIntoTestTagSlots(vecToModify, referenceDat);
+        statusUpdaters::ExplorationUpdaters::initializeMetadata(vecToModify, referenceDat);
+        statusUpdaters::ExplorationUpdaters::dispatchSynthPreprocessing(vecToModify, referenceDat);
+        statusUpdaters::ExplorationUpdaters::initializeDerivedDiffsMtdt(vecToModify, referenceDat);//statusUpdaters::ExplorationUpdaters::initializeRIGGED_DERIVED_DIFFS_MTDT(vecToModify, referenceDat);
+        statusUpdaters::ExplorationUpdaters::dispatchRelationEstimation(vecToModify, referenceDat);
+        statusUpdaters::ExplorationUpdaters::copyPostProcessingResultsAndPointsToVecs(vecToModify, referenceDat);
+        
+        GPU_lieutenant::FIRE_AWAY();
+        
+        auto& theResults = Nucleus.testingGround.Data.results;
+        auto isThereRelation = std::find_if(theResults.begin(), theResults.end(), [](Dataset& dSet){
+            return dSet.returnRelation() != RelationshipType::null;
+        });
+        if(isThereRelation != theResults.end()){std::cout << "found relationship!!! at: "; int dist = (int)std::distance(theResults.begin(), isThereRelation); std::cout << dist;}
+        
+        transferTester::transferDSetsAndCallSGELS_Y();
+        
+        //return  Nucleus.testingGround.Data.testVarsStorage[(2 * RelationConstructionMetadata::points_per_var) +1];
+    }
+};
 
 
 - (void)setUp {
@@ -180,15 +234,15 @@ struct synthVarGenTester{
 }
 
 -(void)testActionAndMetricCreation{//works
-    domainAndVecOfProgNames initializerStruct = trackerTester::addRequestedVariables(20, 15);
-    trackerTester::addData(65, initializerStruct.theDomain, 35, initializerStruct.theProgramNames);
+    domainAndVecOfProgNames initializerStruct = trackerTester::addRequestedVariables(2, 3);
+    trackerTester::addData(128, initializerStruct.theDomain, 5, initializerStruct.theProgramNames);
 }
 
 
 
 -(void)testAddonGen{
     
-    
+    exploringTestingGround_Tester::generateSyntheticAddonsAndCopyDatIntoTestSlots();
 }
 
 

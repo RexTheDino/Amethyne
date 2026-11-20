@@ -14,6 +14,53 @@
 
 
 
+
+synthVarGen::riggedSynthVarFuncReturn synthVarGen::createAndWrite_RIGGED_synthVars(uint16_t numVarsToCreate, std::vector<synthVarAddon> &resultVec, addonGenPasskey passkey){
+    
+    riggedSynthVarFuncReturn returnRigs;
+    
+    tagAssigner::testTagManager.createTestTags();//it clears existing test tags and creates new ones.
+    
+    uint16_t numAddons = 2;//rigged to only be 2 addon
+
+if(resultVec.size() <= ((numVarsToCreate - 1) * numAddons) + (numAddons -1)){resultVec.resize(((numVarsToCreate -1) * numAddons) + numAddons);}
+
+for(int b = 0; b < numVarsToCreate; b++){
+    std::vector<uint16_t> tagsToPickFrom = Nucleus.coldStorage.returnRandTags(numAddons);
+    assert(tagsToPickFrom.size() == numAddons);
+    for(int j = 0; j < numAddons; j++){
+        //the addon is assigned a tag from teh testing tag naming system. the tag is converted to the testing tag system before proceeding.
+        uint16_t tag = tagAssigner::testTagManager.realTagToTestTag(tagsToPickFrom[j]);//tagAssigner::testTagManager.testSynthTagCounterpartOfRealTag(tagsToPickFrom[j]);
+        
+        uint16_t morphOpsCount = static_cast<uint16_t>(morphOps::count);
+        assert(morphOpsCount > 1);
+        
+        std::bernoulli_distribution addOrMultiply(0.5);
+        bool toAddOrToMultiply = addOrMultiply(Amethyne_rand);
+        
+        morphOps morphOp;
+        if(toAddOrToMultiply){
+            morphOp = morphOps::add;//rigged to be only add or multilply fo rnow
+        }else{
+            morphOp = morphOps::multiply;
+        }
+        
+        synthVarAddon derAddon(morphOp, modOps::none, tag);//create the addon
+        resultVec[(b * numAddons)+j] = derAddon;
+        
+        riggedSynthVar_Info resultStruct; resultStruct.baseTag = tag; resultStruct.theAddonApplied = derAddon;
+        returnRigs.riggedAddons.push_back(resultStruct);
+    }
+}
+numAddonsPerTestSynth numberOfAddons;
+numberOfAddons.numAddons = numAddons;
+currentAddonsPerTestSynth = numAddons;
+    returnRigs.numAddons = numberOfAddons;
+return returnRigs;
+}
+
+
+
 //passkey only constructable by the status updater of testing ground
 //this funciton has a vector reference directly passed to it because there is no way beforehand to know how many slots are needed cuz random # of addons
 numAddonsPerTestSynth synthVarGen::createAndWriteSynthVars(uint16_t numVarsToCreate, std::vector<synthVarAddon>& resultVec, addonGenPasskey passkey){
@@ -28,14 +75,14 @@ numAddonsPerTestSynth synthVarGen::createAndWriteSynthVars(uint16_t numVarsToCre
         numAddons = four_to_eight_termDistr(Amethyne_rand);
     }
     
-    if(resultVec.size() <= (numVarsToCreate * numAddons) + numAddons){resultVec.resize((numVarsToCreate * numAddons)+numAddons+1);}
+    if(resultVec.size() <= ((numVarsToCreate - 1) * numAddons) + (numAddons -1)){resultVec.resize(((numVarsToCreate -1) * numAddons) + numAddons);}
     
     for(int b = 0; b < numVarsToCreate; b++){
         std::vector<uint16_t> tagsToPickFrom = Nucleus.coldStorage.returnRandTags(numAddons);
         assert(tagsToPickFrom.size() == numAddons);
         for(int j = 0; j < numAddons; j++){
             //the addon is assigned a tag from teh testing tag naming system. the tag is converted to the testing tag system before proceeding.
-                uint16_t tag = tagAssigner::testTagManager.testSynthTagCounterpartOfRealTag(tagsToPickFrom[j]);
+            uint16_t tag = tagAssigner::testTagManager.realTagToTestTag(tagsToPickFrom[j]);//tagAssigner::testTagManager.testSynthTagCounterpartOfRealTag(tagsToPickFrom[j]);
             
             uint16_t morphOpsCount = static_cast<uint16_t>(morphOps::count);
             uint16_t modOpsCount = static_cast<uint16_t>(modOps::count);

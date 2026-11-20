@@ -64,7 +64,7 @@ class LOGS_MANAGER{
 public:
     //routed through transfer manager to first update cold storage
     void addDataTracker(std::string nameOfTrackedVariable);
-    void addSyntheticTracker(uint16_t linkedTag);
+    void addSyntheticTracker(uint16_t linkedTag, std::span<float> dataToinitializeWith);
     //also routed through transfer manager to convert different types of data into their appropriate float counterparts
     void logDat(std::span<progNameAndDat> varNamesAndData);//logs a new data point for ALL trackers, even ones not listed. whats not listed defaults to the previous value.
     //static void logSyntheticData(std::span<synthDataUpdateInfo> dataUpdateMtdt);
