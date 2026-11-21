@@ -67,11 +67,11 @@ numAddonsPerTestSynth synthVarGen::createAndWriteSynthVars(uint16_t numVarsToCre
     
         tagAssigner::testTagManager.createTestTags();//it clears existing test tags and creates new ones.
     //decides the number of terms. 80% chance of 2-term, 13% chance of 3 term, and 7% chance of 4-8 terms
-    std::discrete_distribution<uint16_t> addonCountDistr({80, 13, 7});
+    std::discrete_distribution<uint16_t> addonCountDistr({60, 33, 7});
     //output ranges form [0, 2]
     uint16_t numAddons = addonCountDistr(Amethyne_rand)+2;//if it returns 0 numAddons is 2. return 1, numAddons is 3. return 2, numAddons is 4-8.
     if(numAddons == 4){//if 4+ terms decide how many!
-        std::uniform_int_distribution<int> four_to_eight_termDistr(4, 8);
+        std::uniform_int_distribution<int> four_to_eight_termDistr(4, std::min((int)(Nucleus.coldStorage.returnALL_TAGS().size()), 8));//cant have more addons than number of terms
         numAddons = four_to_eight_termDistr(Amethyne_rand);
     }
     

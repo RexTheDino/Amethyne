@@ -9,12 +9,16 @@
 using namespace metal;
 //KNOWN BELIEVED TO BE BUG-- the kernel needs to check all the bits in the bits provided for the degrees of the variables, but it supposedly stops when it reaches bits that read '00' failing to read the bits beyond that to find the variables whose degree-bits are seperated from others by 2 ' 0's '.
 
+struct bernsteinMetadata{
+    uint16_t numTerms;
+};
+
 //n >= r
 struct nChooseR_values{//combinations of values for n choose r where (0 < n < 4) && (0 <= r < 4). to be filled
     //int ONE_choose_ZERO, ONE_choose_ONE;
     //int TWO_choose_ZERO, TWO_choose_ONE, TWO_choose_TWO;
     //int THREE_choose_ZERO, THREE_choose_ONE, THREE_choose_TWO, THREE_choose_THREE;
-    uint32_t values[12];//arranged in order respective to the format above except it has padding so each row has 4 elements. needs to be filled still!
+    const uint32_t values[12] = {1, 1, 0, 0, 1, 2, 1, 0, 1, 3, 3, 1};//arranged in order respective to the format above except it has padding so each row has 4 elements. needs to be filled still!
 };
 
 //first we need to know the dimensions of the matrice. since the max and min lenghts along any specific dimension range from (2,4) a.k.a. 3 possible values for each dimension that actually exists create a for loop that reads bytes from pvt buffer and stops when it reaches 00
@@ -54,7 +58,7 @@ inline dimensionsReturn returnMatriceDimensions(InfoBytes rawBytes){
     unsigned char dimensionOneThruFourBytes = rawBytes.one;
     unsigned char dimensionFourThruEightBytes = rawBytes.two;
     
-    returnArray.dimensions[0] = int(dimensionOneThruFourBytes & maskByte)+1;
+    returnArray.dimensions[0] = int(dimensionOneThruFourBytes & maskByte)+1;//dimension PLUS ONE is being done since even at degree 0 there is a dimension length of 1!!!!!
     returnArray.dimensions[1] = int((dimensionOneThruFourBytes >> 2) & maskByte)+1;
     returnArray.dimensions[2] = int((dimensionOneThruFourBytes >> 4) & maskByte)+1;
     returnArray.dimensions[3] = int((dimensionOneThruFourBytes >> 6) & maskByte)+1;
@@ -69,31 +73,29 @@ inline variableInfo returnVariableInfo(InfoBytes rawBytes){
     variableInfo returnInfo;
     unsigned char maskByte = 0b00000011;
     returnInfo.numVars_inTerm = 0;//the number of variables present in this term
-    bool variablesEndAtFirstByte = false;
    //for first byte
-    //loops break when they see a value of 0 since degrees range only form 1-3
     for(int v = 0; v < 4; v++){
         int currentVal = int((rawBytes.three >> (v*2)) & maskByte);
         if(currentVal != 0){
             returnInfo.degrees[v] = currentVal;
             returnInfo.numVars_inTerm++;
         }else{
-            variablesEndAtFirstByte = true;
-            break;
+            returnInfo.degrees[v] = 0;//set th e degree of this variable to 0 since it dont exist!!
+            returnInfo.numVars_inTerm++;//every term has every variable inside it even if its of degree 0
+            continue;//continue past 0 degree term
         }
     }
-    //if more than 4 variables continue to processing next infoByte
-    if(!variablesEndAtFirstByte){
         for(int g = 0; g < 4; g++){
             int currentVal = int((rawBytes.four >> (g*2)) & maskByte);
             if(currentVal != 0){
                 returnInfo.degrees[g+4] = currentVal;
                 returnInfo.numVars_inTerm++;
             }else{
-                break;
+                returnInfo.degrees[g] = 0;
+                returnInfo.numVars_inTerm++;//every term has every variable inside it even if its of degree 0
+                continue;
             }
         }
-    }
     return returnInfo;
 }
 
@@ -117,11 +119,12 @@ inline dimensionsAndVarInfo returnIndexInDimensions(thread dimensionsAndVarInfo 
     int currentFactor;
     int truncatedResult;
     //runs for all iterations except h = 0. for h = 0 we do the mod thing.
-    for(int h = 1; h < num_vars; h++){
+    //num vars is always 8 anyways so doesnt matter, h effectivvely runs for all the dimensions of the grid
+    for(int h = num_vars-1; h > 0; h--){//cycle down from highest dimension to lowest
         currentFactor = matriceFactorReturn(matriceDimensions, h);
         truncatedResult = int(residual/currentFactor);
         residual -= currentFactor * truncatedResult;
-        returnCoords.dimensions[num_vars-h] = truncatedResult;//when num_vars is 2, fills index [2-1] == [1] which is right
+        returnCoords.dimensions[h] = truncatedResult;
     }
     returnCoords.dimensions[0] = thread_ID % matriceDimensions.dimensions[0];
     providedStruct.coords = returnCoords;
@@ -140,35 +143,49 @@ inline dimensionsAndVarInfo returnIndexInDimensions(thread dimensionsAndVarInfo 
 
 //fills buffer with bernstein coefficients
 //num threads dispatched is equal to the product of all the dimensions of the matrice.
-kernel void Bernstein_Coeffs_Filler(device const InfoBytesAndN_Choose_R* inputDat[[buffer(2)]],
+kernel void Bernstein_Coeffs_Filler(device const InfoBytes* inputDat[[buffer(2)]], device const bernsteinMetadata* metadatForKernel[[buffer(0)]],
                                     device float* outBuffer[[buffer(1)]],
                                     uint32_t thread_ID [[thread_position_in_grid]]){
     
-    InfoBytesAndN_Choose_R data = inputDat[0];
-    InfoBytes rawBytes = data.info;//bytes containing matrice dimensions, term degree, and coefficient value
-    nChooseR_values reference = data.referral;
-    float coefficient = rawBytes.coefficient;
-    
-    dimensionsAndVarInfo matriceAndTermInfo;//the .dimensions here contain i,j,k,etc... values
-    returnIndexInDimensions(matriceAndTermInfo, rawBytes, thread_ID);//fill with dimensions and degree data
-        float result = coefficient;//initialized to the coefficient, to be multiplied by the fractions
-    for(int v = 0; v < matriceAndTermInfo.varInfo.numVars_inTerm; v++){
-        float multiplier;//(i choose p) where i is coord and p is term degree
-        float divider;//(n choose p) where n is max degree of entire polynomial and p is term degree
-        int termDegree;
-        int maxDegree;
-            termDegree = matriceAndTermInfo.varInfo.degrees[v];
-            maxDegree = matriceAndTermInfo.matriceDimensions.dimensions[v]-1;//max degree is dimension size -1
-            int dimensionCoord = matriceAndTermInfo.coords.dimensions[v];//coordinate in the matrix itself
-            if(dimensionCoord < termDegree){return;}//break when i < p since i needs to be >= p
+    bernsteinMetadata metadat = metadatForKernel[0];//contains the number of terms and therefore the number of infobytes
+    for(int y = 0; y < metadat.numTerms; y++){
         
-            //dimensions and maxDegree start from 1 so need to do -1
-            multiplier = reference.values[((dimensionCoord-1)*4)+termDegree];//since 4 terms per n_choose_X.
-            divider = reference.values[((maxDegree-1)*4)+termDegree];//-1 so it starts from 0
+        if(metadat.numTerms > 9999){break;}//probably inifnite loop
+        
+        InfoBytes rawBytes = inputDat[y];//bytes containing matrice dimensions, term degree, and coefficient value. //the infobyte struct it picks depends on the current counter of the loop
+        nChooseR_values reference;
+        float coefficient = rawBytes.coefficient;
+        
+        dimensionsAndVarInfo matriceAndTermInfo;//the .dimensions here contain i,j,k,etc... values
+        returnIndexInDimensions(matriceAndTermInfo, rawBytes, thread_ID);//fill with dimensions and degree data
+        float result = coefficient;//initialized to the coefficient, to be multiplied by the fractions
+        for(int v = 0; v < matriceAndTermInfo.varInfo.numVars_inTerm; v++){//numvars in term is redundant and always constant at 8
+            float multiplier;//(i choose p) where i is coord and p is term degree
+            float divider;//(n choose p) where n is max degree of entire polynomial and p is term degree
+            int termDegree;
+            int maxDegree;
+            termDegree = matriceAndTermInfo.varInfo.degrees[v];
             
-            result *= multiplier/divider;//multiply by each fraction
+            if(termDegree != 0){
+                maxDegree = matriceAndTermInfo.matriceDimensions.dimensions[v]-1;//max degree is dimension size -1
+                int dimensionCoord = matriceAndTermInfo.coords.dimensions[v];//coordinate in the matrix itself
+                if(dimensionCoord < termDegree){continue;}//continue to next iteration when i < p since i needs to be >= p
+                
+                //dimensions and maxDegree start from 1 so need to do -1
+                multiplier = reference.values[((dimensionCoord-1)*4)+termDegree];//since 4 terms per n_choose_X.
+                divider = reference.values[((maxDegree-1)*4)+termDegree];//-1 so it starts from 0
+                
+                result *= multiplier/divider;//multiply by each fraction
+            }else{
+                result *= 1.0f;//0 choose 0 is just 1
+            }
+        }
+        if(y == 0){//if calculating for very first term set the value equal to the result. else add result a.k.a. the per term contribution to the current existing value
+            outBuffer[thread_ID] = result;
+        }else{
+            outBuffer[thread_ID] += result;
+        }
     }
-    outBuffer[thread_ID] += result;
 }
 
 

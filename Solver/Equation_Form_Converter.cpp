@@ -72,7 +72,7 @@ matriceDimensionsAndTheirProduct BernsteinDataConverter::convertDimensionsOfExpr
     int product = 1;
     for(int j = 0; j < maxDimensions.size(); j++){
         if(maxDimensions[j] == 0){break;}
-        product *= maxDimensions[j];
+        product *= maxDimensions[j]+1;//NEED TO DO PLUS 1 SINCE EVEN AT DEGREE 0 THERE IS A DIMENSION OF 1
     }
     
     for (int w = 0; w < 8; w++) {
@@ -145,21 +145,21 @@ void BernsteinDataConverter::helperFuncs::writePerTermSymbolDegreesAndCoefficien
     auto expandedExpr = expand(expr);
     auto freedSymbols = free_symbols(*expandedExpr);
     
-    if (is_a<Add>(*expr)) {
-        auto decastedVar = rcp_static_cast<const Add>(expr);
+    if (is_a<Add>(*expandedExpr)) {
+        auto decastedVar = rcp_static_cast<const Add>(expandedExpr);
         auto terms = decastedVar->get_args();
         (*ptrToVector).resize(terms.size());
         for (int z = 0; z < terms.size(); z++) {
             //pointer to the corresponding struct that'll carry the term degree and coefficient info and stuff
             perTermCoefficientAndSymbolDegrees* ptrToInfoStruct = &(*ptrToVector)[z];
             //only one of these actually runs depending on if the term is a mult or sym or pow node
-            NodeLogic::multNodeLogic(expr, referenceVecPtr, ptrToInfoStruct, freedSymbols);
-            NodeLogic::Sym_or_PowNodeLogic(expr, referenceVecPtr, ptrToInfoStruct, freedSymbols);
+            NodeLogic::multNodeLogic(terms[z], referenceVecPtr, ptrToInfoStruct, freedSymbols);
+            NodeLogic::Sym_or_PowNodeLogic(terms[z], referenceVecPtr, ptrToInfoStruct, freedSymbols);
         }
     }else{//the other possibility is that there is a mult or pow or sym standalone which means only one term. only one runs.
         (*ptrToVector).resize(1);
-        NodeLogic::multNodeLogic(expr, referenceVecPtr, &(*ptrToVector)[0], freedSymbols);
-        NodeLogic::Sym_or_PowNodeLogic(expr, referenceVecPtr, &(*ptrToVector)[0], freedSymbols);
+        NodeLogic::multNodeLogic(expandedExpr, referenceVecPtr, &(*ptrToVector)[0], freedSymbols);
+        NodeLogic::Sym_or_PowNodeLogic(expandedExpr, referenceVecPtr, &(*ptrToVector)[0], freedSymbols);
     }
 }
 
@@ -203,7 +203,9 @@ void BernsteinDataConverter::helperFuncs::NodeLogic::Sym_or_PowNodeLogic(SymEngi
         symbolAndDegree symAndDegree(decastedVar, 1);
         (*ptrToStruct).symbol_Degrees.resize(freeSymbols.size());
         (*ptrToStruct).symbol_Degrees[indexToFill] = symAndDegree;
-    }else{
+    }else if(is_a<RealDouble>(*expr)){
+        auto decastedVar = rcp_static_cast<const RealDouble>(expr);
+        (*ptrToStruct).coefficient = decastedVar->as_double();//if just a const then fill with the coefficient
         return;//do nothing if not a pow or symbol node
     }
 }
@@ -264,10 +266,14 @@ RCP<const Basic> BernsteinDataConverter::helperFuncs::NodeLogic::returnBernstein
         auto exponent = decastedVar->get_exp();
             base = returnBernsteinAdjustedSymbol(base);//modify base to adjust for domain
         result = pow(base, exponent);//re-exponentiate it.
+        result = expand(result);
         return result;
     }else if(is_a<Symbol>(*expr)){
         result = returnBernsteinAdjustedSymbol(expr);//modify expression in-place--cuz its a symbol, no need to decast
+        result = expand(result);
         return result;
+    } else if(is_a<RealDouble>(*expr)){
+        return expr;//if just a constant no change
     } else{
         return RCP<const Basic>();//if not a pow node then return null
     }
@@ -280,13 +286,13 @@ RCP<const Basic> BernsteinDataConverter::helperFuncs::NodeLogic::returnBernstein
         auto decastedVar = rcp_static_cast<const Mul>(expr);
         auto arguments = decastedVar->get_args();
         for(int v = 0; v < arguments.size(); v++){
-            auto& currentArg = arguments[v];//has to be a pow or a symbol if everything started out expanded!
             arguments[v] = returnBernsteinAdjustedPow_Or_SymNode(arguments[v]);
         }
         //now that all arguments have been replaced, reconstruct the original expression
         for(int h = 0; h < arguments.size(); h++){
             result = mul(result, arguments[h]);
         }
+        result = expand(result);
         return result;//dont modify the original expression but return a copy of the bernstein-modified values
     }else{
         return RCP<const Basic>();//if not a mult node then return null
@@ -309,39 +315,35 @@ int BernsteinDataConverter::processExpressionForBernsteinCoefficientsCalculation
 
 
 
-void calculateBernsteinCoeffs::calculateAndWriteInfoBytes_AND_NchooseR_vals(SymEngine::RCP<const SymEngine::Basic>& expr, std::vector<subcommands> subcommandsVec){
+void calculateBernsteinCoeffs::calculateAndWriteInfoBytes(SymEngine::RCP<const SymEngine::Basic>& expr, std::vector<subcommands>& subcommandsVec){
     assert(bernCoeffStatus == bernsteinCoeffCalculationStatus::unprimed);
     assert(subcommandsVec.empty());//shoudlnt have been filled before this
     
     //calculate info bytes
     std::vector<InfoBytes> infoByteBuffer; refDat.productOfAllDimensions = BernsteinDataConverter::processExpressionForBernsteinCoefficientsCalculation(expr, &infoByteBuffer);
     assert(infoByteBuffer.size() > 0);//shouldve been filled
+    refDat.metalInfVec = infoByteBuffer;
+    
     auto& metalInfBuffer = refDat.metalInfVec;
-    for(int i = 0; i < infoByteBuffer.size(); i++){
-        InfoBytesAndN_Choose_R infBytesAndCombinatorialVals;
-        infBytesAndCombinatorialVals.the_infoBytes = infoByteBuffer[i];//n choose r vals default initialized
-        metalInfBuffer.push_back(infBytesAndCombinatorialVals);
-    }
+    //stuff is broken not functioning yet fix the bernstein kernel such that you only fire it once for a whole groupp of polynomials so that the result finding func only fires once and also fix up result finder kernel to be more than just one threadgroup of 64 leaving it now just to test
+        std::span<InfoBytes> infoByteSpan(metalInfBuffer.begin(), metalInfBuffer.end());//need to fire bernstein coeffs seperately for each term, and also need to copy it to the very first slot.
+        
+        GPU_lieutenant::addCopyCommand<InfoBytes>(infoByteSpan, bufferTypes::PRIVATE_inputDataBuffer);//copy infobytes to priate data staging buffer
+        subcommandsHelper::appendDataCopyOp(infoByteSpan, bufferTypes::PRIVATE_inputDataBuffer, subcommandsVec);//copy infobytes to gpu
+    refDat.numTerms = infoByteSpan.size();
+    std::span<uint16_t> numTermsSpan(&refDat.numTerms,1);
+    GPU_lieutenant::addCopyCommand<uint16_t>(numTermsSpan, bufferTypes::SHARED_initializerBuffer);//the number of info bytes. copy this over so each thread can execute all the variables. copied to shared buffer.
     
     bernCoeffStatus = bernsteinCoeffCalculationStatus::DISPATCHED_INFO_BYTES;
 }
 
-void calculateBernsteinCoeffs::bindCalculationAndMAXMIN_FINDER_kernels(std::vector<subcommands> subcommandsVec){
+void calculateBernsteinCoeffs::bindCalculationAndMAXMIN_FINDER_kernels(std::vector<subcommands>& subcommandsVec){
     assert(bernCoeffStatus == bernsteinCoeffCalculationStatus::DISPATCHED_INFO_BYTES);
     assert(subcommandsVec.size() == 1);//the one command it should have is the data copy op of the infobytes
     
     int threadsPerGroup = 64;
-    
-    auto& metalInfBuffer = refDat.metalInfVec;
-    //stuff is broken not functioning yet fix the bernstein kernel such that you only fire it once for a whole groupp of polynomials so that the result finding func only fires once and also fix up result finder kernel to be more than just one threadgroup of 64 leaving it now just to test
-    for(int u = 0; u < metalInfBuffer.size(); u++){
-        std::span<InfoBytesAndN_Choose_R> infoByteSpan(metalInfBuffer.begin()+u, 1);//need to fire bernstein coeffs seperately for each term, and also need to copy it to the very first slot.
-        
-        GPU_lieutenant::addCopyCommand<InfoBytesAndN_Choose_R>(infoByteSpan, bufferTypes::PRIVATE_inputDataBuffer);
-        subcommandsHelper::appendDataCopyOp(infoByteSpan, bufferTypes::PRIVATE_inputDataBuffer, subcommandsVec);
         
         subcommandsHelper::appendKernelOp(kernels::bernstein_coefficient_calculations, refDat.productOfAllDimensions, threadsPerGroup, subcommandsVec);
-    }
     
     int threadgroupsForMaxMin = 1;//change later if needed
     int threadsPerGroupForMaxMin = 64;
@@ -352,7 +354,7 @@ void calculateBernsteinCoeffs::bindCalculationAndMAXMIN_FINDER_kernels(std::vect
     bernCoeffStatus = bernsteinCoeffCalculationStatus::DISPATCHED_KERNEL_OP;
 }
 
-void calculateBernsteinCoeffs::dispatchResultCopyCommand(std::vector<subcommands> subcommandsVec){
+void calculateBernsteinCoeffs::dispatchResultCopyCommand(std::vector<subcommands>& subcommandsVec){
     assert(bernCoeffStatus == bernsteinCoeffCalculationStatus::DISPATCHED_KERNEL_OP);
     std::span<domain> domainSpan(refDat.writeBackValsTo, 1);
     subcommandsHelper::appendDataCopyOp<domain>(domainSpan, bufferTypes::PRIVATE_outputBuffer, subcommandsVec);//data copy op only looks at span for size and not where to write to. unlike copyCommand.
@@ -370,7 +372,7 @@ void calculateBernsteinCoeffs::findMaxAndMinBernsteinCoeffs(SymEngine::RCP<const
     //assert(funcToCallbackAferResult != nullptr);//metal is supposed to check if its nullptr
     refDat.funcToCallbackAferResult = funcToCallbackAferResult;
     
-    calculateAndWriteInfoBytes_AND_NchooseR_vals(expr, refDat.subcommandsVec);
+    calculateAndWriteInfoBytes(expr, refDat.subcommandsVec);
     bindCalculationAndMAXMIN_FINDER_kernels(refDat.subcommandsVec);
     dispatchResultCopyCommand(refDat.subcommandsVec);
 }

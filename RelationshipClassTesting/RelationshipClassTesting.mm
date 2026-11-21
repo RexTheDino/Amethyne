@@ -163,6 +163,7 @@ struct transferTester{
                     calculateBernsteinCoeffs calcTheCoeffs;
                     domain bernsteinResultWriteback(0.0f,0.0f);//should be overwritten by metal results.
                     calcTheCoeffs.findMaxAndMinBernsteinCoeffs(resultExprofRelatedDatasets, &bernsteinResultWriteback, nullptr);
+                    GPU_lieutenant::FIRE_AWAY();
                 }
             }
         }
@@ -187,9 +188,9 @@ struct exploringTestingGround_Tester{
         
         auto& theResults = Nucleus.testingGround.Data.results;
         auto isThereRelation = std::find_if(theResults.begin(), theResults.end(), [](Dataset& dSet){
-            return dSet.returnRelation() != RelationshipType::null;
+            return dSet.returnRelation() == RelationshipType::quadratic;
         });
-        if(isThereRelation != theResults.end()){std::cout << "found relationship!!! at: "; int dist = (int)std::distance(theResults.begin(), isThereRelation); std::cout << dist;}
+        if(isThereRelation != theResults.end()){std::cout << "found quadratic relationship!!! at: "; int dist = (int)std::distance(theResults.begin(), isThereRelation); std::cout << dist;}
         
         transferTester::transferDSetsAndCallSGELS_Y();
         

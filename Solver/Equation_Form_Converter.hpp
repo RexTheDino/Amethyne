@@ -26,20 +26,21 @@ struct matriceDimensionsAndTheirProduct{
     int productOfDimensions;
 };
 struct varDegreesAndCoefficient{//degrees and coefficient given a certain term of an expression
-    float coefficient = 0.0f;
     unsigned char degreesOneThruFour = 0; unsigned char degreesFourThruEight = 0;
+    float coefficient = 0.0f;
 };
 
 struct InfoBytes{//mirrors struct found in metal
+    //change whats below so infobytes has 0 padding and consists of purely 4 chars followed by a float.
     MetalMatriceDimensionsFormat matriceDimensions;
     varDegreesAndCoefficient CoefficientAndVariableDegrees;
     InfoBytes(MetalMatriceDimensionsFormat derDimensions, varDegreesAndCoefficient termByTermInfo);
     InfoBytes() = default;
 };
-struct InfoBytesAndN_Choose_R{//what metal actually needs
+/*struct InfoBytesAndN_Choose_R{//what metal actually needs
     InfoBytes the_infoBytes;
     const uint32_t nChooseR_vals[12] = {1, 1, 0, 0, 1, 2, 1, 0, 1, 3, 3, 1};
-};
+};*/
 
 
 //give it a symEngine expresson and indicate the term to input as well as a pointer to the metal buffer and it writes the require ddata into the metal buffers in metal format. also capable of reading the data
@@ -123,8 +124,9 @@ enum class bernsteinCoeffCalculationStatus{
 struct bernsteinCoeffsReferenceData{
     std::vector<subcommands> subcommandsVec;
     uint32_t productOfAllDimensions;//for the number of threadgroups
+    uint16_t numTerms;//the number of total terms in the polynomial being calculated for.
     domain* writeBackValsTo = nullptr;//to be filled by the public func. this is the space that the caller wants to record the domain results in.
-    std::vector<InfoBytesAndN_Choose_R> metalInfVec;
+    std::vector<InfoBytes> metalInfVec;
     void(*funcToCallbackAferResult)();
 };
 
@@ -135,9 +137,9 @@ private:
     bernsteinCoeffCalculationStatus bernCoeffStatus = bernsteinCoeffCalculationStatus::unprimed;
     static inline bernsteinCoeffsReferenceData refDat;
     
-    void calculateAndWriteInfoBytes_AND_NchooseR_vals(SymEngine::RCP<const SymEngine::Basic>& expr, std::vector<subcommands> subcommandsVec);
-    void bindCalculationAndMAXMIN_FINDER_kernels(std::vector<subcommands> subcommandsVec);
-    void dispatchResultCopyCommand(std::vector<subcommands> subcommandsVec);//also dispatches command to copy back into result variable
+    void calculateAndWriteInfoBytes(SymEngine::RCP<const SymEngine::Basic>& expr, std::vector<subcommands>& subcommandsVec);
+    void bindCalculationAndMAXMIN_FINDER_kernels(std::vector<subcommands>& subcommandsVec);
+    void dispatchResultCopyCommand(std::vector<subcommands>& subcommandsVec);//also dispatches command to copy back into result variable
     
 public:
     void findMaxAndMinBernsteinCoeffs(SymEngine::RCP<const SymEngine::Basic>& expr, domain* writeBackResultsTo, void(*funcToCallbackAferResult)());

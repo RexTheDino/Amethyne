@@ -74,7 +74,7 @@ SymEngine::RCP<const SymEngine::Basic> Relation_Equation_Constructor::calculateC
     auto systemOfEqns = returnSysOfEqns(relatedDatasets);//ALSO FILLS MATRIX WITH REQ POINTS!
     
         int calculatedRank;
-        float rcond = 0.001f;
+        float rcond = 0.0001f;
     initDat.numPts = RelationConstructionMetadata::points_per_var_eqn_construct_calculation_SGELSY;
     initDat.numTerms = (int)systemOfEquations.size();//the number of terms in the matrix
     initDat.writeBackRankTo = &calculatedRank;
@@ -183,7 +183,7 @@ void Relation_Equation_Constructor::addVariableDataTo_SGELSY_matrice(uint16_t ta
         auto var1DataSpan = Nucleus.logsManager.returnDataOfRequestedTracker(progNameVar1);
     std::span<dataLog> var2DataSpan;
     if(powerOfVar2 != 0){//if calculating for multipel variables then request var 2 data span.
-        auto var2DataSpan = Nucleus.logsManager.returnDataOfRequestedTracker(progNameVar2);
+        var2DataSpan = Nucleus.logsManager.returnDataOfRequestedTracker(progNameVar2);
     }
     
     int sizeOfDat = RelationConstructionMetadata::points_per_var_eqn_construct_calculation_SGELSY;

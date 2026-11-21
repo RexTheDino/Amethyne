@@ -169,6 +169,7 @@ void statusUpdaters::ExplorationUpdaters::dispatchSynthPreprocessing(std::vector
     
     std::vector<subcommands> preprocessingCopyBackCommand;//needs to be a seperate subcommand so that it executes AFTER the metal dispatch command!!!
     int expectedResultsSize = (numThreadgroups +1) * RelationConstructionMetadata::points_per_var * 2;//number of points expected as results
+    Nucleus.testingGround.Data.testVarsStorage.resize(expectedResultsSize);//resize in case not enough size.
     std::span<float> expectedResultSpan(Nucleus.testingGround.Data.testVarsStorage.begin(), expectedResultsSize);//span of the data expected to be filled as results
     subcommandsHelper::appendDataCopyOp(expectedResultSpan, bufferTypes::PRIVATE_inputDataBuffer, preprocessingCopyBackCommand, true);//TRUE TO REVERSE COPY SYNTH PROCESSING DATA BACK!
     

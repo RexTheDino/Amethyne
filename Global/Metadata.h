@@ -32,7 +32,7 @@ struct varCreationMetadata{
     //TEMPORARY scratchpad to hold data while architecture is being built!!!!
     
     static SHARED_CONST unsigned short synthChainLimit = 5;//controls the max chain length of complex vars
-    static SHARED_CONST unsigned short synthVarBatchLimit = 300;//the max num of synth vars created in one go
+    static SHARED_CONST unsigned short synthVarBatchLimit = 30000;//the max num of synth vars created in one go
     static SHARED_CONST unsigned short number_of_synth_operators = 3;//add, subtract, multiply
     static SHARED_CONST unsigned short num_mod_ops = 2;
     

@@ -14,8 +14,8 @@
             filePath = "RelationshipClassTesting/RelationshipClassTesting.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
             landmarkName = "RelationshipClassTesting"
             landmarkType = "3">
             <Locations>
@@ -306,68 +306,6 @@
             endingLineNumber = "318"
             landmarkName = "cold_Storage::addActionVar(passkey, varToAdd)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "A5F21AEA-F7BA-4A54-BC95-E00660AFAA20 - 3cc77f6b183356dc"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "cold_Storage::addActionVar(cold_Storage::TransferManagerPasskey, actionVar)"
-                  moduleName = "RelationshipClassTesting"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Storage/Var_Storage.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "308"
-                  endingLineNumber = "308"
-                  offsetFromSymbolStart = "317">
-               </Location>
-               <Location
-                  uuid = "A5F21AEA-F7BA-4A54-BC95-E00660AFAA20 - 3cc77f6b183356dc"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "cold_Storage::addActionVar(cold_Storage::TransferManagerPasskey, actionVar)"
-                  moduleName = "RelationshipClassTesting"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Storage/Var_Storage.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "308"
-                  endingLineNumber = "308"
-                  offsetFromSymbolStart = "232">
-               </Location>
-               <Location
-                  uuid = "A5F21AEA-F7BA-4A54-BC95-E00660AFAA20 - 3cc77f6b183359f5"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "cold_Storage::addActionVar(cold_Storage::TransferManagerPasskey, actionVar)"
-                  moduleName = "RelationshipClassTesting"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Storage/Var_Storage.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "315"
-                  endingLineNumber = "315"
-                  offsetFromSymbolStart = "232">
-               </Location>
-               <Location
-                  uuid = "A5F21AEA-F7BA-4A54-BC95-E00660AFAA20 - 3cc77f6b18335996"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "cold_Storage::addActionVar(cold_Storage::TransferManagerPasskey, actionVar)"
-                  moduleName = "RelationshipClassTesting"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Variables/Storage/Var_Storage.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "318"
-                  endingLineNumber = "318"
-                  offsetFromSymbolStart = "232">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -424,8 +362,8 @@
             filePath = "RelationshipClassTesting/RelationshipClassTesting.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
             landmarkName = "RelationshipClassTesting"
             landmarkType = "3">
          </BreakpointContent>
@@ -615,8 +553,8 @@
             filePath = "Variables/Storage/TestStorage_Status_logic.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
             landmarkName = "statusUpdaters::ExplorationUpdaters::initializeDerivedDiffsMtdt(subcommandsVec, referenceData)"
             landmarkType = "7">
          </BreakpointContent>
@@ -631,8 +569,8 @@
             filePath = "RelationshipClassTesting/RelationshipClassTesting.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
             landmarkName = "RelationshipClassTesting"
             landmarkType = "3">
             <Locations>
@@ -889,113 +827,6 @@
             endingLineNumber = "261"
             landmarkName = "MetalCommander::CommanderExecute(commandToExecute, passkey)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 4c12a78dfec23fad"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
-                  moduleName = "RelationshipClassTesting"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "241"
-                  endingLineNumber = "241"
-                  offsetFromSymbolStart = "1116">
-               </Location>
-               <Location
-                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 4c12a78dfec23f8c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
-                  moduleName = "RelationshipClassTesting"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "240"
-                  endingLineNumber = "240"
-                  offsetFromSymbolStart = "1114">
-               </Location>
-               <Location
-                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 4c12a78dfec23fc2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
-                  moduleName = "RelationshipClassTesting"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "242"
-                  endingLineNumber = "242"
-                  offsetFromSymbolStart = "1114">
-               </Location>
-               <Location
-                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 4c12a78dfec23f46"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
-                  moduleName = "RelationshipClassTesting"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "246"
-                  endingLineNumber = "246"
-                  offsetFromSymbolStart = "1114">
-               </Location>
-               <Location
-                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 4c12a78dfec23f46"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey)"
-                  moduleName = "RelationshipClassTesting"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "246"
-                  endingLineNumber = "246"
-                  offsetFromSymbolStart = "854">
-               </Location>
-               <Location
-                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 738b429f15b2c315"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey, void (*)())"
-                  moduleName = "RelationshipClassTesting"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "251"
-                  endingLineNumber = "251"
-                  offsetFromSymbolStart = "871">
-               </Location>
-               <Location
-                  uuid = "9580FC0C-69A2-479F-9255-A7A321D52D22 - 738b429f15b2ccdf"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MetalCommander::CommanderExecute(metalDispatchCommand, MetalCommander::LieutenantPasskey, void (*)())"
-                  moduleName = "RelationshipClassTesting"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Metal%20Dispatch/Commander.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "261"
-                  endingLineNumber = "261"
-                  offsetFromSymbolStart = "871">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1221,22 +1052,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "272FEBD0-6282-488F-839F-74EB0513C6CC"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Variables/Relationships/Relations_Logic.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
-            landmarkName = "Relation_Equation_Constructor::returnSysOfEqns(relatedDSETS)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "177C9474-85E7-4058-B00F-F86C0B3AFE57"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1277,8 +1092,8 @@
             filePath = "RelationshipClassTesting/RelationshipClassTesting.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
             landmarkName = "RelationshipClassTesting"
             landmarkType = "3">
             <Locations>
@@ -1450,8 +1265,8 @@
             filePath = "Variables/Storage/TestStorage_Status_logic.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "343"
-            endingLineNumber = "343"
+            startingLineNumber = "344"
+            endingLineNumber = "344"
             landmarkName = "statusUpdaters::ExplorationUpdaters::returnPointsCorrespondingToTag(synthTestTag, passkey)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1459,49 +1274,306 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "20A85D74-586B-4A4A-902C-49581BA26710"
+            uuid = "E2B5C27E-6EBF-46F4-936B-EB7389B8955E"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Variables/Relationships/Relations_Logic.cpp"
+            filePath = "Solver/Equation_Form_Converter.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
-            landmarkName = "Relation_Equation_Constructor::returnSysOfEqns(relatedDSETS)"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
+            landmarkName = "BernsteinDataConverter::processExpressionForBernsteinCoefficientsCalculation(expression, ptrToInfoByteBuffer)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E2B5C27E-6EBF-46F4-936B-EB7389B8955E - d2e0b0c5b198f93a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BernsteinDataConverter::processExpressionForBernsteinCoefficientsCalculation(SymEngine::RCP&lt;SymEngine::Basic const&gt;&amp;, std::__1::vector&lt;InfoBytes, std::__1::allocator&lt;InfoBytes&gt; &gt;*)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Solver/Equation_Form_Converter.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "305"
+                  endingLineNumber = "305"
+                  offsetFromSymbolStart = "87">
+               </Location>
+               <Location
+                  uuid = "E2B5C27E-6EBF-46F4-936B-EB7389B8955E - d2e0b0c5b198f93a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BernsteinDataConverter::processExpressionForBernsteinCoefficientsCalculation(SymEngine::RCP&lt;SymEngine::Basic const&gt;&amp;, std::__1::vector&lt;InfoBytes, std::__1::allocator&lt;InfoBytes&gt; &gt;*)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Solver/Equation_Form_Converter.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "305"
+                  endingLineNumber = "305"
+                  offsetFromSymbolStart = "29">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3879D289-654F-4A28-8481-93253A258974"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Solver/Equation_Form_Converter.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "BernsteinDataConverter::helperFuncs::writePerTermSymbolDegreesAndCoefficientsIntoVector(expr, ptrToVector)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7D9AC7B4-D792-4E25-8C7A-5DEE5F4AED55"
+            uuid = "7F391F94-3661-4310-BC46-48FD8D9961EF"
+            shouldBeEnabled = "Yes"
+            condition = "expr.is_null()"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Solver/Equation_Form_Converter.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
+            landmarkName = "BernsteinDataConverter::helperFuncs::writePerTermSymbolDegreesAndCoefficientsIntoVector(expr, ptrToVector)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3873C7F0-09A1-4EC8-8963-88293044338E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RelationshipClassTesting/RelationshipClassTesting.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "RelationshipClassTesting"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "3873C7F0-09A1-4EC8-8963-88293044338E - 865f65ff8f7ba701"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "transferTester::transferDSetsAndCallSGELS_Y()"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/RelationshipClassTesting/RelationshipClassTesting.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "166"
+                  endingLineNumber = "166"
+                  offsetFromSymbolStart = "340">
+               </Location>
+               <Location
+                  uuid = "3873C7F0-09A1-4EC8-8963-88293044338E - 865f65ff8f7ba720"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "transferTester::transferDSetsAndCallSGELS_Y()"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/RelationshipClassTesting/RelationshipClassTesting.mm"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "167"
+                  endingLineNumber = "167"
+                  offsetFromSymbolStart = "314">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "91F07918-9CF4-45C6-AA9A-38A70C05A436"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Solver/Equation_Form_Converter.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
-            landmarkName = "BernsteinDataConverter::helperFuncs::NodeLogic::returnBernsteinAdjustedExpression(expr)"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
+            landmarkName = "calculateBernsteinCoeffs::calculateAndWriteInfoBytes(expr, subcommandsVec)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "91F07918-9CF4-45C6-AA9A-38A70C05A436 - 1ada25d48aca20de"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "calculateBernsteinCoeffs::calculateAndWriteInfoBytes(SymEngine::RCP&lt;SymEngine::Basic const&gt;&amp;, std::__1::vector&lt;subcommands, std::__1::allocator&lt;subcommands&gt; &gt;&amp;)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Solver/Equation_Form_Converter.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "327"
+                  endingLineNumber = "327"
+                  offsetFromSymbolStart = "357">
+               </Location>
+               <Location
+                  uuid = "91F07918-9CF4-45C6-AA9A-38A70C05A436 - 1ada25d48aca20de"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "calculateBernsteinCoeffs::calculateAndWriteInfoBytes(SymEngine::RCP&lt;SymEngine::Basic const&gt;&amp;, std::__1::vector&lt;subcommands, std::__1::allocator&lt;subcommands&gt; &gt;&amp;)"
+                  moduleName = "RelationshipClassTesting"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anshudiya/Desktop/Amethyne_Model/Amethyne/Solver/Equation_Form_Converter.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "327"
+                  endingLineNumber = "327"
+                  offsetFromSymbolStart = "335">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "09D63276-7C71-4C5F-986A-2017E88F494C"
+            uuid = "F4BA1F07-E9B5-4E23-880B-ED746C6EBBD0"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RelationshipClassTesting/RelationshipClassTesting.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "RelationshipClassTesting"
             landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CE1A065C-2EBA-4449-9E20-5112C845117D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "93"
+            endingColumnNumber = "101"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "Relation_Equation_Constructor::calculateCoefficients(yTag)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "828C5C8D-FD54-43AE-9517-1DFB6900C3FE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "Relation_Equation_Constructor::calculateCoefficients(yTag)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4807AC36-2C8B-4C60-9CEF-4AC0AD7FA37B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Variables/Relationships/Relations_Logic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "Relation_Equation_Constructor::calculateCoefficients(yTag)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D5B99079-D63B-4B1E-AB2A-5E3947169C87"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Solver/Equation_Form_Converter.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
+            landmarkName = "BernsteinDataConverter::helperFuncs::NodeLogic::multNodeLogic(expr, ptrToReferenceVector, ptrToStruct, freeSymbols)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C312AD59-F7F3-442A-B618-938ED31C4D6B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Solver/Equation_Form_Converter.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
+            landmarkName = "BernsteinDataConverter::helperFuncs::NodeLogic::multNodeLogic(expr, ptrToReferenceVector, ptrToStruct, freeSymbols)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1C0B7159-DD57-41EA-8218-0AE3C6FCDCF6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Solver/Equation_Form_Converter.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "BernsteinDataConverter::calculateInfoBytes(expr, vectorToWriteTo)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "77578FB3-2510-4F58-9CBC-D18618CF4593"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Solver/Equation_Form_Converter.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "BernsteinDataConverter::convertDimensionsOfExpr(ptrToPolynomialInfoVector)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
